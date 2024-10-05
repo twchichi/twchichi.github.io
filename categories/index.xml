@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>分类 on 臺灣之之的部落格</title>
-    <link>https://twchichi.github.io/categories/</link>
-    <description>Recent content in 分类 on 臺灣之之的部落格</description>
+    <title>Categories on heyo</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on heyo</description>
     <generator>Hugo</generator>
-    <language>zh-Hans-TW</language>
-    <copyright>版權所有</copyright>
-    <lastBuildDate>Mon, 29 Jul 2024 21:58:50 +0800</lastBuildDate>
-    <atom:link href="https://twchichi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <managingEditor>jane@doe.com (Jane Doe)</managingEditor>
+    <webMaster>jane@doe.com (Jane Doe)</webMaster>
+    <lastBuildDate>Tue, 12 Dec 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>行者无疆</title>
-      <link>https://twchichi.github.io/categories/%E8%A1%8C%E8%80%85%E6%97%A0%E7%96%86/</link>
-      <pubDate>Mon, 29 Jul 2024 21:58:50 +0800</pubDate>
-      <guid>https://twchichi.github.io/categories/%E8%A1%8C%E8%80%85%E6%97%A0%E7%96%86/</guid>
+      <title>Heyo</title>
+      <link>/categories/heyo/</link>
+      <pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate><author>jane@doe.com (Jane Doe)</author>
+      <guid>/categories/heyo/</guid>
       <description></description>
     </item>
     <item>
-      <title>传世之作</title>
-      <link>https://twchichi.github.io/categories/%E4%BC%A0%E4%B8%96%E4%B9%8B%E4%BD%9C/</link>
-      <pubDate>Sat, 02 Mar 2024 12:26:01 +0800</pubDate>
-      <guid>https://twchichi.github.io/categories/%E4%BC%A0%E4%B8%96%E4%B9%8B%E4%BD%9C/</guid>
+      <title>Syntax</title>
+      <link>/categories/syntax/</link>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><author>jane@doe.com (Jane Doe)</author>
+      <guid>/categories/syntax/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Themes</title>
+      <link>/categories/themes/</link>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><author>jane@doe.com (Jane Doe)</author>
+      <guid>/categories/themes/</guid>
       <description></description>
     </item>
   </channel>

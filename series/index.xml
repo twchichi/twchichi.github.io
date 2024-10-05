@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Series on 臺灣之之的部落格</title>
-    <link>https://twchichi.github.io/series/</link>
-    <description>Recent content in Series on 臺灣之之的部落格</description>
+    <title>Series on heyo</title>
+    <link>/series/</link>
+    <description>Recent content in Series on heyo</description>
     <generator>Hugo</generator>
-    <language>zh-Hans-TW</language>
-    <copyright>版權所有</copyright>
-    <lastBuildDate>Mon, 29 Jul 2024 21:58:50 +0800</lastBuildDate>
-    <atom:link href="https://twchichi.github.io/series/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <managingEditor>jane@doe.com (Jane Doe)</managingEditor>
+    <webMaster>jane@doe.com (Jane Doe)</webMaster>
+    <lastBuildDate>Mon, 07 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Headline</title>
-      <link>https://twchichi.github.io/series/headline/</link>
-      <pubDate>Mon, 29 Jul 2024 21:58:50 +0800</pubDate>
-      <guid>https://twchichi.github.io/series/headline/</guid>
+      <title>Themes Guide</title>
+      <link>/series/themes-guide/</link>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><author>jane@doe.com (Jane Doe)</author>
+      <guid>/series/themes-guide/</guid>
       <description></description>
     </item>
   </channel>

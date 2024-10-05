@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on heyo</title>
+    <link>/pt-br/categories/</link>
+    <description>Recent content in Categories on heyo</description>
+    <generator>Hugo</generator>
+    <language>pt-br</language>
+    <managingEditor>jane@doe.com (Jane Doe)</managingEditor>
+    <webMaster>jane@doe.com (Jane Doe)</webMaster>
+    <lastBuildDate>Mon, 07 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/pt-br/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Heyo</title>
+      <link>/pt-br/categories/heyo/</link>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 +0000</pubDate><author>jane@doe.com (Jane Doe)</author>
+      <guid>/pt-br/categories/heyo/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
