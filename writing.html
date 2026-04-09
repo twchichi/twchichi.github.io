@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文章 — 之之的書寫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0e1611;
+  --bg2:       #121a14;
+  --bg3:       #182019;
+  --border:    rgba(232,224,204,0.09);
+  --text:      #e8e0cc;
+  --text-muted:rgba(232,224,204,0.45);
+  --text-dim:  rgba(232,224,204,0.22);
+  --gold:      #baa878;
+  --gold-dim:  rgba(186,168,120,0.18);
+  --moss:      #6db87a;
+  --moss-dim:  rgba(109,184,122,0.15);
+  --rust:      #c4875e;
+  --font-serif: 'Fraunces','Noto Serif TC',serif;
+  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+
+/* ── Nav ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center;
+  padding: 0 64px; height: 52px;
+  background: rgba(14,22,17,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-style: italic; font-size: 13px; color: var(--gold);
+}
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab {
+  padding: 0 20px; height: 52px; display: flex; align-items: center;
+  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.nav-hint {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-left: auto; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 20px;
+}
+
+/* ── Shared ── */
+.chapter-mark {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.6); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+.site-footer {
+  padding: 24px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim); font-size: 11px;
+  font-family: var(--font-label); letter-spacing: 0.04em;
+  margin-top: 80px;
+}
+.footer-moss { color: var(--moss); }
+
+/* ── Writing Page ── */
+.writing-wrap { padding: 72px 64px; margin-top: 52px; }
+
+.writing-hero {
+  margin-bottom: 48px; padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.writing-page-title {
+  font-family: var(--font-serif); font-size: 52px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.02em; margin-bottom: 8px;
+}
+.writing-page-sub {
+  font-family: var(--font-serif); font-style: italic; font-weight: 300;
+  font-size: 20px; color: var(--gold);
+}
+
+/* Layout */
+.writing-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; }
+
+/* Post list */
+.post-list { list-style: none; }
+.post-item {
+  padding: 28px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: all 0.15s;
+  display: grid; grid-template-columns: 72px 1fr;
+  gap: 24px; align-items: start;
+}
+.post-item:hover { background: rgba(232,224,204,0.02); margin: 0 -16px; padding: 28px 16px; }
+.post-item:last-child { border-bottom: none; }
+.post-date {
+  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 0.04em; line-height: 1.4; margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.post-cat {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.post-title {
+  font-family: var(--font-serif); font-size: 20px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.3;
+}
+.post-excerpt {
+  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
+}
+.post-read-time {
+  margin-top: 10px; font-size: 11px; color: var(--text-dim);
+  font-family: var(--font-label);
+}
+
+/* Sidebar */
+.sidebar-section { margin-bottom: 40px; }
+.sidebar-section-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-pill {
+  padding: 5px 14px; border: 1px solid var(--border);
+  font-family: var(--font-label); font-size: 12px; color: var(--text-muted);
+  border-radius: 20px; cursor: pointer; transition: all 0.2s;
+}
+.tag-pill:hover { border-color: var(--gold); color: var(--gold); }
+.tag-pill.active { background: var(--gold-dim); border-color: rgba(186,168,120,0.4); color: var(--gold); }
+.archive-list { list-style: none; }
+.archive-list li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05);
+  font-size: 13px; color: var(--text-muted); cursor: pointer;
+}
+.archive-list li span { font-size: 11px; color: var(--text-dim); }
+.archive-list li:last-child { border-bottom: none; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; }
+  .nav-hint { display: none; }
+  .writing-wrap { padding: 72px 24px; }
+  .writing-layout { grid-template-columns: 1fr; }
+  .writing-layout aside { order: -1; }
+  .site-footer { padding: 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">之</div>
+    之之的書寫
+  </a>
+  <div class="nav-tabs">
+    <a href="/" class="nav-tab">首頁</a>
+    <a href="/works.html" class="nav-tab">作品</a>
+    <a href="/about.html" class="nav-tab">關於我</a>
+    <a href="/writing.html" class="nav-tab active">文章</a>
+    <a href="/contact.html" class="nav-tab">聯絡</a>
+  </div>
+  <span class="nav-hint">方案C · Deep Forest</span>
+</nav>
+
+<main class="writing-wrap">
+
+  <div class="writing-hero">
+    <p class="chapter-mark">所有文章</p>
+    <h1 class="writing-page-title">文章</h1>
+    <p class="writing-page-sub">散文、筆記、創作碎片</p>
+  </div>
+
+  <div class="writing-layout">
+
+    <!-- Post List -->
+    <ul class="post-list">
+      <li class="post-item">
+        <span class="post-date">2026.03</span>
+        <div>
+          <p class="post-cat" style="color:var(--moss);">散文</p>
+          <h3 class="post-title">關於在路上寫作這件事</h3>
+          <p class="post-excerpt">移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p>
+          <p class="post-read-time">閱讀時間約 5 分鐘</p>
+        </div>
+      </li>
+      <li class="post-item">
+        <span class="post-date">2026.02</span>
+        <div>
+          <p class="post-cat" style="color:var(--gold);">筆記</p>
+          <h3 class="post-title">卡片筆記法用了三個月後的反思</h3>
+          <p class="post-excerpt">Zettelkasten 不是魔法。它只是讓你更難自欺欺人。</p>
+          <p class="post-read-time">閱讀時間約 7 分鐘</p>
+        </div>
+      </li>
+      <li class="post-item">
+        <span class="post-date">2026.01</span>
+        <div>
+          <p class="post-cat" style="color:var(--rust);">創作</p>
+          <h3 class="post-title">小說的第一個字怎麼來的</h3>
+          <p class="post-excerpt">我從來不在「最好的時機」開始寫，我在忍不住的時候開始。</p>
+          <p class="post-read-time">閱讀時間約 4 分鐘</p>
+        </div>
+      </li>
+      <li class="post-item">
+        <span class="post-date">2025.12</span>
+        <div>
+          <p class="post-cat" style="color:var(--moss);">散文</p>
+          <h3 class="post-title">某個城市的最後一個早晨</h3>
+          <p class="post-excerpt">離開的前一天，我總是睡得特別早，醒得特別早。</p>
+          <p class="post-read-time">閱讀時間約 3 分鐘</p>
+        </div>
+      </li>
+      <li class="post-item">
+        <span class="post-date">2025.10</span>
+        <div>
+          <p class="post-cat" style="color:var(--gold);">筆記</p>
+          <h3 class="post-title">為什麼我用紙本而不是 Notion</h3>
+          <p class="post-excerpt">數位工具的問題不是功能太少，是功能太多讓你忘了在做什麼。</p>
+          <p class="post-read-time">閱讀時間約 6 分鐘</p>
+        </div>
+      </li>
+      <li class="post-item">
+        <span class="post-date">2025.08</span>
+        <div>
+          <p class="post-cat" style="color:var(--rust);">創作</p>
+          <h3 class="post-title">寫一個你不喜歡的角色</h3>
+          <p class="post-excerpt">寫反派不難，難的是讓讀者理解他——哪怕只有一瞬間。</p>
+          <p class="post-read-time">閱讀時間約 5 分鐘</p>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Sidebar -->
+    <aside>
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">分類</p>
+        <div class="tag-cloud">
+          <span class="tag-pill active">全部</span>
+          <span class="tag-pill">散文</span>
+          <span class="tag-pill">筆記</span>
+          <span class="tag-pill">創作</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">年份</p>
+        <ul class="archive-list">
+          <li>2026 <span>3 篇</span></li>
+          <li>2025 <span>8 篇</span></li>
+          <li>2024 <span>5 篇</span></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>之之 © 2026</span>
+  <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
+</footer>
+
+<script>
+document.querySelectorAll('.tag-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

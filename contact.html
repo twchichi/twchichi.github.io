@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>聯絡 — 之之的書寫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0e1611;
+  --bg2:       #121a14;
+  --bg3:       #182019;
+  --border:    rgba(232,224,204,0.09);
+  --text:      #e8e0cc;
+  --text-muted:rgba(232,224,204,0.45);
+  --text-dim:  rgba(232,224,204,0.22);
+  --gold:      #baa878;
+  --gold-dim:  rgba(186,168,120,0.18);
+  --moss:      #6db87a;
+  --moss-dim:  rgba(109,184,122,0.15);
+  --rust:      #c4875e;
+  --font-serif: 'Fraunces','Noto Serif TC',serif;
+  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+
+/* ── Nav ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center;
+  padding: 0 64px; height: 52px;
+  background: rgba(14,22,17,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-style: italic; font-size: 13px; color: var(--gold);
+}
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab {
+  padding: 0 20px; height: 52px; display: flex; align-items: center;
+  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.nav-hint {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-left: auto; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 20px;
+}
+
+/* ── Shared ── */
+.chapter-mark {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.6); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+/* ── Contact Page ── */
+.contact-wrap {
+  margin-top: 52px;
+  padding: 80px 64px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 72px; align-items: start;
+  min-height: calc(100vh - 52px);
+}
+
+.contact-title {
+  font-family: var(--font-serif); font-size: 56px; font-weight: 700;
+  color: var(--text); line-height: 1.0; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.contact-title em {
+  font-style: italic; font-weight: 300; color: var(--gold); display: block;
+}
+.contact-desc {
+  font-size: 15px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; margin-bottom: 44px; max-width: 360px;
+}
+
+/* Links */
+.contact-links { list-style: none; }
+.contact-link-item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 0; border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.contact-link-item:last-child { border-bottom: none; }
+.contact-link-icon {
+  width: 40px; height: 40px; border: 1px solid var(--border);
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; transition: all 0.2s;
+}
+.contact-link-item:hover .contact-link-icon {
+  border-color: var(--gold); background: var(--gold-dim);
+}
+.contact-link-type {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px;
+}
+.contact-link-value { font-size: 14px; color: var(--text-muted); }
+
+/* Right column */
+.contact-note-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+.contact-note-body {
+  font-size: 14px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; margin-bottom: 28px;
+}
+
+/* Form */
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-field { display: flex; flex-direction: column; gap: 8px; }
+.form-label {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+.form-input,
+.form-textarea {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--font-sans); font-size: 14px;
+  padding: 12px 16px; outline: none; transition: border-color 0.2s;
+  border-radius: 2px; font-weight: 300;
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--text-dim); }
+.form-input:focus, .form-textarea:focus {
+  border-color: rgba(186,168,120,0.35);
+}
+.form-textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; background: var(--gold-dim);
+  border: 1px solid rgba(186,168,120,0.3); color: var(--gold);
+  font-family: var(--font-label); font-size: 13px; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.2s; align-self: flex-start;
+  border-radius: 2px;
+}
+.form-submit:hover { background: rgba(186,168,120,0.2); border-color: var(--gold); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; }
+  .nav-hint { display: none; }
+  .contact-wrap { grid-template-columns: 1fr; padding: 72px 24px; gap: 40px; }
+  .contact-title { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">之</div>
+    之之的書寫
+  </a>
+  <div class="nav-tabs">
+    <a href="/" class="nav-tab">首頁</a>
+    <a href="/works.html" class="nav-tab">作品</a>
+    <a href="/about.html" class="nav-tab">關於我</a>
+    <a href="/writing.html" class="nav-tab">文章</a>
+    <a href="/contact.html" class="nav-tab active">聯絡</a>
+  </div>
+  <span class="nav-hint">方案C · Deep Forest</span>
+</nav>
+
+<div class="contact-wrap">
+
+  <!-- Left: Info + Links -->
+  <div>
+    <p class="chapter-mark">聯絡</p>
+    <h1 class="contact-title">說聲<br><em>你好</em></h1>
+    <p class="contact-desc">
+      歡迎任何關於作品的回饋、合作提案，或是單純想聊聊你也喜歡某本書——都可以寫信給我。
+    </p>
+    <ul class="contact-links">
+      <li class="contact-link-item">
+        <div class="contact-link-icon">✉️</div>
+        <div>
+          <p class="contact-link-type">Email</p>
+          <p class="contact-link-value">twchichi@gmail.com</p>
+        </div>
+      </li>
+      <li class="contact-link-item">
+        <div class="contact-link-icon">📷</div>
+        <div>
+          <p class="contact-link-type">Instagram</p>
+          <p class="contact-link-value">@chichi.writes</p>
+        </div>
+      </li>
+      <li class="contact-link-item">
+        <div class="contact-link-icon">📝</div>
+        <div>
+          <p class="contact-link-type">Newsletter</p>
+          <p class="contact-link-value">不定期電子報，訂閱可收到新文章通知</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Right: Form -->
+  <div>
+    <p class="contact-note-title">直接寫信給我</p>
+    <p class="contact-note-body">回覆時間通常在 1–3 天內。如果是合作提案，請說明你是誰、想做什麼——我喜歡直接。</p>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-field">
+        <label class="form-label">稱呼</label>
+        <input class="form-input" placeholder="你的名字或暱稱" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="your@email.com" />
+      </div>
+      <div class="form-field">
+        <label class="form-label">訊息</label>
+        <textarea class="form-textarea" rows="5" placeholder="想說什麼都可以..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">送出 ✦</button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '已送出 ✦';
+  btn.style.color = 'var(--moss)';
+  btn.style.borderColor = 'rgba(109,184,122,0.3)';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>

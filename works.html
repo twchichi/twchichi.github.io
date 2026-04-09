@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品 — 之之的書寫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Token System (方案C) ── */
+:root {
+  --bg:        #0e1611;
+  --bg2:       #121a14;
+  --bg3:       #182019;
+  --border:    rgba(232,224,204,0.09);
+  --text:      #e8e0cc;
+  --text-muted:rgba(232,224,204,0.45);
+  --text-dim:  rgba(232,224,204,0.22);
+  --gold:      #baa878;
+  --gold-dim:  rgba(186,168,120,0.18);
+  --moss:      #6db87a;
+  --moss-dim:  rgba(109,184,122,0.15);
+  --rust:      #c4875e;
+  --font-serif: 'Fraunces','Noto Serif TC',serif;
+  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+
+/* ── Nav ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center;
+  padding: 0 64px; height: 52px;
+  background: rgba(14,22,17,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-style: italic; font-size: 13px; color: var(--gold);
+}
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab {
+  padding: 0 20px; height: 52px; display: flex; align-items: center;
+  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.nav-hint {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-left: auto; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 20px;
+}
+
+/* ── Shared ── */
+.chapter-mark {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.6); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+.site-footer {
+  padding: 24px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim); font-size: 11px;
+  font-family: var(--font-label); letter-spacing: 0.04em;
+  margin-top: 80px;
+}
+.footer-moss { color: var(--moss); }
+
+/* ── Works Page ── */
+.works-wrap { padding: 72px 64px; margin-top: 52px; }
+
+.works-hero {
+  margin-bottom: 56px; padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.works-page-title {
+  font-family: var(--font-serif);
+  font-size: 56px; font-weight: 700; line-height: 1; color: var(--text);
+  letter-spacing: -0.02em;
+}
+.works-page-sub {
+  font-family: var(--font-serif);
+  font-size: 20px; font-style: italic; font-weight: 300;
+  color: var(--gold); margin-top: 8px;
+}
+.works-count-row { display: flex; gap: 32px; align-items: flex-end; }
+.works-count-item { text-align: right; }
+.works-count-num {
+  font-family: var(--font-serif); font-size: 40px; font-weight: 700;
+  color: var(--text); line-height: 1; display: block;
+}
+.works-count-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* Filter */
+.filter-row { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 6px 18px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-muted);
+  font-family: var(--font-label); font-size: 12px;
+  letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+  border-radius: 2px;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--text); }
+.filter-btn.on {
+  background: var(--gold-dim); border-color: rgba(186,168,120,0.4);
+  color: var(--gold);
+}
+
+/* Featured */
+.work-featured {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  display: grid; grid-template-columns: 1fr 300px;
+  margin-bottom: 16px;
+}
+.work-featured-body { padding: 40px; }
+.work-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-label); font-size: 11px;
+  color: var(--moss); letter-spacing: 0.1em; margin-bottom: 20px;
+}
+.work-status::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--moss); display: inline-block;
+  box-shadow: 0 0 6px rgba(109,184,122,0.5);
+}
+.work-featured-title {
+  font-family: var(--font-serif); font-size: 36px; font-weight: 700;
+  color: var(--text); line-height: 1.1; margin-bottom: 16px;
+}
+.work-featured-excerpt {
+  font-size: 14px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; max-width: 440px; margin-bottom: 28px;
+}
+.work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.work-tag {
+  padding: 4px 12px; border: 1px solid var(--border);
+  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 0.06em; border-radius: 2px;
+}
+.work-featured-side {
+  border-left: 1px solid var(--border);
+  padding: 40px 28px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+.work-meta-row { border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+.work-meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+.work-meta-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 6px;
+}
+.work-meta-value { font-size: 14px; color: var(--text-muted); }
+.progress-bar { height: 3px; background: rgba(232,224,204,0.08); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; background: var(--moss); border-radius: 2px; }
+
+/* Grid */
+.works-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 16px;
+}
+.work-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-top: 3px solid;
+  padding: 28px 24px; transition: all 0.2s;
+}
+.work-card:hover { background: rgba(232,224,204,0.03); transform: translateY(-2px); }
+.work-card:nth-child(1) { border-top-color: var(--moss); }
+.work-card:nth-child(2) { border-top-color: var(--rust); }
+.work-card:nth-child(3) { border-top-color: var(--gold); }
+.work-card-type {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 14px;
+}
+.work-card-title {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.2;
+}
+.work-card-desc {
+  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
+}
+.work-card-year {
+  margin-top: 20px; font-size: 11px; color: var(--text-dim);
+  font-family: var(--font-label);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; }
+  .nav-logo { margin-right: 16px; }
+  .nav-hint { display: none; }
+  .works-wrap { padding: 72px 24px; }
+  .works-hero { display: block; }
+  .works-count-row { margin-top: 24px; }
+  .work-featured { display: block; }
+  .work-featured-side { border-left: none; border-top: 1px solid var(--border); }
+  .works-grid { grid-template-columns: 1fr; }
+  .site-footer { padding: 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">之</div>
+    之之的書寫
+  </a>
+  <div class="nav-tabs">
+    <a href="/" class="nav-tab">首頁</a>
+    <a href="/works.html" class="nav-tab active">作品</a>
+    <a href="/about.html" class="nav-tab">關於我</a>
+    <a href="/writing.html" class="nav-tab">文章</a>
+    <a href="/contact.html" class="nav-tab">聯絡</a>
+  </div>
+  <span class="nav-hint">方案C · Deep Forest</span>
+</nav>
+
+<main class="works-wrap">
+
+  <div class="works-hero">
+    <div>
+      <p class="chapter-mark">所有作品</p>
+      <h1 class="works-page-title">作品</h1>
+      <p class="works-page-sub">小說 · 散文 · 短篇</p>
+    </div>
+    <div class="works-count-row">
+      <div class="works-count-item">
+        <span class="works-count-num">4</span>
+        <span class="works-count-label">作品總數</span>
+      </div>
+      <div class="works-count-item">
+        <span class="works-count-num" style="color:var(--moss);">1</span>
+        <span class="works-count-label">進行中</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-row">
+    <button class="filter-btn on">全部</button>
+    <button class="filter-btn">長篇小說</button>
+    <button class="filter-btn">散文</button>
+    <button class="filter-btn">短篇小說</button>
+  </div>
+
+  <!-- Featured Work -->
+  <div class="work-featured">
+    <div class="work-featured-body">
+      <div class="work-status">進行中</div>
+      <h2 class="work-featured-title">尚未命名的長篇小說</h2>
+      <p class="work-featured-excerpt">
+        故事從一個人的行李開始。關於移動、記憶、與留下來的理由。目前第三稿，預計年底完成。
+      </p>
+      <div class="work-tags">
+        <span class="work-tag">長篇小說</span>
+        <span class="work-tag">2024 —</span>
+      </div>
+    </div>
+    <div class="work-featured-side">
+      <div class="work-meta-row">
+        <p class="work-meta-label">創作進度</p>
+        <p class="work-meta-value">第三稿，約 60%</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div>
+      </div>
+      <div class="work-meta-row">
+        <p class="work-meta-label">類型</p>
+        <p class="work-meta-value">當代文學小說</p>
+      </div>
+      <div class="work-meta-row">
+        <p class="work-meta-label">預計完成</p>
+        <p class="work-meta-value">2026 年底</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="works-grid">
+    <div class="work-card">
+      <p class="work-card-type">散文</p>
+      <h3 class="work-card-title">散文集其一</h3>
+      <p class="work-card-desc">關於移動、停留與等待的文字。2022–2023 年寫成。</p>
+      <p class="work-card-year">2023 · 已完成</p>
+    </div>
+    <div class="work-card">
+      <p class="work-card-type">短篇小說</p>
+      <h3 class="work-card-title">短篇選集</h3>
+      <p class="work-card-desc">六篇短篇，每篇在不同城市完成，各有獨立的敘事視角。</p>
+      <p class="work-card-year">2023 · 已完成</p>
+    </div>
+    <div class="work-card">
+      <p class="work-card-type">隨筆</p>
+      <h3 class="work-card-title">寫作筆記</h3>
+      <p class="work-card-desc">不定期分享創作過程的思考、研究素材與靈感碎片。</p>
+      <p class="work-card-year">持續更新</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <span>之之 © 2026</span>
+  <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
+</footer>
+
+<script>
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>

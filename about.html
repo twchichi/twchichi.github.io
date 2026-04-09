@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關於我 — 之之的書寫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0e1611;
+  --bg2:       #121a14;
+  --bg3:       #182019;
+  --border:    rgba(232,224,204,0.09);
+  --text:      #e8e0cc;
+  --text-muted:rgba(232,224,204,0.45);
+  --text-dim:  rgba(232,224,204,0.22);
+  --gold:      #baa878;
+  --gold-dim:  rgba(186,168,120,0.18);
+  --moss:      #6db87a;
+  --moss-dim:  rgba(109,184,122,0.15);
+  --rust:      #c4875e;
+  --font-serif: 'Fraunces','Noto Serif TC',serif;
+  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+
+/* ── Nav ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center;
+  padding: 0 64px; height: 52px;
+  background: rgba(14,22,17,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-style: italic; font-size: 13px; color: var(--gold);
+}
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab {
+  padding: 0 20px; height: 52px; display: flex; align-items: center;
+  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.nav-hint {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-left: auto; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 20px;
+}
+
+/* ── Shared ── */
+.chapter-mark {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.6); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+.section-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.site-footer {
+  padding: 24px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim); font-size: 11px;
+  font-family: var(--font-label); letter-spacing: 0.04em;
+  margin-top: 80px;
+}
+.footer-moss { color: var(--moss); }
+
+/* ── About Page ── */
+.about-wrap { padding: 80px 64px; margin-top: 52px; }
+
+/* Top grid */
+.about-top {
+  display: grid; grid-template-columns: 1fr 260px;
+  gap: 64px; margin-bottom: 64px; padding-bottom: 56px;
+  border-bottom: 1px solid var(--border);
+}
+.about-name {
+  font-family: var(--font-serif);
+  font-size: 72px; font-weight: 700; line-height: 0.95;
+  letter-spacing: -0.02em; color: var(--text); margin-bottom: 36px;
+}
+.about-name em { font-style: italic; font-weight: 300; color: var(--gold); display: block; }
+.about-bio-long {
+  font-size: 15px; line-height: 2.0; color: rgba(232,224,204,0.6);
+  font-weight: 300; max-width: 540px;
+}
+.about-bio-long p + p { margin-top: 20px; }
+.about-bio-long strong { color: rgba(232,224,204,0.85); font-weight: 500; }
+
+/* Sidebar */
+.sidebar-block { margin-bottom: 36px; }
+.sidebar-block-title {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.sidebar-list { list-style: none; }
+.sidebar-list li {
+  padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05);
+  font-size: 13px; color: var(--text-muted); line-height: 1.5;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.sidebar-list li span { font-size: 11px; color: var(--text-dim); }
+.sidebar-list li:last-child { border-bottom: none; }
+
+/* Identities */
+.identities-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  margin-bottom: 64px;
+}
+.identity-card {
+  background: var(--bg3); padding: 36px 28px;
+  border: 1px solid var(--border); border-top: 2px solid;
+}
+.identity-card:nth-child(1) { border-top-color: var(--gold); }
+.identity-card:nth-child(2) { border-top-color: var(--moss); }
+.identity-card:nth-child(3) { border-top-color: var(--rust); }
+.identity-icon { font-size: 28px; margin-bottom: 16px; }
+.identity-role {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+  color: var(--text); margin-bottom: 12px;
+}
+.identity-desc {
+  font-size: 13px; line-height: 1.8; color: var(--text-muted); font-weight: 300;
+}
+
+/* Quote */
+.about-quote {
+  padding: 44px 48px;
+  background: var(--bg3); border-left: 3px solid var(--gold);
+  margin-bottom: 60px;
+}
+.about-quote blockquote {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 300;
+  font-style: italic; color: rgba(232,224,204,0.75);
+  line-height: 1.7; max-width: 600px;
+}
+.about-quote cite {
+  display: block; margin-top: 16px; font-size: 12px; font-style: normal;
+  color: var(--text-dim); letter-spacing: 0.08em;
+  font-family: var(--font-label);
+}
+
+/* Timeline */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border);
+}
+.timeline-item { position: relative; padding-bottom: 36px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+  position: absolute; left: -32px; top: 6px;
+  width: 9px; height: 9px; border-radius: 50%;
+  border: 1px solid var(--gold); background: var(--bg);
+}
+.timeline-dot.dim { border-color: rgba(186,168,120,0.4); }
+.timeline-dot.dimmer { border-color: rgba(186,168,120,0.3); }
+.timeline-year {
+  font-family: var(--font-label); font-size: 11px; letter-spacing: 0.1em;
+  color: var(--gold); margin-bottom: 6px;
+}
+.timeline-event {
+  font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 300;
+}
+.timeline-event strong { color: rgba(232,224,204,0.8); font-weight: 500; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; }
+  .nav-hint { display: none; }
+  .about-wrap { padding: 72px 24px; }
+  .about-top { grid-template-columns: 1fr; gap: 40px; }
+  .about-name { font-size: 52px; }
+  .identities-grid { grid-template-columns: 1fr; }
+  .site-footer { padding: 20px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">
+    <div class="nav-logo-mark">之</div>
+    之之的書寫
+  </a>
+  <div class="nav-tabs">
+    <a href="/" class="nav-tab">首頁</a>
+    <a href="/works.html" class="nav-tab">作品</a>
+    <a href="/about.html" class="nav-tab active">關於我</a>
+    <a href="/writing.html" class="nav-tab">文章</a>
+    <a href="/contact.html" class="nav-tab">聯絡</a>
+  </div>
+  <span class="nav-hint">方案C · Deep Forest</span>
+</nav>
+
+<main class="about-wrap">
+
+  <!-- Top: Bio + Sidebar -->
+  <div class="about-top">
+    <div>
+      <p class="chapter-mark">關於作者</p>
+      <h1 class="about-name">之之<br><em>Chichi</em></h1>
+      <div class="about-bio-long">
+        <p>我是公務員，也是小說作者，也是數位游牧工作者。這幾個身份不互相矛盾——它們都是我用來認識世界的不同方式。</p>
+        <p>寫作對我來說不是副業，是一種思考方式。每到一個地方，我就嘗試用文字理解那個地方給我的感受。長篇、散文、隨筆——形式不同，但動機都一樣：<strong>想把瞬間留住。</strong></p>
+        <p>目前在寫第一部長篇小說，同時整理卡片筆記系統，嘗試讓思考更有結構。</p>
+      </div>
+    </div>
+    <div>
+      <div class="sidebar-block">
+        <p class="sidebar-block-title">基本資料</p>
+        <ul class="sidebar-list">
+          <li>稱呼 <span>之之</span></li>
+          <li>語言 <span>繁體中文</span></li>
+          <li>工作模式 <span>數位游牧</span></li>
+          <li>目前狀態 <span style="color:var(--moss);">✦ 創作中</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-block">
+        <p class="sidebar-block-title">興趣 / 關注</p>
+        <ul class="sidebar-list">
+          <li>卡片筆記法 (Zettelkasten)</li>
+          <li>長距離步行與健身</li>
+          <li>城市攝影與紀錄</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三身份 -->
+  <p class="section-label">三個身份</p>
+  <div class="identities-grid">
+    <div class="identity-card">
+      <div class="identity-icon">✍️</div>
+      <h3 class="identity-role">小說作者</h3>
+      <p class="identity-desc">寫長篇、短篇與散文。相信文學是理解人的最慢、也最準確的方式。</p>
+    </div>
+    <div class="identity-card">
+      <div class="identity-icon">🌏</div>
+      <h3 class="identity-role">數位游牧</h3>
+      <p class="identity-desc">不定居在一個地方。用移動換取視角，每個城市都是素材庫。</p>
+    </div>
+    <div class="identity-card">
+      <div class="identity-icon">🏛️</div>
+      <h3 class="identity-role">公務員</h3>
+      <p class="identity-desc">在體制裡工作，在體制外寫作。兩件事之間的張力，也是寫作的來源。</p>
+    </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="about-quote">
+    <blockquote>
+      「我不是為了記錄而寫，是因為不寫就忘了——某種感覺，某個光線，某個人說話的方式。」
+    </blockquote>
+    <cite>— 之之</cite>
+  </div>
+
+  <!-- Timeline -->
+  <p class="section-label">創作時間線</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">2024 — 現在</p>
+      <p class="timeline-event"><strong>長篇小說</strong> 第一部長篇創作中，數位游牧工作模式確立。</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot dim"></div>
+      <p class="timeline-year">2023</p>
+      <p class="timeline-event"><strong>散文集 + 短篇選集</strong> 完成並整理發表。</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot dimmer"></div>
+      <p class="timeline-year">2022 以前</p>
+      <p class="timeline-event">散落的散文與短篇創作，開始寫作習慣的養成期。</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <span>之之 © 2026</span>
+  <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
+</footer>
+
+</body>
+</html>
