@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>之之的書寫 - 動態背景預覽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0e1611;
+      --bg2:        #121a14;
+      --text:       #e8e0cc;
+      --gold:       #baa878;
+      --moss:       #6db87a;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* p5.js canvas sits behind content */
+    #p5-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Demo content overlay */
+    .demo-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .demo-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      padding: 0 64px;
+      height: 52px;
+      background: rgba(14,22,17,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      margin-right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .demo-nav-logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(186,168,120,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .demo-nav-tabs { display: flex; gap: 0; flex: 1; }
+    .demo-nav-tab {
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(232,224,204,0.45);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .demo-nav-tab:hover { color: var(--text); }
+    .demo-nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+
+    .demo-hero {
+      margin-top: 52px;
+      padding: 120px 64px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 56px;
+      align-items: start;
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-chapter-mark {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(186,168,120,0.6);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+    .demo-hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(64px, 7vw, 100px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .demo-hero-sub {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 40px;
+    }
+
+    .demo-hero-bio {
+      font-size: 16px;
+      line-height: 2.0;
+      color: rgba(232,224,204,0.65);
+      font-weight: 300;
+      max-width: 520px;
+    }
+
+    .demo-now-card {
+      background: rgba(186,168,120,0.06);
+      border: 1px solid rgba(186,168,120,0.12);
+      padding: 32px 28px;
+    }
+
+    .demo-now-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .demo-now-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--moss);
+      box-shadow: 0 0 8px rgba(109,184,122,0.5);
+      animation: glow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 8px rgba(109,184,122,0.5); }
+      50%      { box-shadow: 0 0 3px rgba(109,184,122,0.2); }
+    }
+
+    .demo-now-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,224,204,0.22);
+    }
+
+    .demo-now-list { list-style: none; margin-top: 16px; }
+    .demo-now-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(232,224,204,0.06);
+      font-size: 13px;
+      color: rgba(232,224,204,0.65);
+      display: flex;
+      gap: 10px;
+      line-height: 1.6;
+    }
+    .demo-now-list li:last-child { border-bottom: none; }
+    .demo-now-list li::before {
+      content: '✦';
+      color: var(--moss);
+      font-size: 9px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Cards row */
+    .demo-nav-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-nav-card {
+      padding: 32px 40px;
+      border-right: 1px solid rgba(232,224,204,0.09);
+      text-decoration: none;
+      display: block;
+      transition: background 0.25s;
+    }
+    .demo-nav-card:last-child { border-right: none; }
+    .demo-nav-card:hover { background: rgba(232,224,204,0.025); }
+
+    .demo-nav-card-type {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(232,224,204,0.22);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .demo-nav-card-type span {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+    .demo-nav-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .demo-nav-card-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(232,224,204,0.45);
+      font-weight: 300;
+    }
+    .demo-nav-card-arrow {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(232,224,204,0.22);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .demo-nav-card:hover .demo-nav-card-arrow { color: var(--gold); }
+
+    /* More content for scroll demo */
+    .demo-section {
+      padding: 80px 64px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .demo-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .demo-section p {
+      font-size: 15px;
+      line-height: 2;
+      color: rgba(232,224,204,0.6);
+      margin-bottom: 16px;
+    }
+
+    .demo-footer {
+      padding: 24px 64px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(232,224,204,0.09);
+      color: rgba(232,224,204,0.22);
+      font-size: 11px;
+    }
+    .demo-footer-moss { color: var(--moss); }
+
+    /* Controls panel */
+    .controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      background: rgba(14,22,17,0.95);
+      border: 1px solid rgba(186,168,120,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 12px;
+      color: rgba(232,224,204,0.7);
+      backdrop-filter: blur(12px);
+      min-width: 200px;
+    }
+    .controls h4 {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .controls label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .controls input[type="range"] {
+      width: 100%;
+      margin-bottom: 4px;
+      accent-color: var(--moss);
+    }
+    .controls span {
+      font-size: 10px;
+      color: rgba(232,224,204,0.4);
+    }
+
+    @media (max-width: 900px) {
+      .demo-nav { padding: 0 24px; }
+      .demo-hero { grid-template-columns: 1fr; padding: 60px 24px; }
+      .demo-nav-cards { grid-template-columns: 1fr 1fr; }
+      .demo-nav-card { border-right: none; border-bottom: 1px solid rgba(232,224,204,0.09); }
+      .demo-footer { padding: 20px 24px; }
+    }
+    @media (max-width: 500px) {
+      .demo-nav-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- p5.js canvas will be inserted here -->
+  <div id="p5-canvas"></div>
+
+  <!-- Demo site content -->
+  <div class="demo-content">
+
+    <nav class="demo-nav">
+      <div class="demo-nav-logo">
+        <div class="demo-nav-logo-mark">之</div>
+        之之的書寫
+      </div>
+      <div class="demo-nav-tabs">
+        <a href="#" class="demo-nav-tab active">首頁</a>
+        <a href="#" class="demo-nav-tab">作品</a>
+        <a href="#" class="demo-nav-tab">關於我</a>
+        <a href="#" class="demo-nav-tab">文章</a>
+        <a href="#" class="demo-nav-tab">聯絡</a>
+      </div>
+    </nav>
+
+    <div class="demo-hero">
+      <div>
+        <p class="demo-chapter-mark">作者 · 游牧者</p>
+        <h1 class="demo-hero-title">之之</h1>
+        <h2 class="demo-hero-sub">寫字的人，路上的人</h2>
+        <p class="demo-hero-bio">
+          文字是我記錄世界的方式。這裡有我的作品、正在發生的事，還有一些寫作途中的想法碎片。
+        </p>
+      </div>
+      <div class="demo-now-card">
+        <div class="demo-now-card-header">
+          <div class="demo-now-dot"></div>
+          <span class="demo-now-label">現在進行中</span>
+        </div>
+        <ul class="demo-now-list">
+          <li>長篇小說第三稿創作</li>
+          <li>Zettelkasten 卡片筆記系統建立</li>
+          <li>增肌減脂訓練計畫</li>
+          <li>政府採購證照線上課備考</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="demo-nav-cards">
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:var(--gold);"></span>作品</p>
+        <h3 class="demo-nav-card-title">小說 · 散文 · 短篇</h3>
+        <p class="demo-nav-card-desc">4 部作品，1 部進行中。從行李開始的故事。</p>
+        <p class="demo-nav-card-arrow">查看作品 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:var(--moss);"></span>關於我</p>
+        <h3 class="demo-nav-card-title">公務人員 · 作者 · 游牧</h3>
+        <p class="demo-nav-card-desc">三個身份，一種思考方式，想把瞬間留住。</p>
+        <p class="demo-nav-card-arrow">了解更多 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:#c4875e;"></span>文章</p>
+        <h3 class="demo-nav-card-title">散文 · 筆記 · 創作碎片</h3>
+        <p class="demo-nav-card-desc">不定期寫下移動與寫作途中的思考片段。</p>
+        <p class="demo-nav-card-arrow">閱讀文章 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:rgba(232,224,204,0.22);"></span>聯絡</p>
+        <h3 class="demo-nav-card-title">說聲你好</h3>
+        <p class="demo-nav-card-desc">作品回饋、合作提案，或單純想聊聊一本書。</p>
+        <p class="demo-nav-card-arrow">寫信給我 →</p>
+      </a>
+    </div>
+
+    <div class="demo-section">
+      <h2>關於這個背景動畫</h2>
+      <p>這是用 p5.js 生成的流量場背景。細小的粒子在不可見的向量場中漂浮，營造出一種「在路上」的意象。</p>
+      <p>• 粒子被滾動的滾輪速度影響<br>
+         • 滑鼠懸停會產生微妙的吸引效果<br>
+         • 點擊可以在該位置產生新的粒子流<br>
+         • 背景的線條是流量場的可視化</p>
+      <p>滾動頁面看看效果，或調整右下角的參數。</p>
+    </div>
+
+    <div class="demo-section">
+      <h2>寫字的意義</h2>
+      <p>有時候我會想，寫字這件事，到底是記錄世界，還是在世界裡刻下自己存在的痕跡？</p>
+      <p>路上的風景一直在變，但留下來的文字，卻像是把某一個當下永遠釘在了時間的牆上。</p>
+    </div>
+
+    <footer class="demo-footer">
+      <span>之之 © 2026</span>
+      <span>在某個地方書寫 <span class="demo-footer-moss">✦</span></span>
+    </footer>
+  </div>
+
+  <!-- Controls panel -->
+  <div class="controls">
+    <h4>背景參數</h4>
+    <label>
+      粒子數量
+      <input type="range" id="particleCount" min="50" max="300" value="150">
+      <span id="particleCountVal">150</span>
+    </label>
+    <label>
+      流量強度
+      <input type="range" id="flowStrength" min="1" max="10" value="4">
+      <span id="flowStrengthVal">4</span>
+    </label>
+    <label>
+      粒子大小
+      <input type="range" id="particleSize" min="1" max="4" value="2" step="0.5">
+      <span id="particleSizeVal">2</span>
+    </label>
+    <label>
+      速度
+      <input type="range" id="speed" min="1" max="8" value="3">
+      <span id="speedVal">3</span>
+    </label>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+  <script>
+    p5.disableFriendlyErrors = true;
+
+    // === Config ===
+    const CONFIG = {
+      seed: 42,
+      particleCount: 150,
+      flowStrength: 4,
+      particleSize: 2,
+      speed: 3
+    };
+
+    // === Palette (from your site) ===
+    const PALETTE = {
+      bg: [14, 22, 17],          // #0e1611
+      gold: [186, 168, 120],     // #baa878
+      moss: [109, 184, 122],     // #6db87a
+      rust: [196, 135, 94],      // #c4875e
+      textDim: [232, 224, 204]   // #e8e0cc
+    };
+
+    // === State ===
+    let particles = [];
+    let t = 0;
+    let scrollY = 0;
+
+    // === Particle class ===
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.px = this.x; // previous x for trail
+        this.py = this.y;
+        this.life = Math.random() * 200 + 100;
+        this.maxLife = this.life;
+        // Slight color variation within palette
+        let c = Math.random();
+        if (c < 0.3) {
+          this.color = [...PALETTE.gold]; // gold particles
+        } else if (c < 0.7) {
+          this.color = [...PALETTE.moss]; // moss particles
+        } else if (c < 0.85) {
+          this.color = [...PALETTE.textDim]; // dim text particles
+        } else {
+          this.color = [...PALETTE.rust]; // rust accent
+        }
+        this.alpha = Math.random() * 0.4 + 0.1;
+      }
+
+      update(speedMult) {
+        this.px = this.x;
+        this.py = this.y;
+
+        // Flow field angle
+        let angle = Math.sin(this.x * 0.002 + t * 0.5) *
+                    Math.cos(this.y * 0.002 + t * 0.3) *
+                    Math.PI * 2 +
+                    Math.sin(this.y * 0.001 + t * 0.2) * 2;
+
+        // Add scroll influence
+        angle += Math.sin(this.y * 0.003 + scrollY * 0.0001) * 0.5;
+
+        // Mouse influence (subtle)
+        if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+          let dx = mouseX - this.x;
+          let dy = mouseY - this.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            angle += (Math.atan2(dy, dx) + Math.PI) * (1 - dist / 150) * 0.8;
+          }
+        }
+
+        let spd = CONFIG.speed * speedMult * 0.5;
+        this.x += Math.cos(angle) * spd;
+        this.y += Math.sin(angle) * spd;
+
+        this.life--;
+
+        // Respawn if out of bounds or dead
+        if (this.life <= 0 || this.x < -10 || this.x > width + 10 ||
+            this.y < -10 || this.y > height + 10) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        let lifeRatio = this.life / this.maxLife;
+        let a = this.alpha * lifeRatio;
+
+        // Draw trail
+        let px = this.px, py = this.py;
+
+        // Subtle gradient trail
+        let c = this.color;
+        stroke(c[0], c[1], c[2], a * 255);
+        strokeWeight(CONFIG.particleSize * 0.5);
+        line(this.px, this.py, this.x, this.y);
+
+        // Dot at head
+        fill(c[0], c[1], c[2], a * 255);
+        noStroke();
+        ellipse(this.x, this.y, CONFIG.particleSize, CONFIG.particleSize);
+      }
+    }
+
+    // === Flow field lines (background texture) ===
+    function drawFlowLines() {
+      let spacing = 40;
+      stroke(232, 224, 204, 8); // very subtle
+      strokeWeight(0.5);
+
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          let angle = Math.sin(x * 0.002 + t * 0.3) *
+                      Math.cos(y * 0.002 + t * 0.2) *
+                      Math.PI * 2;
+          let len = 15;
+          let x2 = x + Math.cos(angle) * len;
+          let y2 = y + Math.sin(angle) * len;
+          line(x, y, x2, y2);
+        }
+      }
+    }
+
+    // === p5 setup ===
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent('p5-canvas');
+      pixelDensity(1);
+      colorMode(RGB, 255, 255, 255, 255);
+      randomSeed(CONFIG.seed);
+      noiseSeed(CONFIG.seed);
+
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    // === p5 draw loop ===
+    function draw() {
+      // Semi-transparent bg for trails
+      background(PALETTE.bg[0], PALETTE.bg[1], PALETTE.bg[2], 25);
+
+      // Draw flow field lines
+      drawFlowLines();
+
+      // Update and draw particles
+      for (let p of particles) {
+        p.update(CONFIG.speed * 0.3);
+        p.draw();
+      }
+
+      t += 0.005;
+    }
+
+    // === Event handlers ===
+    function mousePressed() {
+      // Spawn particles at click
+      for (let i = 0; i < 10; i++) {
+        let p = new Particle();
+        p.x = mouseX;
+        p.y = mouseY;
+        p.px = mouseX;
+        p.py = mouseY;
+        particles.push(p);
+      }
+      // Cap particles
+      while (particles.length > 500) {
+        particles.shift();
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    function mouseWheel(e) {
+      scrollY += e.delta;
+    }
+
+    // === Control bindings ===
+    document.getElementById('particleCount').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('particleCountVal').textContent = v;
+      CONFIG.particleCount = v;
+      // Adjust particle count
+      while (particles.length < v) particles.push(new Particle());
+      while (particles.length > v) particles.shift();
+    });
+
+    document.getElementById('flowStrength').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('flowStrengthVal').textContent = v;
+      CONFIG.flowStrength = v;
+    });
+
+    document.getElementById('particleSize').addEventListener('input', function() {
+      let v = parseFloat(this.value);
+      document.getElementById('particleSizeVal').textContent = v;
+      CONFIG.particleSize = v;
+    });
+
+    document.getElementById('speed').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('speedVal').textContent = v;
+      CONFIG.speed = v;
+    });
+  </script>
+</body>
+</html>

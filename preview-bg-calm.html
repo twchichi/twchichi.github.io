@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>之之的書寫 - 安靜版背景預覽</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0e1611;
+      --bg2:        #121a14;
+      --text:       #e8e0cc;
+      --gold:       #baa878;
+      --moss:       #6db87a;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    #p5-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .demo-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .demo-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      padding: 0 64px;
+      height: 52px;
+      background: rgba(14,22,17,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      margin-right: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .demo-nav-logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(186,168,120,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold);
+    }
+
+    .demo-nav-tabs { display: flex; gap: 0; flex: 1; }
+    .demo-nav-tab {
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(232,224,204,0.45);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .demo-nav-tab:hover { color: var(--text); }
+    .demo-nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+
+    .demo-hero {
+      margin-top: 52px;
+      padding: 120px 64px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 56px;
+      align-items: start;
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-chapter-mark {
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(186,168,120,0.6);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+    .demo-hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(64px, 7vw, 100px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .demo-hero-sub {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 40px;
+    }
+
+    .demo-hero-bio {
+      font-size: 16px;
+      line-height: 2.0;
+      color: rgba(232,224,204,0.65);
+      font-weight: 300;
+      max-width: 520px;
+    }
+
+    .demo-now-card {
+      background: rgba(186,168,120,0.06);
+      border: 1px solid rgba(186,168,120,0.12);
+      padding: 32px 28px;
+    }
+
+    .demo-now-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .demo-now-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--moss);
+      box-shadow: 0 0 8px rgba(109,184,122,0.5);
+      animation: glow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 8px rgba(109,184,122,0.5); }
+      50%      { box-shadow: 0 0 3px rgba(109,184,122,0.2); }
+    }
+
+    .demo-now-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,224,204,0.22);
+    }
+
+    .demo-now-list { list-style: none; margin-top: 16px; }
+    .demo-now-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(232,224,204,0.06);
+      font-size: 13px;
+      color: rgba(232,224,204,0.65);
+      display: flex;
+      gap: 10px;
+      line-height: 1.6;
+    }
+    .demo-now-list li:last-child { border-bottom: none; }
+    .demo-now-list li::before {
+      content: '✦';
+      color: var(--moss);
+      font-size: 9px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .demo-nav-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid rgba(232,224,204,0.09);
+    }
+
+    .demo-nav-card {
+      padding: 32px 40px;
+      border-right: 1px solid rgba(232,224,204,0.09);
+      text-decoration: none;
+      display: block;
+      transition: background 0.25s;
+    }
+    .demo-nav-card:last-child { border-right: none; }
+    .demo-nav-card:hover { background: rgba(232,224,204,0.025); }
+
+    .demo-nav-card-type {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(232,224,204,0.22);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .demo-nav-card-type span {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+    .demo-nav-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .demo-nav-card-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(232,224,204,0.45);
+      font-weight: 300;
+    }
+    .demo-nav-card-arrow {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(232,224,204,0.22);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .demo-nav-card:hover .demo-nav-card-arrow { color: var(--gold); }
+
+    .demo-section {
+      padding: 80px 64px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .demo-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .demo-section p {
+      font-size: 15px;
+      line-height: 2;
+      color: rgba(232,224,204,0.6);
+      margin-bottom: 16px;
+    }
+
+    .demo-footer {
+      padding: 24px 64px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(232,224,204,0.09);
+      color: rgba(232,224,204,0.22);
+      font-size: 11px;
+    }
+    .demo-footer-moss { color: var(--moss); }
+
+    .controls {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      background: rgba(14,22,17,0.95);
+      border: 1px solid rgba(186,168,120,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 12px;
+      color: rgba(232,224,204,0.7);
+      backdrop-filter: blur(12px);
+      min-width: 200px;
+    }
+    .controls h4 {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .controls label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .controls input[type="range"] {
+      width: 100%;
+      margin-bottom: 4px;
+      accent-color: var(--moss);
+    }
+    .controls span {
+      font-size: 10px;
+      color: rgba(232,224,204,0.4);
+    }
+
+    @media (max-width: 900px) {
+      .demo-nav { padding: 0 24px; }
+      .demo-hero { grid-template-columns: 1fr; padding: 60px 24px; }
+      .demo-nav-cards { grid-template-columns: 1fr 1fr; }
+      .demo-nav-card { border-right: none; border-bottom: 1px solid rgba(232,224,204,0.09); }
+      .demo-footer { padding: 20px 24px; }
+    }
+    @media (max-width: 500px) {
+      .demo-nav-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="p5-canvas"></div>
+
+  <div class="demo-content">
+
+    <nav class="demo-nav">
+      <div class="demo-nav-logo">
+        <div class="demo-nav-logo-mark">之</div>
+        之之的書寫
+      </div>
+      <div class="demo-nav-tabs">
+        <a href="#" class="demo-nav-tab active">首頁</a>
+        <a href="#" class="demo-nav-tab">作品</a>
+        <a href="#" class="demo-nav-tab">關於我</a>
+        <a href="#" class="demo-nav-tab">文章</a>
+        <a href="#" class="demo-nav-tab">聯絡</a>
+      </div>
+    </nav>
+
+    <div class="demo-hero">
+      <div>
+        <p class="demo-chapter-mark">作者 · 游牧者</p>
+        <h1 class="demo-hero-title">之之</h1>
+        <h2 class="demo-hero-sub">寫字的人，路上的人</h2>
+        <p class="demo-hero-bio">
+          文字是我記錄世界的方式。這裡有我的作品、正在發生的事，還有一些寫作途中的想法碎片。
+        </p>
+      </div>
+      <div class="demo-now-card">
+        <div class="demo-now-card-header">
+          <div class="demo-now-dot"></div>
+          <span class="demo-now-label">現在進行中</span>
+        </div>
+        <ul class="demo-now-list">
+          <li>長篇小說第三稿創作</li>
+          <li>Zettelkasten 卡片筆記系統建立</li>
+          <li>增肌減脂訓練計畫</li>
+          <li>政府採購證照線上課備考</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="demo-nav-cards">
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:var(--gold);"></span>作品</p>
+        <h3 class="demo-nav-card-title">小說 · 散文 · 短篇</h3>
+        <p class="demo-nav-card-desc">4 部作品，1 部進行中。從行李開始的故事。</p>
+        <p class="demo-nav-card-arrow">查看作品 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:var(--moss);"></span>關於我</p>
+        <h3 class="demo-nav-card-title">公務人員 · 作者 · 游牧</h3>
+        <p class="demo-nav-card-desc">三個身份，一種思考方式，想把瞬間留住。</p>
+        <p class="demo-nav-card-arrow">了解更多 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:#c4875e;"></span>文章</p>
+        <h3 class="demo-nav-card-title">散文 · 筆記 · 創作碎片</h3>
+        <p class="demo-nav-card-desc">不定期寫下移動與寫作途中的思考片段。</p>
+        <p class="demo-nav-card-arrow">閱讀文章 →</p>
+      </a>
+      <a href="#" class="demo-nav-card">
+        <p class="demo-nav-card-type"><span style="background:rgba(232,224,204,0.22);"></span>聯絡</p>
+        <h3 class="demo-nav-card-title">說聲你好</h3>
+        <p class="demo-nav-card-desc">作品回饋、合作提案，或單純想聊聊一本書。</p>
+        <p class="demo-nav-card-arrow">寫信給我 →</p>
+      </a>
+    </div>
+
+    <div class="demo-section">
+      <h2>關於這個背景動畫</h2>
+      <p>這是一個安靜的浮動效果。沒有花俏的粒子，只有緩慢飄動的透明圓點，像是深夜窗外的遠處燈火。</p>
+      <p>非常安靜，不搶走內容的風采。</p>
+    </div>
+
+    <div class="demo-section">
+      <h2>寫字的意義</h2>
+      <p>有時候我會想，寫字這件事，到底是記錄世界，還是在世界裡刻下自己存在的痕跡？</p>
+      <p>路上的風景一直在變，但留下來的文字，卻像是把某一個當下永遠釘在了時間的牆上。</p>
+    </div>
+
+    <footer class="demo-footer">
+      <span>之之 © 2026</span>
+      <span>在某個地方書寫 <span class="demo-footer-moss">✦</span></span>
+    </footer>
+  </div>
+
+  <div class="controls">
+    <h4>背景參數</h4>
+    <label>
+      數量
+      <input type="range" id="particleCount" min="20" max="100" value="40">
+      <span id="particleCountVal">40</span>
+    </label>
+    <label>
+      飄動速度
+      <input type="range" id="speed" min="1" max="5" value="2">
+      <span id="speedVal">2</span>
+    </label>
+    <label>
+      透明度
+      <input type="range" id="alpha" min="5" max="40" value="15">
+      <span id="alphaVal">15</span>
+    </label>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+  <script>
+    p5.disableFriendlyErrors = true;
+
+    // === Config ===
+    const CONFIG = {
+      seed: 12345,
+      particleCount: 40,
+      speed: 2,
+      alpha: 15
+    };
+
+    // === Palette (from your site) ===
+    const PALETTE = {
+      bg: [14, 22, 17],          // #0e1611
+      gold: [186, 168, 120],     // #baa878
+      moss: [109, 184, 122],     // #6db87a
+      textDim: [232, 224, 204]   // #e8e0cc
+    };
+
+    // === State ===
+    let particles = [];
+    let t = 0;
+
+    // === FloatingDot class - slow, gentle floating ===
+    class FloatingDot {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.size = Math.random() * 3 + 1; // 1-4px
+        this.phaseX = Math.random() * Math.PI * 2;
+        this.phaseY = Math.random() * Math.PI * 2;
+        this.periodX = Math.random() * 3000 + 2000; // 2-5 seconds
+        this.periodY = Math.random() * 4000 + 3000; // 3-7 seconds
+        // Color: mostly text dim, occasional gold/moss
+        let c = Math.random();
+        if (c < 0.15) {
+          this.color = [...PALETTE.gold];
+        } else if (c < 0.3) {
+          this.color = [...PALETTE.moss];
+        } else {
+          this.color = [...PALETTE.textDim];
+        }
+      }
+
+      update() {
+        // Very slow sinusoidal movement
+        let spd = CONFIG.speed * 0.3;
+        let progress = (millis() % 100000) / 1000; // time in seconds
+
+        this.x = this.baseX + Math.sin(progress * (1000 / this.periodX) + this.phaseX) * 30 * spd;
+        this.y = this.baseY + Math.sin(progress * (1000 / this.periodY) + this.phaseY) * 20 * spd;
+
+        // Keep in bounds
+        if (this.x < -20) this.x = width + 20;
+        if (this.x > width + 20) this.x = -20;
+        if (this.y < -20) this.y = height + 20;
+        if (this.y > height + 20) this.y = -20;
+      }
+
+      draw() {
+        let a = CONFIG.alpha / 100;
+        let c = this.color;
+        fill(c[0], c[1], c[2], a * 255);
+        noStroke();
+        ellipse(this.x, this.y, this.size, this.size);
+      }
+    }
+
+    // === Subtle grain texture ===
+    function drawGrain() {
+      // Very subtle noise dots for texture
+      loadPixels();
+      let d = pixelDensity();
+      let w = width * d;
+      let h = height * d;
+
+      // Only update every 4th frame for performance
+      if (frameCount % 4 !== 0) return;
+
+      for (let i = 0; i < 200; i++) {
+        let x = Math.floor(Math.random() * w);
+        let y = Math.floor(Math.random() * h);
+        let idx = 4 * (y * w + x);
+        let v = Math.random() * 8;
+        pixels[idx] = PALETTE.bg[0] + v;
+        pixels[idx+1] = PALETTE.bg[1] + v;
+        pixels[idx+2] = PALETTE.bg[2] + v;
+      }
+      updatePixels();
+    }
+
+    // === p5 setup ===
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent('p5-canvas');
+      pixelDensity(1);
+      colorMode(RGB, 255, 255, 255, 255);
+      randomSeed(CONFIG.seed);
+
+      for (let i = 0; i < CONFIG.particleCount; i++) {
+        particles.push(new FloatingDot());
+      }
+    }
+
+    // === p5 draw loop ===
+    function draw() {
+      // Solid background - no trails, very clean
+      background(PALETTE.bg[0], PALETTE.bg[1], PALETTE.bg[2]);
+
+      // Draw floating dots
+      for (let p of particles) {
+        p.update();
+        p.draw();
+      }
+    }
+
+    // === Event handlers ===
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    // === Control bindings ===
+    document.getElementById('particleCount').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('particleCountVal').textContent = v;
+      CONFIG.particleCount = v;
+      while (particles.length < v) particles.push(new FloatingDot());
+      while (particles.length > v) particles.shift();
+    });
+
+    document.getElementById('speed').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('speedVal').textContent = v;
+      CONFIG.speed = v;
+    });
+
+    document.getElementById('alpha').addEventListener('input', function() {
+      let v = parseInt(this.value);
+      document.getElementById('alphaVal').textContent = v;
+      CONFIG.alpha = v;
+    });
+  </script>
+</body>
+</html>
