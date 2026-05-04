@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>作品 — 之之的書寫</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,336 +10,249 @@
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── Token System (方案C) ── */
 :root {
-  --bg:        #0e1611;
-  --bg2:       #121a14;
-  --bg3:       #182019;
-  --border:    rgba(232,224,204,0.09);
-  --text:      #e8e0cc;
-  --text-muted:rgba(232,224,204,0.45);
-  --text-dim:  rgba(232,224,204,0.22);
-  --gold:      #baa878;
-  --gold-dim:  rgba(186,168,120,0.18);
-  --moss:      #6db87a;
-  --moss-dim:  rgba(109,184,122,0.15);
-  --rust:      #c4875e;
+  --bg: #0e1611; --bg2: #121a14; --bg3: #182019; --bg4: #1e2a1f;
+  --border: rgba(232,224,204,0.09); --border-md: rgba(232,224,204,0.15);
+  --text: #e8e0cc; --text-muted: rgba(232,224,204,0.45); --text-dim: rgba(232,224,204,0.22);
+  --gold: #baa878; --gold-dim: rgba(186,168,120,0.18);
+  --moss: #6db87a; --moss-glow: rgba(109,184,122,0.5); --rust: #c4875e;
   --font-serif: 'Fraunces','Noto Serif TC',serif;
-  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-sans: 'Noto Sans TC','Instrument Sans',sans-serif;
   --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
 }
-
-body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
-
-/* ── Nav ── */
-.site-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center;
-  padding: 0 64px; height: 52px;
-  background: rgba(14,22,17,0.94);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
-  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none;
-}
-.nav-logo-mark {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid rgba(186,168,120,0.35);
-  display: flex; align-items: center; justify-content: center;
-  font-style: italic; font-size: 13px; color: var(--gold);
-}
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); overflow-x: hidden; min-height: 100vh; }
+.site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; padding: 0 48px; height: 56px; background: rgba(14,22,17,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: var(--font-serif); font-size: 17px; font-weight: 400; color: var(--text); letter-spacing: 0.05em; margin-right: 40px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(186,168,120,0.35); display: flex; align-items: center; justify-content: center; font-style: italic; font-size: 13px; color: var(--gold); }
 .nav-tabs { display: flex; gap: 0; flex: 1; }
-.nav-tab {
-  padding: 0 20px; height: 52px; display: flex; align-items: center;
-  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s; letter-spacing: 0.04em;
-  white-space: nowrap;
-}
+.nav-tab { padding: 0 20px; height: 56px; display: flex; align-items: center; font-family: var(--font-label); font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap; }
 .nav-tab:hover { color: var(--text); }
 .nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
-.nav-hint {
-  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
-  color: var(--text-dim); text-transform: uppercase;
-  margin-left: auto; padding: 3px 10px;
-  border: 1px solid var(--border); border-radius: 20px;
-}
-
-/* ── Shared ── */
-.chapter-mark {
-  font-family: var(--font-label); font-size: 10px;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(186,168,120,0.6); margin-bottom: 16px;
-  display: flex; align-items: center; gap: 12px;
-}
-.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
-
-.site-footer {
-  padding: 24px 64px;
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid var(--border);
-  color: var(--text-dim); font-size: 11px;
-  font-family: var(--font-label); letter-spacing: 0.04em;
-  margin-top: 80px;
-}
+.nav-hint { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-left: auto; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; }
+.works-hero { margin-top: 56px; padding: 80px 48px 60px; position: relative; overflow: hidden; }
+.works-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(109,184,122,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-eyebrow { font-family: var(--font-label); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(186,168,120,0.6); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: '§'; color: var(--gold); font-size: 14px; }
+.hero-title { font-family: var(--font-serif); font-size: clamp(64px, 10vw, 120px); font-weight: 900; line-height: 0.9; color: var(--text); letter-spacing: -0.03em; margin-bottom: 24px; }
+.hero-title span { display: block; background: linear-gradient(135deg, var(--text) 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-family: var(--font-serif); font-size: clamp(18px, 2.5vw, 26px); font-style: italic; font-weight: 300; color: var(--text-muted); margin-bottom: 40px; max-width: 500px; }
+.hero-meta { display: flex; gap: 48px; align-items: flex-end; }
+.hero-stat-num { font-family: var(--font-serif); font-size: 48px; font-weight: 700; color: var(--text); line-height: 1; }
+.hero-stat-num.accent { color: var(--moss); }
+.hero-stat-label { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+.filter-section { padding: 0 48px 40px; }
+.filter-tabs { display: flex; gap: 4px; background: var(--bg2); padding: 4px; border-radius: 8px; width: fit-content; }
+.filter-tab { padding: 10px 24px; border: none; background: transparent; color: var(--text-muted); font-family: var(--font-label); font-size: 13px; letter-spacing: 0.04em; cursor: pointer; border-radius: 6px; transition: all 0.25s; }
+.filter-tab:hover { color: var(--text); }
+.filter-tab.active { background: var(--bg4); color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.filter-tab .count { margin-left: 8px; padding: 2px 8px; background: var(--border); border-radius: 10px; font-size: 11px; color: var(--text-dim); }
+.filter-tab.active .count { background: var(--gold-dim); color: var(--gold); }
+.deck-section { padding: 0 48px 60px; }
+.deck-container { position: relative; max-width: 900px; margin: 0 auto; }
+.progress-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 48px; position: relative; overflow: hidden; }
+.progress-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--moss) 0%, var(--gold) 100%); }
+.progress-card::after { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(109,184,122,0.08) 0%, transparent 60%); pointer-events: none; }
+.card-eyebrow { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(109,184,122,0.12); border: 1px solid rgba(109,184,122,0.3); border-radius: 20px; font-family: var(--font-label); font-size: 11px; letter-spacing: 0.08em; color: var(--moss); text-transform: uppercase; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--moss); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--moss-glow); } 50% { opacity: 0.7; box-shadow: 0 0 0 8px transparent; } }
+.card-category { font-family: var(--font-label); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+.card-title { font-family: var(--font-serif); font-size: clamp(32px, 5vw, 52px); font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 20px; }
+.card-excerpt { font-size: 16px; line-height: 1.9; color: var(--text-muted); font-weight: 300; max-width: 560px; margin-bottom: 32px; }
+.card-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 32px; border-top: 1px solid var(--border); }
+.detail-label { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.detail-value { font-size: 15px; color: var(--text-muted); margin-bottom: 8px; }
+.progress-track { height: 4px; background: rgba(232,224,204,0.08); border-radius: 4px; overflow: hidden; }
+.progress-thumb { height: 100%; background: linear-gradient(90deg, var(--moss), var(--gold)); border-radius: 4px; transition: width 0.5s ease; }
+.cards-stack { position: relative; height: 300px; margin-top: 24px; }
+.work-card { position: absolute; width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 36px 40px; cursor: pointer; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, box-shadow 0.3s ease; overflow: hidden; }
+.work-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.work-card:nth-child(1) { transform: translateX(0) scale(1); z-index: 3; border-top: 3px solid var(--gold); }
+.work-card:nth-child(2) { transform: translateX(8px) scale(0.97); opacity: 0.6; z-index: 2; border-top: 3px solid var(--rust); }
+.work-card:nth-child(3) { transform: translateX(16px) scale(0.94); opacity: 0.3; z-index: 1; border-top: 3px solid var(--moss); }
+.work-card.expanded:hover:nth-child(1) { transform: translateX(0) scale(1.02); }
+.work-card-content { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+.card-type { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+.card-title-sm { font-family: var(--font-serif); font-size: 28px; font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 12px; }
+.card-desc { font-size: 14px; line-height: 1.8; color: var(--text-muted); font-weight: 300; max-width: 500px; }
+.card-year-badge { padding: 8px 20px; background: var(--bg4); border: 1px solid var(--border); border-radius: 8px; text-align: center; }
+.card-year { font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--text); }
+.card-status { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-top: 4px; }
+.card-expand { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; padding: 0; }
+.work-card.expanded .card-expand { max-height: 200px; padding-top: 24px; margin-top: 24px; border-top: 1px solid var(--border); }
+.expand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.expand-label { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+.expand-value { font-size: 14px; color: var(--text-muted); }
+.card-nav { display: flex; justify-content: center; align-items: center; gap: 24px; margin-top: 32px; }
+.nav-dots { display: flex; gap: 8px; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-md); cursor: pointer; transition: all 0.3s; }
+.nav-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+.nav-dot:hover:not(.active) { background: var(--text-dim); }
+.nav-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg3); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 18px; }
+.nav-arrow:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.grid-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 28px; transition: all 0.3s; cursor: pointer; }
+.grid-card:hover { background: rgba(232,224,204,0.03); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.grid-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.grid-card-type { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+.grid-card-status { padding: 4px 10px; border-radius: 12px; font-family: var(--font-label); font-size: 10px; letter-spacing: 0.06em; }
+.grid-card-status.done { background: var(--gold-dim); color: var(--gold); }
+.grid-card-status.ongoing { background: rgba(109,184,122,0.12); color: var(--moss); }
+.grid-card-title { font-family: var(--font-serif); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+.grid-card-desc { font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300; }
+.grid-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.grid-card-year { font-size: 12px; color: var(--text-dim); font-family: var(--font-label); }
+.grid-card-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: all 0.2s; }
+.grid-card:hover .grid-card-arrow { border-color: var(--gold); color: var(--gold); }
+.site-footer { padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px; font-family: var(--font-label); letter-spacing: 0.04em; margin-top: 80px; }
 .footer-moss { color: var(--moss); }
-
-/* ── Works Page ── */
-.works-wrap { padding: 72px 64px; margin-top: 52px; }
-
-.works-hero {
-  margin-bottom: 56px; padding-bottom: 48px;
-  border-bottom: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: flex-end;
-}
-.works-page-title {
-  font-family: var(--font-serif);
-  font-size: 56px; font-weight: 700; line-height: 1; color: var(--text);
-  letter-spacing: -0.02em;
-}
-.works-page-sub {
-  font-family: var(--font-serif);
-  font-size: 20px; font-style: italic; font-weight: 300;
-  color: var(--gold); margin-top: 8px;
-}
-.works-count-row { display: flex; gap: 32px; align-items: flex-end; }
-.works-count-item { text-align: right; }
-.works-count-num {
-  font-family: var(--font-serif); font-size: 40px; font-weight: 700;
-  color: var(--text); line-height: 1; display: block;
-}
-.works-count-label {
-  font-family: var(--font-label); font-size: 10px;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
-}
-
-/* Filter */
-.filter-row { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
-.filter-btn {
-  padding: 6px 18px; border: 1px solid var(--border);
-  background: transparent; color: var(--text-muted);
-  font-family: var(--font-label); font-size: 12px;
-  letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
-  border-radius: 2px;
-}
-.filter-btn:hover { border-color: var(--gold); color: var(--text); }
-.filter-btn.on {
-  background: var(--gold-dim); border-color: rgba(186,168,120,0.4);
-  color: var(--gold);
-}
-
-/* Featured */
-.work-featured {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-top: 3px solid var(--gold);
-  display: grid; grid-template-columns: 1fr 300px;
-  margin-bottom: 16px;
-}
-.work-featured-body { padding: 40px; }
-.work-status {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--font-label); font-size: 11px;
-  color: var(--moss); letter-spacing: 0.1em; margin-bottom: 20px;
-}
-.work-status::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--moss); display: inline-block;
-  box-shadow: 0 0 6px rgba(109,184,122,0.5);
-}
-.work-featured-title {
-  font-family: var(--font-serif); font-size: 36px; font-weight: 700;
-  color: var(--text); line-height: 1.1; margin-bottom: 16px;
-}
-.work-featured-excerpt {
-  font-size: 14px; line-height: 1.9; color: var(--text-muted);
-  font-weight: 300; max-width: 440px; margin-bottom: 28px;
-}
-.work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.work-tag {
-  padding: 4px 12px; border: 1px solid var(--border);
-  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
-  letter-spacing: 0.06em; border-radius: 2px;
-}
-.work-featured-side {
-  border-left: 1px solid var(--border);
-  padding: 40px 28px;
-  display: flex; flex-direction: column; gap: 24px;
-}
-.work-meta-row { border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-.work-meta-row:last-child { border-bottom: none; padding-bottom: 0; }
-.work-meta-label {
-  font-family: var(--font-label); font-size: 10px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-dim); margin-bottom: 6px;
-}
-.work-meta-value { font-size: 14px; color: var(--text-muted); }
-.progress-bar { height: 3px; background: rgba(232,224,204,0.08); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-.progress-fill { height: 100%; background: var(--moss); border-radius: 2px; }
-
-/* Grid */
-.works-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-  margin-top: 16px;
-}
-.work-card {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-top: 3px solid;
-  padding: 28px 24px; transition: all 0.2s;
-}
-.work-card:hover { background: rgba(232,224,204,0.03); transform: translateY(-2px); }
-.work-card:nth-child(1) { border-top-color: var(--moss); }
-.work-card:nth-child(2) { border-top-color: var(--rust); }
-.work-card:nth-child(3) { border-top-color: var(--gold); }
-.work-card-type {
-  font-family: var(--font-label); font-size: 10px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-dim); margin-bottom: 14px;
-}
-.work-card-title {
-  font-family: var(--font-serif); font-size: 22px; font-weight: 500;
-  color: var(--text); margin-bottom: 10px; line-height: 1.2;
-}
-.work-card-desc {
-  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
-}
-.work-card-year {
-  margin-top: 20px; font-size: 11px; color: var(--text-dim);
-  font-family: var(--font-label);
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .site-nav { padding: 0 24px; }
-  .nav-logo { margin-right: 16px; }
-  .nav-hint { display: none; }
-  .works-wrap { padding: 72px 24px; }
-  .works-hero { display: block; }
-  .works-count-row { margin-top: 24px; }
-  .work-featured { display: block; }
-  .work-featured-side { border-left: none; border-top: 1px solid var(--border); }
-  .works-grid { grid-template-columns: 1fr; }
-  .site-footer { padding: 20px 24px; }
-}
+@media (max-width: 900px) { .site-nav { padding: 0 24px; } .works-hero { padding: 60px 24px 40px; } .hero-meta { flex-wrap: wrap; gap: 24px; } .filter-section { padding: 0 24px 32px; } .deck-section { padding: 0 24px 40px; } .cards-stack { height: 340px; } .work-card-content { grid-template-columns: 1fr; } .card-details, .expand-grid { grid-template-columns: 1fr; gap: 16px; } .cards-grid { grid-template-columns: 1fr; } .site-footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; } }
 </style>
 </head>
 <body>
-
 <nav class="site-nav">
-  <a href="/" class="nav-logo">
-    <div class="nav-logo-mark">之</div>
-    之之的書寫
-  </a>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">之</div>之之的書寫</a>
   <div class="nav-tabs">
     <a href="/" class="nav-tab">首頁</a>
     <a href="/works.html" class="nav-tab active">作品</a>
     <a href="/about.html" class="nav-tab">關於我</a>
-    <a href="/writing.html" class="nav-tab">文章</a>
+    <a href="/writing.html" class="nav-tab">隨筆</a>
     <a href="/contact.html" class="nav-tab">聯絡</a>
   </div>
   <span class="nav-hint">方案C · Deep Forest</span>
 </nav>
 
-<main class="works-wrap">
+<main>
+  <section class="works-hero">
+    <p class="hero-eyebrow">Portfolio</p>
+    <h1 class="hero-title"><span>作品</span></h1>
+    <p class="hero-sub">小說、散文、短篇——在文字裡漫遊與停留</p>
+    <div class="hero-meta">
+      <div class="hero-stat"><span class="hero-stat-num">3</span><p class="hero-stat-label">作品總數</p></div>
+      <div class="hero-stat"><span class="hero-stat-num accent">1</span><p class="hero-stat-label">進行中</p></div>
+      <div class="hero-stat"><span class="hero-stat-num">2</span><p class="hero-stat-label">已完成</p></div>
+    </div>
+  </section>
 
-  <div class="works-hero">
-    <div>
-      <p class="chapter-mark">所有作品</p>
-      <h1 class="works-page-title">作品</h1>
-      <p class="works-page-sub">小說 · 散文 · 短篇</p>
+  <section class="filter-section">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">全部<span class="count">3</span></button>
+      <button class="filter-tab" data-filter="novel">長篇小說<span class="count">1</span></button>
+      <button class="filter-tab" data-filter="essay">散文<span class="count">1</span></button>
+      <button class="filter-tab" data-filter="short">短篇<span class="count">1</span></button>
     </div>
-    <div class="works-count-row">
-      <div class="works-count-item">
-        <span class="works-count-num">4</span>
-        <span class="works-count-label">作品總數</span>
-      </div>
-      <div class="works-count-item">
-        <span class="works-count-num" style="color:var(--moss);">1</span>
-        <span class="works-count-label">進行中</span>
-      </div>
-    </div>
-  </div>
+  </section>
 
-  <!-- Filter -->
-  <div class="filter-row">
-    <button class="filter-btn on">全部</button>
-    <button class="filter-btn">長篇小說</button>
-    <button class="filter-btn">散文</button>
-    <button class="filter-btn">短篇小說</button>
-  </div>
+  <!-- Featured Progress Card -->
+  <section class="deck-section">
+    <div class="deck-container">
+      <div class="progress-card" data-category="novel">
+        <div class="card-eyebrow">
+          <span class="status-badge"><span class="status-dot"></span>進行中</span>
+          <span class="card-category">長篇小說</span>
+        </div>
+        <h2 class="card-title">尚未命名的長篇小說</h2>
+        <p class="card-excerpt">故事從一個人的行李開始。關於移動、記憶、與留下來的理由。目前第三稿，預計年底完成。</p>
+        <div class="card-details">
+          <div class="detail-item"><p class="detail-label">創作進度</p><p class="detail-value">第三稿，約 60%</p><div class="progress-track"><div class="progress-thumb" style="width: 60%;"></div></div></div>
+          <div class="detail-item"><p class="detail-label">類型</p><p class="detail-value">當代文學小說</p></div>
+          <div class="detail-item"><p class="detail-label">預計完成</p><p class="detail-value">2026 年底</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Featured Work -->
-  <div class="work-featured">
-    <div class="work-featured-body">
-      <div class="work-status">進行中</div>
-      <h2 class="work-featured-title">尚未命名的長篇小說</h2>
-      <p class="work-featured-excerpt">
-        故事從一個人的行李開始。關於移動、記憶、與留下來的理由。目前第三稿，預計年底完成。
-      </p>
-      <div class="work-tags">
-        <span class="work-tag">長篇小說</span>
-        <span class="work-tag">2024 —</span>
+  <!-- Swipeable Cards Stack -->
+  <section class="deck-section">
+    <div class="deck-container">
+      <div class="cards-stack" id="cardsStack">
+        <div class="work-card" data-index="0" data-category="essay">
+          <div class="work-card-content">
+            <div><p class="card-type">散文</p><h3 class="card-title-sm">散文集其一</h3><p class="card-desc">關於移動、停留與等待的文字。2022–2023 年寫成。</p></div>
+            <div class="card-year-badge"><p class="card-year">2023</p><p class="card-status">已完成</p></div>
+          </div>
+          <div class="card-expand"><div class="expand-grid"><div class="expand-item"><p class="expand-label">收錄篇數</p><p class="expand-value">12 篇</p></div><div class="expand-item"><p class="expand-label">創作年份</p><p class="expand-value">2022 — 2023</p></div><div class="expand-item"><p class="expand-label">主題</p><p class="expand-value">城市與記憶</p></div></div></div>
+        </div>
+        <div class="work-card" data-index="1" data-category="short">
+          <div class="work-card-content">
+            <div><p class="card-type">短篇小說</p><h3 class="card-title-sm">短篇選集</h3><p class="card-desc">六篇短篇，每篇在不同城市完成，各有獨立的敘事視角。</p></div>
+            <div class="card-year-badge"><p class="card-year">2023</p><p class="card-status">已完成</p></div>
+          </div>
+          <div class="card-expand"><div class="expand-grid"><div class="expand-item"><p class="expand-label">收錄篇數</p><p class="expand-value">6 篇</p></div><div class="expand-item"><p class="expand-label">創作年份</p><p class="expand-value">2023</p></div><div class="expand-item"><p class="expand-label">城市背景</p><p class="expand-value">台北・東京・柏林</p></div></div></div>
+        </div>
+        <div class="work-card" data-index="2" data-category="novel">
+          <div class="work-card-content">
+            <div><p class="card-type">長篇小說</p><h3 class="card-title-sm">尚未命名的長篇小說</h3><p class="card-desc">故事從一個人的行李開始。關於移動、記憶、與留下來的理由。</p></div>
+            <div class="card-year-badge"><p class="card-year">2024</p><p class="card-status">進行中</p></div>
+          </div>
+          <div class="card-expand"><div class="expand-grid"><div class="expand-item"><p class="expand-label">進度</p><p class="expand-value">第三稿 60%</p></div><div class="expand-item"><p class="expand-label">類型</p><p class="expand-value">當代文學</p></div><div class="expand-item"><p class="expand-label">預計完成</p><p class="expand-value">2026 年底</p></div></div></div>
+        </div>
+      </div>
+      <div class="card-nav">
+        <button class="nav-arrow" id="prevBtn">←</button>
+        <div class="nav-dots"><span class="nav-dot active" data-index="0"></span><span class="nav-dot" data-index="1"></span><span class="nav-dot" data-index="2"></span></div>
+        <button class="nav-arrow" id="nextBtn">→</button>
       </div>
     </div>
-    <div class="work-featured-side">
-      <div class="work-meta-row">
-        <p class="work-meta-label">創作進度</p>
-        <p class="work-meta-value">第三稿，約 60%</p>
-        <div class="progress-bar"><div class="progress-fill" style="width:60%;"></div></div>
-      </div>
-      <div class="work-meta-row">
-        <p class="work-meta-label">類型</p>
-        <p class="work-meta-value">當代文學小說</p>
-      </div>
-      <div class="work-meta-row">
-        <p class="work-meta-label">預計完成</p>
-        <p class="work-meta-value">2026 年底</p>
-      </div>
-    </div>
-  </div>
+  </section>
 
-  <!-- Grid -->
-  <div class="works-grid">
-    <div class="work-card">
-      <p class="work-card-type">散文</p>
-      <h3 class="work-card-title">散文集其一</h3>
-      <p class="work-card-desc">關於移動、停留與等待的文字。2022–2023 年寫成。</p>
-      <p class="work-card-year">2023 · 已完成</p>
+  <!-- Grid View -->
+  <section class="deck-section">
+    <div class="deck-container">
+      <div class="cards-grid">
+        <div class="grid-card" data-category="novel">
+          <div class="grid-card-header"><span class="grid-card-type">長篇小說</span><span class="grid-card-status ongoing">進行中</span></div>
+          <h3 class="grid-card-title">尚未命名的長篇小說</h3>
+          <p class="grid-card-desc">故事從一個人的行李開始。關於移動、記憶、與留下來的理由。</p>
+          <div class="grid-card-footer"><span class="grid-card-year">2024 —</span><div class="grid-card-arrow">→</div></div>
+        </div>
+        <div class="grid-card" data-category="essay">
+          <div class="grid-card-header"><span class="grid-card-type">散文</span><span class="grid-card-status done">已完成</span></div>
+          <h3 class="grid-card-title">散文集其一</h3>
+          <p class="grid-card-desc">關於移動、停留與等待的文字。</p>
+          <div class="grid-card-footer"><span class="grid-card-year">2023</span><div class="grid-card-arrow">→</div></div>
+        </div>
+        <div class="grid-card" data-category="short">
+          <div class="grid-card-header"><span class="grid-card-type">短篇小說</span><span class="grid-card-status done">已完成</span></div>
+          <h3 class="grid-card-title">短篇選集</h3>
+          <p class="grid-card-desc">六篇短篇，各有獨立的敘事視角。</p>
+          <div class="grid-card-footer"><span class="grid-card-year">2023</span><div class="grid-card-arrow">→</div></div>
+        </div>
+      </div>
     </div>
-    <div class="work-card">
-      <p class="work-card-type">短篇小說</p>
-      <h3 class="work-card-title">短篇選集</h3>
-      <p class="work-card-desc">六篇短篇，每篇在不同城市完成，各有獨立的敘事視角。</p>
-      <p class="work-card-year">2023 · 已完成</p>
-    </div>
-    <div class="work-card">
-      <p class="work-card-type">隨筆</p>
-      <h3 class="work-card-title">寫作筆記</h3>
-      <p class="work-card-desc">不定期分享創作過程的思考、研究素材與靈感碎片。</p>
-      <p class="work-card-year">持續更新</p>
-    </div>
-  </div>
-
+  </section>
 </main>
 
-<footer class="site-footer">
-  <span>之之 © 2026</span>
-  <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
-</footer>
+<footer class="site-footer"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
 
 <script>
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
+const cards = document.querySelectorAll('.work-card');
+const dots = document.querySelectorAll('.nav-dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let currentIndex = 0;
+function updateCards(index) {
+  cards.forEach((card, i) => {
+    card.classList.remove('expanded');
+    if (i === index) { card.style.transform = 'translateX(0) scale(1)'; card.style.opacity = '1'; card.style.zIndex = '3'; }
+    else if (i === (index + 1) % cards.length) { card.style.transform = 'translateX(8px) scale(0.97)'; card.style.opacity = '0.6'; card.style.zIndex = '2'; }
+    else if (i === (index + 2) % cards.length) { card.style.transform = 'translateX(16px) scale(0.94)'; card.style.opacity = '0.3'; card.style.zIndex = '1'; }
+    else { card.style.opacity = '0'; card.style.zIndex = '0'; }
   });
-});
+  dots.forEach((dot, i) => { dot.classList.toggle('active', i === index); });
+  currentIndex = index;
+}
+function nextCard() { updateCards((currentIndex + 1) % cards.length); }
+function prevCard() { updateCards((currentIndex - 1 + cards.length) % cards.length); }
+nextBtn.addEventListener('click', nextCard);
+prevBtn.addEventListener('click', prevCard);
+dots.forEach((dot, i) => { dot.addEventListener('click', () => updateCards(i)); });
+cards.forEach(card => { card.addEventListener('click', () => { if (card.dataset.index == currentIndex) { card.classList.toggle('expanded'); } else { updateCards(parseInt(card.dataset.index)); } }); });
+let touchStartX = 0;
+document.getElementById('cardsStack').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+document.getElementById('cardsStack').addEventListener('touchend', e => { const diff = touchStartX - e.changedTouches[0].screenX; if (Math.abs(diff) > 50) { diff > 0 ? nextCard() : prevCard(); } }, { passive: true });
+document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') nextCard(); if (e.key === 'ArrowLeft') prevCard(); });
+document.querySelectorAll('.filter-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); const filter = tab.dataset.filter; document.querySelectorAll('.work-card, .grid-card, .progress-card').forEach(c => { c.style.display = (filter === 'all' || c.dataset.category === filter) ? '' : 'none'; }); }); });
 </script>
 </body>
 </html>

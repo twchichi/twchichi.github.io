@@ -3,297 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>文章 — 之之的書寫</title>
+<title>隨筆 — 之之的書寫</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg:        #0e1611;
-  --bg2:       #121a14;
-  --bg3:       #182019;
+  --bg:        #0e1611; --bg2: #121a14; --bg3: #182019;
   --border:    rgba(232,224,204,0.09);
-  --text:      #e8e0cc;
-  --text-muted:rgba(232,224,204,0.45);
-  --text-dim:  rgba(232,224,204,0.22);
-  --gold:      #baa878;
-  --gold-dim:  rgba(186,168,120,0.18);
-  --moss:      #6db87a;
-  --moss-dim:  rgba(109,184,122,0.15);
-  --rust:      #c4875e;
+  --text:      #e8e0cc; --text-muted: rgba(232,224,204,0.45); --text-dim: rgba(232,224,204,0.22);
+  --gold:      #baa878; --gold-dim: rgba(186,168,120,0.18);
+  --moss:      #6db87a; --moss-dim: rgba(109,184,122,0.15); --rust: #c4875e;
   --font-serif: 'Fraunces','Noto Serif TC',serif;
   --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
   --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
 }
-
 body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
-
-/* ── Nav ── */
-.site-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center;
-  padding: 0 64px; height: 52px;
-  background: rgba(14,22,17,0.94);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
-  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
-  display: flex; align-items: center; gap: 10px;
-  text-decoration: none;
-}
-.nav-logo-mark {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid rgba(186,168,120,0.35);
-  display: flex; align-items: center; justify-content: center;
-  font-style: italic; font-size: 13px; color: var(--gold);
-}
+.reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--moss)); width: 0%; z-index: 200; transition: width 0.1s linear; }
+.site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; padding: 0 64px; height: 52px; background: rgba(14,22,17,0.94); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: var(--font-serif); font-size: 17px; font-weight: 400; color: var(--text); letter-spacing: 0.05em; margin-right: 40px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-mark { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(186,168,120,0.35); display: flex; align-items: center; justify-content: center; font-style: italic; font-size: 13px; color: var(--gold); }
 .nav-tabs { display: flex; gap: 0; flex: 1; }
-.nav-tab {
-  padding: 0 20px; height: 52px; display: flex; align-items: center;
-  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap;
-}
+.nav-tab { padding: 0 20px; height: 52px; display: flex; align-items: center; font-family: var(--font-label); font-size: 13px; color: var(--text-muted); text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.2s; letter-spacing: 0.04em; white-space: nowrap; }
 .nav-tab:hover { color: var(--text); }
 .nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
-.nav-hint {
-  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
-  color: var(--text-dim); text-transform: uppercase;
-  margin-left: auto; padding: 3px 10px;
-  border: 1px solid var(--border); border-radius: 20px;
-}
-
-/* ── Shared ── */
-.chapter-mark {
-  font-family: var(--font-label); font-size: 10px;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(186,168,120,0.6); margin-bottom: 16px;
-  display: flex; align-items: center; gap: 12px;
-}
-.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
-
-.site-footer {
-  padding: 24px 64px;
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid var(--border);
-  color: var(--text-dim); font-size: 11px;
-  font-family: var(--font-label); letter-spacing: 0.04em;
-  margin-top: 80px;
-}
+.nav-hint { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; margin-left: auto; padding: 3px 10px; border: 1px solid var(--border); border-radius: 20px; }
+.back-to-top { position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px; border-radius: 50%; background: var(--gold-dim); border: 1px solid rgba(186,168,120,0.3); color: var(--gold); font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 150; }
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { background: var(--gold); color: var(--bg); }
+.article-view { display: none; }
+.article-view.active { display: block; }
+.article-hero { padding: 140px 64px 80px; max-width: 900px; margin: 0 auto; }
+.article-category { font-family: var(--font-label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.article-category.essay { color: var(--moss); }
+.article-category.note { color: var(--gold); }
+.article-category.creation { color: var(--rust); }
+.article-category::before { content: '◈'; font-size: 8px; }
+.article-title { font-family: var(--font-serif); font-size: clamp(40px, 6vw, 72px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-bottom: 24px; }
+.article-subtitle { font-family: var(--font-serif); font-style: italic; font-weight: 300; font-size: 24px; color: var(--gold); margin-bottom: 40px; line-height: 1.4; }
+.article-meta { display: flex; align-items: center; gap: 20px; font-family: var(--font-label); font-size: 13px; color: var(--text-muted); padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+.article-meta span { display: flex; align-items: center; gap: 6px; }
+.article-meta .reading-time { color: var(--moss); }
+.hero-figure { aspect-ratio: 21/9; background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 50%, rgba(109,184,122,0.15) 100%); border-radius: 12px; margin: 48px 0; position: relative; overflow: hidden; }
+.hero-figure::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(186,168,120,0.12) 0%, transparent 60%); }
+.hero-figure-caption { position: absolute; bottom: 16px; left: 20px; font-family: var(--font-label); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; }
+.article-body { max-width: 680px; margin: 0 auto; padding: 0 64px 96px; }
+.article-body p { font-size: 19px; line-height: 1.8; margin: 32px 0; color: var(--text); }
+.article-body p:first-of-type::first-letter { float: left; font-size: 72px; line-height: 0.85; padding: 8px 14px 0 0; font-weight: 600; color: var(--gold); font-family: var(--font-serif); }
+.article-body h2 { font-family: var(--font-serif); font-size: 32px; font-weight: 600; letter-spacing: -0.01em; margin: 56px 0 20px; color: var(--text); }
+.pull-quote { margin: 48px -32px; padding: 32px 40px; border-left: 3px solid var(--gold); background: var(--gold-dim); font-family: var(--font-serif); font-size: 26px; font-style: italic; line-height: 1.5; color: var(--text); }
+.pull-quote cite { display: block; margin-top: 16px; font-family: var(--font-label); font-size: 13px; font-style: normal; color: var(--text-muted); }
+.figure { margin: 40px -64px; }
+.figure-image { aspect-ratio: 16/9; background: linear-gradient(145deg, var(--bg2), var(--bg3)); border-radius: 8px; border: 1px solid var(--border); }
+.figure-caption { margin-top: 12px; padding: 0 16px; font-family: var(--font-label); font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+.author-footer { margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 20px; }
+.author-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-dim), var(--moss-dim)); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 24px; font-style: italic; color: var(--gold); }
+.author-info h4 { font-family: var(--font-serif); font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.author-info p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.author-info .author-bio { font-family: var(--font-label); font-size: 12px; }
+.related-articles { margin-top: 80px; padding-top: 48px; border-top: 1px solid var(--border); }
+.related-title { font-family: var(--font-label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px; }
+.related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.related-card { padding: 24px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.related-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.related-card .card-cat { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.related-card .card-cat.essay { color: var(--moss); }
+.related-card .card-cat.note { color: var(--gold); }
+.related-card .card-cat.creation { color: var(--rust); }
+.related-card h4 { font-family: var(--font-serif); font-size: 17px; font-weight: 500; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+.related-card p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+.site-footer { padding: 24px 64px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 11px; font-family: var(--font-label); letter-spacing: 0.04em; margin-top: 80px; }
 .footer-moss { color: var(--moss); }
-
-/* ── Writing Page ── */
+.list-view.hidden { display: none; }
 .writing-wrap { padding: 72px 64px; margin-top: 52px; }
-
-.writing-hero {
-  margin-bottom: 48px; padding-bottom: 40px;
-  border-bottom: 1px solid var(--border);
-}
-.writing-page-title {
-  font-family: var(--font-serif); font-size: 52px; font-weight: 700;
-  color: var(--text); letter-spacing: -0.02em; margin-bottom: 8px;
-}
-.writing-page-sub {
-  font-family: var(--font-serif); font-style: italic; font-weight: 300;
-  font-size: 20px; color: var(--gold);
-}
-
-/* Layout */
+.writing-hero { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+.writing-page-title { font-family: var(--font-serif); font-size: 52px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 8px; }
+.writing-page-sub { font-family: var(--font-serif); font-style: italic; font-weight: 300; font-size: 20px; color: var(--gold); }
 .writing-layout { display: grid; grid-template-columns: 1fr 220px; gap: 48px; }
-
-/* Post list */
 .post-list { list-style: none; }
-.post-item {
-  padding: 28px 0; border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: all 0.15s;
-  display: grid; grid-template-columns: 72px 1fr;
-  gap: 24px; align-items: start;
-}
+.post-item { padding: 28px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all 0.15s; display: grid; grid-template-columns: 72px 1fr; gap: 24px; align-items: start; }
 .post-item:hover { background: rgba(232,224,204,0.02); margin: 0 -16px; padding: 28px 16px; }
-.post-item:last-child { border-bottom: none; }
-.post-date {
-  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
-  letter-spacing: 0.04em; line-height: 1.4; margin-top: 3px;
-  font-variant-numeric: tabular-nums;
-}
-.post-cat {
-  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em;
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.post-title {
-  font-family: var(--font-serif); font-size: 20px; font-weight: 500;
-  color: var(--text); margin-bottom: 10px; line-height: 1.3;
-}
-.post-excerpt {
-  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
-}
-.post-read-time {
-  margin-top: 10px; font-size: 11px; color: var(--text-dim);
-  font-family: var(--font-label);
-}
-
-/* Sidebar */
+.post-date { font-family: var(--font-label); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; line-height: 1.4; margin-top: 3px; font-variant-numeric: tabular-nums; }
+.post-cat { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+.post-title { font-family: var(--font-serif); font-size: 20px; font-weight: 500; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+.post-excerpt { font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300; }
+.post-read-time { margin-top: 10px; font-size: 11px; color: var(--text-dim); font-family: var(--font-label); }
 .sidebar-section { margin-bottom: 40px; }
-.sidebar-section-title {
-  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
-  padding-bottom: 10px; border-bottom: 1px solid var(--border);
-}
+.sidebar-section-title { font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag-pill {
-  padding: 5px 14px; border: 1px solid var(--border);
-  font-family: var(--font-label); font-size: 12px; color: var(--text-muted);
-  border-radius: 20px; cursor: pointer; transition: all 0.2s;
-}
+.tag-pill { padding: 5px 14px; border: 1px solid var(--border); font-family: var(--font-label); font-size: 12px; color: var(--text-muted); border-radius: 20px; cursor: pointer; transition: all 0.2s; }
 .tag-pill:hover { border-color: var(--gold); color: var(--gold); }
 .tag-pill.active { background: var(--gold-dim); border-color: rgba(186,168,120,0.4); color: var(--gold); }
 .archive-list { list-style: none; }
-.archive-list li {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05);
-  font-size: 13px; color: var(--text-muted); cursor: pointer;
-}
+.archive-list li { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05); font-size: 13px; color: var(--text-muted); cursor: pointer; }
 .archive-list li span { font-size: 11px; color: var(--text-dim); }
-.archive-list li:last-child { border-bottom: none; }
-
-/* Responsive */
-@media (max-width: 900px) {
-  .site-nav { padding: 0 24px; }
-  .nav-hint { display: none; }
-  .writing-wrap { padding: 72px 24px; }
-  .writing-layout { grid-template-columns: 1fr; }
-  .writing-layout aside { order: -1; }
-  .site-footer { padding: 20px 24px; }
-}
+.back-to-list { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-label); font-size: 13px; color: var(--text-muted); text-decoration: none; padding: 8px 0; margin-bottom: 40px; transition: color 0.2s; cursor: pointer; }
+.back-to-list:hover { color: var(--gold); }
+.back-to-list::before { content: '←'; }
+@media (max-width: 900px) { .site-nav { padding: 0 24px; } .nav-hint { display: none; } .writing-wrap { padding: 72px 24px; } .writing-layout { grid-template-columns: 1fr; } .writing-layout aside { order: -1; } .site-footer { padding: 20px 24px; } .article-hero { padding: 120px 24px 60px; } .article-body { padding: 0 24px 64px; } .pull-quote { margin: 40px 0; } .figure { margin: 40px -24px; } .related-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
+<div class="reading-progress" id="readingProgress"></div>
 
 <nav class="site-nav">
-  <a href="/" class="nav-logo">
-    <div class="nav-logo-mark">之</div>
-    之之的書寫
-  </a>
+  <a href="/" class="nav-logo"><div class="nav-logo-mark">之</div>之之的書寫</a>
   <div class="nav-tabs">
     <a href="/" class="nav-tab">首頁</a>
     <a href="/works.html" class="nav-tab">作品</a>
     <a href="/about.html" class="nav-tab">關於我</a>
-    <a href="/writing.html" class="nav-tab active">文章</a>
+    <a href="/writing.html" class="nav-tab active">隨筆</a>
     <a href="/contact.html" class="nav-tab">聯絡</a>
   </div>
   <span class="nav-hint">方案C · Deep Forest</span>
 </nav>
 
-<main class="writing-wrap">
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-  <div class="writing-hero">
-    <p class="chapter-mark">所有文章</p>
-    <h1 class="writing-page-title">文章</h1>
-    <p class="writing-page-sub">散文、筆記、創作碎片</p>
-  </div>
+<!-- List View -->
+<div class="list-view" id="listView">
+  <main class="writing-wrap">
+    <div class="writing-hero">
+      <p class="chapter-mark">所有隨筆</p>
+      <h1 class="writing-page-title">隨筆</h1>
+      <p class="writing-page-sub">散文、筆記、創作碎片</p>
+    </div>
+    <div class="writing-layout">
+      <ul class="post-list">
+        <li class="post-item" data-article="0">
+          <span class="post-date">2026.03</span>
+          <div><p class="post-cat" style="color:var(--moss);">散文</p><h3 class="post-title">關於在路上寫作這件事</h3><p class="post-excerpt">移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p><p class="post-read-time">閱讀時間約 5 分鐘</p></div>
+        </li>
+        <li class="post-item" data-article="1">
+          <span class="post-date">2026.02</span>
+          <div><p class="post-cat" style="color:var(--gold);">筆記</p><h3 class="post-title">卡片筆記法用了三個月後的反思</h3><p class="post-excerpt">Zettelkasten 不是魔法。它只是讓你更難自欺欺人。</p><p class="post-read-time">閱讀時間約 7 分鐘</p></div>
+        </li>
+        <li class="post-item" data-article="2">
+          <span class="post-date">2026.01</span>
+          <div><p class="post-cat" style="color:var(--rust);">創作</p><h3 class="post-title">小說的第一個字怎麼來的</h3><p class="post-excerpt">我從來不在「最好的時機」開始寫，我在忍不住的時候開始。</p><p class="post-read-time">閱讀時間約 4 分鐘</p></div>
+        </li>
+        <li class="post-item" data-article="3">
+          <span class="post-date">2025.12</span>
+          <div><p class="post-cat" style="color:var(--moss);">散文</p><h3 class="post-title">某個城市的最後一個早晨</h3><p class="post-excerpt">離開的前一天，我總是睡得特別早，醒得特別早。</p><p class="post-read-time">閱讀時間約 3 分鐘</p></div>
+        </li>
+        <li class="post-item" data-article="4">
+          <span class="post-date">2025.10</span>
+          <div><p class="post-cat" style="color:var(--gold);">筆記</p><h3 class="post-title">為什麼我用水筆而不是 Notion</h3><p class="post-excerpt">數位工具的問題不是功能太少，是功能太多讓你忘了在做什麼。</p><p class="post-read-time">閱讀時間約 6 分鐘</p></div>
+        </li>
+        <li class="post-item" data-article="5">
+          <span class="post-date">2025.08</span>
+          <div><p class="post-cat" style="color:var(--rust);">創作</p><h3 class="post-title">寫一個你不喜歡的角色</h3><p class="post-excerpt">寫反派不難，難的是讓讀者理解他——哪怕只有一瞬間。</p><p class="post-read-time">閱讀時間約 5 分鐘</p></div>
+        </li>
+      </ul>
+      <aside>
+        <div class="sidebar-section"><p class="sidebar-section-title">分類</p><div class="tag-cloud"><span class="tag-pill active">全部</span><span class="tag-pill">散文</span><span class="tag-pill">筆記</span><span class="tag-pill">創作</span></div></div>
+        <div class="sidebar-section"><p class="sidebar-section-title">年份</p><ul class="archive-list"><li>2026 <span>3 篇</span></li><li>2025 <span>8 篇</span></li><li>2024 <span>5 篇</span></li></ul></div>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
+</div>
 
-  <div class="writing-layout">
+<!-- Article View 0: 關於在路上寫作這件事 -->
+<div id="articleView0" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category essay">散文</p>
+      <h1 class="article-title">關於在路上寫作這件事</h1>
+      <p class="article-subtitle">移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p>
+      <div class="article-meta"><span>2026年3月</span><span class="reading-time">◷ 5 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">拍攝於東京地下鐵 — 2026年3月</span></div>
+    <div class="article-body">
+      <p>大多數人以為創作需要一個固定的場所、一段完整的時間、一張乾淨的桌面。他們等到這些條件都滿足，才動筆。然後他們發現，條件永遠不會滿足。</p>
+      <p>我寫作的場所是咖啡館、火車座位、醫院候診室、起飛前的登機口。有時候是凌晨三點的公寓，有時候是雨天的便利商店門口。</p>
+      <h2>系統比意志力靠譜</h2>
+      <p>移動中寫作的關鍵不是找到「靈感」，而是建立一套不需要意志力也能運轉的系統。</p>
+      <blockquote class="pull-quote">"不是找到時間寫作，而是把寫作變成時間的一部分。"<cite>— 之之，2026年東京旅途中</cite></blockquote>
+      <p>我的系統很簡單：永遠帶著可以寫字的工具、永遠打開一個可以立刻開始的文檔、永遠接受任何品質的初稿。</p>
+      <div class="figure"><div class="figure-image"></div><p class="figure-caption">我的移動寫作工具：一本A6大小的空白筆記本、一支筆、和一個可以離線使用的文字編輯器。</p></div>
+      <h2>關於環境的錯覺</h2>
+      <p>我們傾向於相信好的環境會帶來好的創作。但這是一個錯覺。環境影響的是舒適度，不是創造力。</p>
+      <p>事實上，很多我最滿意的文字是在最不舒服的環境裡寫出來的。擁擠的火車座位、隔壁有人在吵架的咖啡館、即將關門的圖書館閱讀室。</p>
+      <p>這些環境有一個共同點：它們都在提醒我時間是有限的。而時間的有限性，是創作者最好的朋友。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(1)"><p class="card-cat note">筆記</p><h4>卡片筆記法用了三個月後的反思</h4><p>Zettelkasten 不是魔法。</p></div><div class="related-card" onclick="showArticle(3)"><p class="card-cat essay">散文</p><h4>某個城市的最後一個早晨</h4><p>離開的前一天，我總是睡得特別早，醒得特別早。</p></div></div></div>
+    </div>
+  </article>
+</div>
 
-    <!-- Post List -->
-    <ul class="post-list">
-      <li class="post-item">
-        <span class="post-date">2026.03</span>
-        <div>
-          <p class="post-cat" style="color:var(--moss);">散文</p>
-          <h3 class="post-title">關於在路上寫作這件事</h3>
-          <p class="post-excerpt">移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p>
-          <p class="post-read-time">閱讀時間約 5 分鐘</p>
-        </div>
-      </li>
-      <li class="post-item">
-        <span class="post-date">2026.02</span>
-        <div>
-          <p class="post-cat" style="color:var(--gold);">筆記</p>
-          <h3 class="post-title">卡片筆記法用了三個月後的反思</h3>
-          <p class="post-excerpt">Zettelkasten 不是魔法。它只是讓你更難自欺欺人。</p>
-          <p class="post-read-time">閱讀時間約 7 分鐘</p>
-        </div>
-      </li>
-      <li class="post-item">
-        <span class="post-date">2026.01</span>
-        <div>
-          <p class="post-cat" style="color:var(--rust);">創作</p>
-          <h3 class="post-title">小說的第一個字怎麼來的</h3>
-          <p class="post-excerpt">我從來不在「最好的時機」開始寫，我在忍不住的時候開始。</p>
-          <p class="post-read-time">閱讀時間約 4 分鐘</p>
-        </div>
-      </li>
-      <li class="post-item">
-        <span class="post-date">2025.12</span>
-        <div>
-          <p class="post-cat" style="color:var(--moss);">散文</p>
-          <h3 class="post-title">某個城市的最後一個早晨</h3>
-          <p class="post-excerpt">離開的前一天，我總是睡得特別早，醒得特別早。</p>
-          <p class="post-read-time">閱讀時間約 3 分鐘</p>
-        </div>
-      </li>
-      <li class="post-item">
-        <span class="post-date">2025.10</span>
-        <div>
-          <p class="post-cat" style="color:var(--gold);">筆記</p>
-          <h3 class="post-title">為什麼我用紙本而不是 Notion</h3>
-          <p class="post-excerpt">數位工具的問題不是功能太少，是功能太多讓你忘了在做什麼。</p>
-          <p class="post-read-time">閱讀時間約 6 分鐘</p>
-        </div>
-      </li>
-      <li class="post-item">
-        <span class="post-date">2025.08</span>
-        <div>
-          <p class="post-cat" style="color:var(--rust);">創作</p>
-          <h3 class="post-title">寫一個你不喜歡的角色</h3>
-          <p class="post-excerpt">寫反派不難，難的是讓讀者理解他——哪怕只有一瞬間。</p>
-          <p class="post-read-time">閱讀時間約 5 分鐘</p>
-        </div>
-      </li>
-    </ul>
+<!-- Article View 1: 卡片筆記法 -->
+<div id="articleView1" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category note">筆記</p>
+      <h1 class="article-title">卡片筆記法用了三個月後的反思</h1>
+      <p class="article-subtitle">Zettelkasten 不是魔法。它只是讓你更難自欺欺人。</p>
+      <div class="article-meta"><span>2026年2月</span><span class="reading-time">◷ 7 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">卡片盒系統示意 — 2026年2月</span></div>
+    <div class="article-body">
+      <p>第一次接觸 Zettelkasten，是在一年前。當時的直覺反應是：這不就是便利貼的數位版本嗎？</p>
+      <p>三個月後，我發現這個問題的答案既對又不對。對的是：它確實是便利貼的某種形式。不對的是：它改變了我思考的方式。</p>
+      <h2>便利貼與思維的區別</h2>
+      <p>普通便利貼是存放想法的地方。Zettelkasten 是想法互相連接的地方。</p>
+      <blockquote class="pull-quote">"一張卡片沒有價值。兩張卡片的連接開始有價值。十張卡片的網絡產生了系統。"<cite>— 關於 Zettelkasten 的觀察，2026</cite></blockquote>
+      <p>當你開始在卡片之間建立連結，你會發現一些之前沒有注意到的模式。有些想法反覆出現，有些概念可以合併，有些則是孤島，永遠沒有和其他想法產生關聯。</p>
+      <div class="figure"><div class="figure-image"></div><p class="figure-caption">三個月的卡片累積。大約有三百張卡片，其中約四十張形成了密集的網絡。</p></div>
+      <h2>它讓自欺更難</h2>
+      <p>Zettelkasten 最大的價值，不是幫你記住更多東西。它最大的價值，是讓你面對一個事實：你的哪些想法真的經得起推敲？</p>
+      <p>因為當你試圖連接兩張卡片時，你會發現它們之間的邏輯關係可能沒有你想的那麼強。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(4)"><p class="card-cat note">筆記</p><h4>為什麼我用水筆而不是 Notion</h4><p>數位工具的問題不是功能太少，是功能太多讓你忘了在做什麼。</p></div><div class="related-card" onclick="showArticle(0)"><p class="card-cat essay">散文</p><h4>關於在路上寫作這件事</h4><p>移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p></div></div></div>
+    </div>
+  </article>
+</div>
 
-    <!-- Sidebar -->
-    <aside>
-      <div class="sidebar-section">
-        <p class="sidebar-section-title">分類</p>
-        <div class="tag-cloud">
-          <span class="tag-pill active">全部</span>
-          <span class="tag-pill">散文</span>
-          <span class="tag-pill">筆記</span>
-          <span class="tag-pill">創作</span>
-        </div>
-      </div>
-      <div class="sidebar-section">
-        <p class="sidebar-section-title">年份</p>
-        <ul class="archive-list">
-          <li>2026 <span>3 篇</span></li>
-          <li>2025 <span>8 篇</span></li>
-          <li>2024 <span>5 篇</span></li>
-        </ul>
-      </div>
-    </aside>
+<!-- Article View 2: 小說的第一個字 -->
+<div id="articleView2" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category creation">創作</p>
+      <h1 class="article-title">小說的第一個字怎麼來的</h1>
+      <p class="article-subtitle">我從來不在「最好的時機」開始寫，我在忍不住的時候開始。</p>
+      <div class="article-meta"><span>2026年1月</span><span class="reading-time">◷ 4 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">凌晨三點的桌面 — 2026年1月</span></div>
+    <div class="article-body">
+      <p>有人問我，你的小說第一句是怎麼想出來的？</p>
+      <p>我說：我沒有想。</p>
+      <p>大多數人以為寫小說是從第一句話開始的。不是的。第一句話是最後來的。在那之前，是一堆看起來毫無意義的碎片。</p>
+      <blockquote class="pull-quote">"第一句話不是起點。第一句話是抵達。是終點。"<cite>— 之之，關於寫作</cite></blockquote>
+      <h2>等待的藝術</h2>
+      <p>寫小說需要耐心。不是那種坐在書桌前的耐心，而是願意讓想法在腦子裡發酵的耐心。</p>
+      <p>我通常會讓一個場景、一個人物、一種情緒在心裡懸著，幾天，幾週，有時候幾個月。我知道它在，但我暫時不去碰它。</p>
+      <p>直到有一天，我發現自己開始在腦子裡自動往下寫。那個瞬間，我知道時機到了。</p>
+      <h2>所以第一句話是怎麼來的？</h2>
+      <p>它是故事已經說完了，才來的。</p>
+      <p>就像你走完一條路，回頭看，才知道從哪裡開始最美。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(5)"><p class="card-cat creation">創作</p><h4>寫一個你不喜歡的角色</h4><p>寫反派不難，難的是讓讀者理解他——哪怕只有一瞬間。</p></div><div class="related-card" onclick="showArticle(3)"><p class="card-cat essay">散文</p><h4>某個城市的最後一個早晨</h4><p>離開的前一天，我總是睡得特別早，醒得特別早。</p></div></div></div>
+    </div>
+  </article>
+</div>
 
-  </div>
-</main>
+<!-- Article View 3: 某個城市的最後一個早晨 -->
+<div id="articleView3" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category essay">散文</p>
+      <h1 class="article-title">某個城市的最後一個早晨</h1>
+      <p class="article-subtitle">離開的前一天，我總是睡得特別早，醒得特別早。</p>
+      <div class="article-meta"><span>2025年12月</span><span class="reading-time">◷ 3 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">城市天際線 — 2025年12月</span></div>
+    <div class="article-body">
+      <p>我有很多個「最後一個早晨」。台北最後一個，東京最後一個，柏林最後一個，紐約最後一個。</p>
+      <p>它們有一個共同點：我總是比平常早起很多。</p>
+      <blockquote class="pull-quote">"最後一個早晨的陽光，總是比平常的陽光更重。"<cite>— 2025年12月，離開某城市前夕</cite></blockquote>
+      <h2>早起是身體在說再見</h2>
+      <p>我不知道為什麼會這樣。鬧鐘還沒響我就醒了。窗外的光線還很淡，城市的聲音還沒醒來。</p>
+      <p>我躺在那裡，試圖記住這間公寓的氣味，這個房間的形狀，這個早晨的溫度。</p>
+      <p>我知道我不會記住。但我還是要試。</p>
+      <h2>最後一次</h2>
+      <p>那杯咖啡是這間廚房的最後一杯。那扇窗戶的最後一次打開。那張椅子坐過很多個早晨，但這是最後一次。</p>
+      <p>我在心裡說再見。但大多數時候，來不及。城市已經在記憶裡退後一步了。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(0)"><p class="card-cat essay">散文</p><h4>關於在路上寫作這件事</h4><p>移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p></div><div class="related-card" onclick="showArticle(2)"><p class="card-cat creation">創作</p><h4>小說的第一個字怎麼來的</h4><p>我從來不在「最好的時機」開始寫。</p></div></div></div>
+    </div>
+  </article>
+</div>
 
-<footer class="site-footer">
-  <span>之之 © 2026</span>
-  <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
-</footer>
+<!-- Article View 4: 為什麼我用水筆而不是 Notion -->
+<div id="articleView4" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category note">筆記</p>
+      <h1 class="article-title">為什麼我用水筆而不是 Notion</h1>
+      <p class="article-subtitle">數位工具的問題不是功能太少，是功能太多讓你忘了在做什麼。</p>
+      <div class="article-meta"><span>2025年10月</span><span class="reading-time">◷ 6 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">紙筆與數位的選擇 — 2025年10月</span></div>
+    <div class="article-body">
+      <p>我曾經是 Notion 的忠實用戶。資料庫、連結、標籤、視圖——我花了幾十個小時建立我的數位花園。</p>
+      <p>然後我意識到：我花在維護工具的時間，比花在實際思考的時間還多。</p>
+      <h2>工具的陷阱</h2>
+      <p>數位工具給你無數種組織資訊的方式。你可以建立複雜的分類系統，可以連結任何內容到任何內容。</p>
+      <blockquote class="pull-quote">"當你可以把任何東西放在任何地方，你就不會真的把任何東西放在任何地方。"<cite>— 關於數位工具的反思</cite></blockquote>
+      <p>紙筆沒有這個問題。一張紙只有這麼大。你必須選擇。你必須刪減。你必須決定這張紙上放什麼、不放什麼。</p>
+      <div class="figure"><div class="figure-image"></div><p class="figure-caption">我的五本並行筆記本。它們各自有固定的功能，這本身就是一種限制，也是一種自由。</p></div>
+      <h2>所以我回去了</h2>
+      <p>不是說 Notion 不好。它很好。只是它不適合我現在的階段。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(1)"><p class="card-cat note">筆記</p><h4>卡片筆記法用了三個月後的反思</h4><p>Zettelkasten 不是魔法。</p></div><div class="related-card" onclick="showArticle(5)"><p class="card-cat creation">創作</p><h4>寫一個你不喜歡的角色</h4><p>寫反派不難，難的是讓讀者理解他。</p></div></div></div>
+    </div>
+  </article>
+</div>
+
+<!-- Article View 5: 寫一個你不喜歡的角色 -->
+<div id="articleView5" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category creation">創作</p>
+      <h1 class="article-title">寫一個你不喜歡的角色</h1>
+      <p class="article-subtitle">寫反派不難，難的是讓讀者理解他——哪怕只有一瞬間。</p>
+      <div class="article-meta"><span>2025年8月</span><span class="reading-time">◷ 5 分鐘閱讀</span></div>
+    </header>
+    <div class="hero-figure"><span class="hero-figure-caption">角色研究筆記 — 2025年8月</span></div>
+    <div class="article-body">
+      <p>每一個我寫過的角色，我都在某個瞬間喜歡過他們。哪怕是那個最後殺了人的。</p>
+      <p>很多人問我：怎麼寫反派？怎麼讓讀者恨他？</p>
+      <p>我的回答是：不要想著讓讀者恨他。試著讓讀者理解他。</p>
+      <blockquote class="pull-quote">"讀者可以恨一個角色。但如果他們曾在某個瞬間理解他，那個角色就永遠不會消失。"<cite>— 關於反派創作</cite></blockquote>
+      <h2>理解不等於認同</h2>
+      <p>這兩件事經常被混淆。你理解一個人為什麼這樣做，不代表你同意他這樣做。</p>
+      <p>但當讀者理解了一個角色的動機，這個角色就從「壞人」變成了「人」。這是寫反派最重要的事。</p>
+      <h2>技巧</h2>
+      <p>我常用的技巧是：給你的反派一個讀者會在乎的弱點。不是那種「他其實很孤獨」的空泛描述，而是具體的、讀者自己也有的那種弱點。</p>
+      <p>比如：恐懼失去、想要被看見、無法信任任何人。</p>
+      <div class="author-footer"><div class="author-avatar">之</div><div class="author-info"><h4>之之</h4><p class="author-bio">寫作者、創意工作者。現居台北與東京之間。</p></div></div>
+      <div class="related-articles"><p class="related-title">其他隨筆</p><div class="related-grid"><div class="related-card" onclick="showArticle(2)"><p class="card-cat creation">創作</p><h4>小說的第一個字怎麼來的</h4><p>我從來不在「最好的時機」開始寫。</p></div><div class="related-card" onclick="showArticle(4)"><p class="card-cat note">筆記</p><h4>為什麼我用水筆而不是 Notion</h4><p>數位工具的問題不是功能太少。</p></div></div></div>
+    </div>
+  </article>
+</div>
+
+<footer class="site-footer" id="siteFooter" style="display:none;"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
 
 <script>
-document.querySelectorAll('.tag-pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-  });
+const articles = [0,1,2,3,4,5];
+function showArticle(index) {
+  document.getElementById('listView').classList.add('hidden');
+  document.getElementById('siteFooter').style.display = 'none';
+  articles.forEach((_, i) => { document.getElementById('articleView' + i).classList.remove('active'); });
+  document.getElementById('articleView' + index).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('readingProgress').style.width = '0%';
+}
+function showListView() {
+  articles.forEach((_, i) => { document.getElementById('articleView' + i).classList.remove('active'); });
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('siteFooter').style.display = 'flex';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+document.querySelectorAll('.post-item').forEach(item => { item.addEventListener('click', () => { showArticle(parseInt(item.getAttribute('data-article'))); }); });
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('readingProgress').style.width = progress + '%';
+  document.getElementById('backToTop').classList.toggle('visible', scrollTop > 400);
 });
+document.querySelectorAll('.tag-pill').forEach(pill => { pill.addEventListener('click', () => { document.querySelectorAll('.tag-pill').forEach(p => p.classList.remove('active')); pill.classList.add('active'); }); });
 </script>
 </body>
 </html>
