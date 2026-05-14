@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>之之 — 方案C 各頁面設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Token System (方案C) ── */
+:root {
+  --bg:        #0e1611;
+  --bg2:       #121a14;
+  --bg3:       #182019;
+  --border:    rgba(232,224,204,0.09);
+  --text:      #e8e0cc;
+  --text-muted:rgba(232,224,204,0.45);
+  --text-dim:  rgba(232,224,204,0.22);
+  --gold:      #baa878;
+  --gold-dim:  rgba(186,168,120,0.18);
+  --moss:      #6db87a;
+  --moss-dim:  rgba(109,184,122,0.15);
+  --rust:      #c4875e;
+  --font-serif: 'Fraunces','Noto Serif TC',serif;
+  --font-sans:  'Noto Sans TC','Instrument Sans',sans-serif;
+  --font-label: 'Instrument Sans','Noto Sans TC',sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+
+/* ── Tab Navigation ── */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center;
+  padding: 0 64px; height: 52px;
+  background: rgba(14,22,17,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+.nav-logo {
+  font-family: var(--font-serif); font-size: 17px; font-weight: 400;
+  color: var(--text); letter-spacing: 0.05em; margin-right: 40px;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo-mark {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-style: italic; font-size: 13px; color: var(--gold);
+}
+.nav-tabs { display: flex; gap: 0; flex: 1; }
+.nav-tab {
+  padding: 0 20px; height: 52px; display: flex; align-items: center;
+  font-family: var(--font-label); font-size: 13px; color: var(--text-muted);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.2s; letter-spacing: 0.04em; background: none; border-top: none;
+  border-left: none; border-right: none; white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--gold); }
+.nav-hint {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-dim); text-transform: uppercase;
+  margin-left: auto; padding: 3px 10px;
+  border: 1px solid var(--border); border-radius: 20px;
+}
+
+.page { display: none; margin-top: 52px; min-height: calc(100vh - 52px); }
+.page.active { display: block; }
+
+
+/* ════════════════════════════
+   共用元件
+════════════════════════════ */
+.section-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.chapter-mark {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.6); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.chapter-mark::before { content: '§'; color: var(--gold); font-size: 13px; }
+
+
+/* ════════════════════════════
+   首頁 Home（方案C原版精簡）
+════════════════════════════ */
+/* #home — layout handled inline in HTML */
+#home .hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 6.5vw, 90px); font-weight: 700;
+  line-height: 1.0; letter-spacing: -0.015em; color: var(--text); margin-bottom: 8px;
+}
+#home .hero-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.8vw, 36px); font-weight: 300;
+  font-style: italic; color: var(--gold); margin-bottom: 36px;
+}
+#home .hero-bio {
+  font-size: 15px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; max-width: 480px;
+}
+#home .now-card {
+  background: var(--gold-dim); border: 1px solid rgba(186,168,120,0.15);
+  padding: 28px 24px; margin-top: 8px;
+}
+#home .now-card-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+#home .now-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--moss);
+  box-shadow: 0 0 8px rgba(109,184,122,0.5);
+  animation: glow 2.5s ease-in-out infinite;
+}
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 8px rgba(109,184,122,0.5); }
+  50% { box-shadow: 0 0 3px rgba(109,184,122,0.2); }
+}
+#home .now-card-title {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim);
+}
+#home .now-list { list-style: none; }
+#home .now-list li {
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px; color: rgba(232,224,204,0.65); font-weight: 300;
+  display: flex; gap: 10px; align-items: flex-start; line-height: 1.6;
+}
+#home .now-list li:last-child { border-bottom: none; }
+#home .now-list li::before { content: '✦'; color: var(--moss); font-size: 9px; margin-top: 4px; flex-shrink: 0; }
+
+
+/* ════════════════════════════
+   作品頁 Works
+════════════════════════════ */
+#works { padding: 72px 64px; }
+
+/* Hero bar */
+#works .works-hero {
+  margin-bottom: 56px; padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+#works .works-title-block {}
+#works .works-page-title {
+  font-family: var(--font-serif);
+  font-size: 56px; font-weight: 700; line-height: 1; color: var(--text);
+  letter-spacing: -0.02em;
+}
+#works .works-page-sub {
+  font-family: var(--font-serif);
+  font-size: 22px; font-style: italic; font-weight: 300;
+  color: var(--gold); margin-top: 8px;
+}
+#works .works-count-row {
+  display: flex; gap: 32px; align-items: flex-end;
+}
+#works .works-count-item { text-align: right; }
+#works .works-count-num {
+  font-family: var(--font-serif); font-size: 40px; font-weight: 700;
+  color: var(--text); line-height: 1; display: block;
+}
+#works .works-count-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* Filter tabs */
+#works .filter-row {
+  display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap;
+}
+#works .filter-btn {
+  padding: 6px 18px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-muted);
+  font-family: var(--font-label); font-size: 12px;
+  letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+  border-radius: 2px;
+}
+#works .filter-btn:hover { border-color: var(--gold); color: var(--text); }
+#works .filter-btn.on {
+  background: var(--gold-dim); border-color: rgba(186,168,120,0.4);
+  color: var(--gold);
+}
+
+/* Featured work — full-width card */
+#works .work-featured {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  display: grid; grid-template-columns: 1fr 320px;
+  margin-bottom: 20px; cursor: pointer; transition: background 0.2s;
+}
+#works .work-featured:hover { background: rgba(232,224,204,0.03); }
+#works .work-featured-body { padding: 40px 40px; }
+#works .work-status {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-label); font-size: 11px;
+  color: var(--moss); letter-spacing: 0.1em; margin-bottom: 20px;
+}
+#works .work-status::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--moss); display: inline-block;
+  box-shadow: 0 0 6px rgba(109,184,122,0.5);
+}
+#works .work-featured-title {
+  font-family: var(--font-serif); font-size: 36px; font-weight: 700;
+  color: var(--text); line-height: 1.1; margin-bottom: 16px;
+}
+#works .work-featured-excerpt {
+  font-size: 14px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; max-width: 440px; margin-bottom: 28px;
+}
+#works .work-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+#works .work-tag {
+  padding: 4px 12px; border: 1px solid var(--border);
+  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 0.06em; border-radius: 2px;
+}
+#works .work-featured-side {
+  border-left: 1px solid var(--border);
+  padding: 40px 32px;
+  display: flex; flex-direction: column; gap: 24px;
+}
+#works .work-meta-row { border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+#works .work-meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+#works .work-meta-label {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 6px;
+}
+#works .work-meta-value { font-size: 14px; color: var(--text-muted); }
+#works .work-meta-value.progress-bar-wrap { margin-top: 6px; }
+#works .progress-bar {
+  height: 3px; background: rgba(232,224,204,0.08); border-radius: 2px; overflow: hidden;
+}
+#works .progress-fill { height: 100%; background: var(--moss); border-radius: 2px; }
+
+/* Smaller works grid */
+#works .works-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 16px;
+}
+#works .work-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-top: 3px solid;
+  padding: 28px 24px; cursor: pointer; transition: all 0.2s;
+}
+#works .work-card:hover { background: rgba(232,224,204,0.03); transform: translateY(-2px); }
+#works .work-card:nth-child(1) { border-top-color: var(--moss); }
+#works .work-card:nth-child(2) { border-top-color: var(--rust); }
+#works .work-card:nth-child(3) { border-top-color: var(--gold); }
+#works .work-card-type {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 14px;
+}
+#works .work-card-title {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.2;
+}
+#works .work-card-desc {
+  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
+}
+#works .work-card-year {
+  margin-top: 20px; font-size: 11px; color: var(--text-dim);
+  font-family: var(--font-label);
+}
+
+
+/* ════════════════════════════
+   關於我 About
+════════════════════════════ */
+#about { padding: 80px 64px; }
+
+#about .about-grid {
+  display: grid; grid-template-columns: 1fr 240px;
+  gap: 64px; margin-bottom: 72px; padding-bottom: 64px;
+  border-bottom: 1px solid var(--border);
+}
+#about .about-name-block { margin-bottom: 36px; }
+#about .about-name {
+  font-family: var(--font-serif);
+  font-size: 72px; font-weight: 700; line-height: 0.95;
+  letter-spacing: -0.02em; color: var(--text);
+}
+#about .about-name em {
+  font-style: italic; font-weight: 300; color: var(--gold); display: block;
+}
+#about .about-bio-long {
+  font-size: 15px; line-height: 2.0; color: rgba(232,224,204,0.6);
+  font-weight: 300; max-width: 560px;
+}
+#about .about-bio-long p + p { margin-top: 20px; }
+#about .about-bio-long strong { color: rgba(232,224,204,0.85); font-weight: 500; }
+
+#about .about-sidebar {}
+#about .sidebar-block { margin-bottom: 40px; }
+#about .sidebar-block-title {
+  font-family: var(--font-label); font-size: 10px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+#about .sidebar-list { list-style: none; }
+#about .sidebar-list li {
+  padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05);
+  font-size: 13px; color: var(--text-muted); line-height: 1.5;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+#about .sidebar-list li span { font-size: 11px; color: var(--text-dim); }
+#about .sidebar-list li:last-child { border-bottom: none; }
+
+/* Identities — three columns */
+#about .identities-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 16px;
+}
+#about .identities-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+#about .identities-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  margin-bottom: 64px;
+}
+#about .identity-card {
+  background: var(--bg3); padding: 36px 28px;
+  border: 1px solid var(--border); border-top: 2px solid;
+}
+#about .identity-card:nth-child(1) { border-top-color: var(--gold); }
+#about .identity-card:nth-child(2) { border-top-color: var(--moss); }
+#about .identity-card:nth-child(3) { border-top-color: var(--rust); }
+#about .identity-icon { font-size: 28px; margin-bottom: 16px; }
+#about .identity-role {
+  font-family: var(--font-serif); font-size: 22px; font-weight: 500;
+  color: var(--text); margin-bottom: 12px;
+}
+#about .identity-desc {
+  font-size: 13px; line-height: 1.8; color: var(--text-muted); font-weight: 300;
+}
+
+/* Quote */
+#about .about-quote {
+  padding: 48px 56px;
+  background: var(--bg3); border-left: 3px solid var(--gold);
+  margin-bottom: 64px;
+}
+#about .about-quote blockquote {
+  font-family: var(--font-serif); font-size: 24px; font-weight: 300;
+  font-style: italic; color: rgba(232,224,204,0.75);
+  line-height: 1.65; max-width: 640px;
+}
+#about .about-quote cite {
+  display: block; margin-top: 16px; font-size: 12px; font-style: normal;
+  color: var(--text-dim); letter-spacing: 0.08em;
+  font-family: var(--font-label);
+}
+
+/* Timeline */
+#about .timeline-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 16px;
+}
+#about .timeline-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+#about .timeline { position: relative; padding-left: 28px; }
+#about .timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 1px; background: var(--border);
+}
+#about .timeline-item { position: relative; padding-bottom: 36px; }
+#about .timeline-item::before {
+  content: ''; position: absolute; left: -32px; top: 6px;
+  width: 9px; height: 9px; border-radius: 50%;
+  border: 1px solid var(--gold); background: var(--bg);
+}
+#about .timeline-year {
+  font-family: var(--font-label); font-size: 11px; letter-spacing: 0.1em;
+  color: var(--gold); margin-bottom: 6px;
+}
+#about .timeline-event {
+  font-size: 14px; color: var(--text-muted); line-height: 1.6; font-weight: 300;
+}
+#about .timeline-event strong { color: rgba(232,224,204,0.8); font-weight: 500; }
+
+
+/* ════════════════════════════
+   文章頁 Writing
+════════════════════════════ */
+#writing { padding: 72px 64px; }
+
+#writing .writing-hero {
+  margin-bottom: 52px; padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+#writing .writing-page-title {
+  font-family: var(--font-serif); font-size: 52px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.02em; margin-bottom: 8px;
+}
+#writing .writing-page-sub {
+  font-family: var(--font-serif); font-style: italic; font-weight: 300;
+  font-size: 20px; color: var(--gold);
+}
+
+#writing .writing-layout { display: grid; grid-template-columns: 1fr 260px; gap: 56px; }
+
+/* Post list */
+#writing .post-list { list-style: none; }
+#writing .post-item {
+  padding: 28px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s;
+  display: grid; grid-template-columns: 72px 1fr;
+  gap: 24px; align-items: start;
+}
+#writing .post-item:hover { background: rgba(232,224,204,0.02); margin: 0 -16px; padding: 28px 16px; }
+#writing .post-item:last-child { border-bottom: none; }
+#writing .post-date {
+  font-family: var(--font-label); font-size: 11px; color: var(--text-dim);
+  letter-spacing: 0.04em; line-height: 1.4; margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+#writing .post-main {}
+#writing .post-cat {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--moss); margin-bottom: 8px;
+}
+#writing .post-title {
+  font-family: var(--font-serif); font-size: 20px; font-weight: 500;
+  color: var(--text); margin-bottom: 10px; line-height: 1.3;
+}
+#writing .post-excerpt {
+  font-size: 13px; line-height: 1.75; color: var(--text-muted); font-weight: 300;
+}
+#writing .post-read-time {
+  margin-top: 10px; font-size: 11px; color: var(--text-dim);
+  font-family: var(--font-label);
+}
+
+/* Sidebar */
+#writing .writing-sidebar {}
+#writing .sidebar-section { margin-bottom: 40px; }
+#writing .sidebar-section-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+#writing .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+#writing .tag-pill {
+  padding: 5px 14px; border: 1px solid var(--border);
+  font-family: var(--font-label); font-size: 12px; color: var(--text-muted);
+  border-radius: 20px; cursor: pointer; transition: all 0.2s;
+}
+#writing .tag-pill:hover { border-color: var(--gold); color: var(--gold); }
+#writing .tag-pill.active { background: var(--gold-dim); border-color: rgba(186,168,120,0.4); color: var(--gold); }
+#writing .archive-list { list-style: none; }
+#writing .archive-list li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid rgba(232,224,204,0.05);
+  font-size: 13px; color: var(--text-muted); cursor: pointer;
+}
+#writing .archive-list li span { font-size: 11px; color: var(--text-dim); }
+#writing .archive-list li:last-child { border-bottom: none; }
+
+
+/* ════════════════════════════
+   聯絡頁 Contact
+════════════════════════════ */
+#contact {
+  padding: 80px 64px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 72px; align-items: start;
+  min-height: calc(100vh - 52px);
+}
+#contact .contact-left {}
+#contact .contact-title {
+  font-family: var(--font-serif); font-size: 56px; font-weight: 700;
+  color: var(--text); line-height: 1.0; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+#contact .contact-title em {
+  font-style: italic; font-weight: 300; color: var(--gold); display: block;
+}
+#contact .contact-desc {
+  font-size: 15px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; margin-bottom: 48px; max-width: 380px;
+}
+#contact .contact-links { list-style: none; }
+#contact .contact-link-item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 0; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s;
+}
+#contact .contact-link-item:last-child { border-bottom: none; }
+#contact .contact-link-icon {
+  width: 40px; height: 40px; border: 1px solid var(--border);
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0; transition: all 0.2s;
+}
+#contact .contact-link-item:hover .contact-link-icon {
+  border-color: var(--gold); background: var(--gold-dim);
+}
+#contact .contact-link-info {}
+#contact .contact-link-type {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px;
+}
+#contact .contact-link-value { font-size: 14px; color: var(--text-muted); }
+
+#contact .contact-right {}
+#contact .contact-note-title {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 24px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+}
+#contact .contact-note-body {
+  font-size: 14px; line-height: 1.9; color: var(--text-muted);
+  font-weight: 300; margin-bottom: 36px;
+}
+#contact .contact-note-body p + p { margin-top: 16px; }
+
+/* Simple form */
+#contact .contact-form { display: flex; flex-direction: column; gap: 16px; }
+#contact .form-field { display: flex; flex-direction: column; gap: 8px; }
+#contact .form-label {
+  font-family: var(--font-label); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+#contact .form-input,
+#contact .form-textarea {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--font-sans); font-size: 14px;
+  padding: 12px 16px; outline: none; transition: border-color 0.2s;
+  border-radius: 2px; font-weight: 300;
+}
+#contact .form-input:focus, #contact .form-textarea:focus {
+  border-color: rgba(186,168,120,0.35);
+}
+#contact .form-textarea { resize: vertical; min-height: 120px; }
+#contact .form-submit {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; background: var(--gold-dim);
+  border: 1px solid rgba(186,168,120,0.3); color: var(--gold);
+  font-family: var(--font-label); font-size: 13px; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.2s; align-self: flex-start;
+}
+#contact .form-submit:hover { background: rgba(186,168,120,0.2); border-color: var(--gold); }
+
+
+/* ════════════════════════════
+   Footer（共用）
+════════════════════════════ */
+.site-footer {
+  padding: 24px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim); font-size: 11px;
+  font-family: var(--font-label); letter-spacing: 0.04em;
+  margin-top: 80px;
+}
+.footer-moss { color: var(--moss); }
+
+/* ── Responsive: 窄螢幕自動轉單欄 ── */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; }
+  .nav-logo { margin-right: 16px; }
+  .nav-hint { display: none; }
+
+  /* 所有格線改單欄 */
+  [style*="grid-template-columns:1fr 300px"],
+  [style*="grid-template-columns:1fr 260px"],
+  [style*="grid-template-columns:1fr 220px"],
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:2fr 1fr"],
+  [style*="grid-template-columns:3fr 2fr"],
+  [style*="grid-template-columns:repeat(3"] {
+    display: block !important;
+  }
+  [style*="grid-template-columns:repeat(3"] > * { margin-bottom: 16px; }
+
+  /* 各頁面 padding 縮減 */
+  .page > div:first-child { padding-left: 24px !important; padding-right: 24px !important; }
+  .site-footer { padding: 20px 24px; }
+
+  /* 作品大卡片邊框去掉 border-left */
+  [style*="border-left:1px solid var(--border)"] { border-left: none !important; border-top: 1px solid var(--border) !important; }
+
+  /* 聯絡頁在小螢幕改方向 */
+  #contact > div { grid-template-columns: 1fr !important; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── Site Nav ── -->
+<nav class="site-nav">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">之</div>
+    之之的書寫
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="go('home')">首頁</button>
+    <button class="nav-tab" onclick="go('works')">作品</button>
+    <button class="nav-tab" onclick="go('about')">關於我</button>
+    <button class="nav-tab" onclick="go('writing')">文章</button>
+    <button class="nav-tab" onclick="go('contact')">聯絡</button>
+  </div>
+  <span class="nav-hint">方案C · Deep Forest</span>
+</nav>
+
+
+<!-- ════════ 首頁 ════════ -->
+<div id="home" class="page active">
+  <div style="padding:72px 64px; display:grid; grid-template-columns:1fr 300px; gap:56px; align-items:start; border-bottom:1px solid var(--border);">
+    <div>
+      <p class="chapter-mark">作者 · 游牧者</p>
+      <h1 style="font-family:var(--font-serif);font-size:clamp(64px,7vw,100px);font-weight:700;line-height:1.0;letter-spacing:-0.015em;color:var(--text);margin-bottom:8px;">之之</h1>
+      <h2 style="font-family:var(--font-serif);font-size:clamp(22px,2.6vw,34px);font-weight:300;font-style:italic;color:var(--gold);margin-bottom:40px;">寫字的人，路上的人</h2>
+      <p style="font-size:16px;line-height:2.0;color:var(--text-muted);font-weight:300;max-width:520px;">
+        文字是我記錄世界的方式。這裡有我的作品、正在發生的事，還有一些寫作途中的想法碎片。
+      </p>
+    </div>
+    <div class="now-card" style="background:var(--gold-dim);border:1px solid rgba(186,168,120,0.15);padding:32px 28px;align-self:center;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <div class="now-dot"></div>
+        <span style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);">現在進行中</span>
+      </div>
+      <ul style="list-style:none;">
+        <li style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:rgba(232,224,204,0.65);font-weight:300;display:flex;gap:10px;align-items:flex-start;line-height:1.6;"><span style="color:var(--moss);font-size:9px;margin-top:4px;flex-shrink:0">✦</span>長篇小說第三稿創作</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:rgba(232,224,204,0.65);font-weight:300;display:flex;gap:10px;align-items:flex-start;line-height:1.6;"><span style="color:var(--moss);font-size:9px;margin-top:4px;flex-shrink:0">✦</span>Zettelkasten 卡片筆記系統建立</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:rgba(232,224,204,0.65);font-weight:300;display:flex;gap:10px;align-items:flex-start;line-height:1.6;"><span style="color:var(--moss);font-size:9px;margin-top:4px;flex-shrink:0">✦</span>增肌減脂訓練計畫</li>
+        <li style="padding:10px 0;font-size:13px;color:rgba(232,224,204,0.65);font-weight:300;display:flex;gap:10px;align-items:flex-start;line-height:1.6;"><span style="color:var(--moss);font-size:9px;margin-top:4px;flex-shrink:0">✦</span>政府採購證照線上課備考</li>
+      </ul>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <span>之之 © 2026</span>
+    <span>在某個地方書寫 <span class="footer-moss">✦</span></span>
+  </footer>
+</div>
+
+
+<!-- ════════ 作品頁 ════════ -->
+<div id="works" class="page">
+  <div style="padding:72px 64px;">
+
+    <div class="works-hero" style="margin-bottom:56px;padding-bottom:48px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;">
+      <div>
+        <p class="chapter-mark">所有作品</p>
+        <h1 style="font-family:var(--font-serif);font-size:56px;font-weight:700;line-height:1;color:var(--text);letter-spacing:-0.02em;">作品</h1>
+        <p style="font-family:var(--font-serif);font-size:20px;font-style:italic;font-weight:300;color:var(--gold);margin-top:8px;">小說 · 散文 · 短篇</p>
+      </div>
+      <div style="display:flex;gap:32px;align-items:flex-end;">
+        <div style="text-align:right;">
+          <span style="font-family:var(--font-serif);font-size:40px;font-weight:700;color:var(--text);line-height:1;display:block;">4</span>
+          <span style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);">作品總數</span>
+        </div>
+        <div style="text-align:right;">
+          <span style="font-family:var(--font-serif);font-size:40px;font-weight:700;color:var(--moss);line-height:1;display:block;">1</span>
+          <span style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);">進行中</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div style="display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap;">
+      <button style="padding:6px 18px;border:1px solid rgba(186,168,120,0.4);background:var(--gold-dim);color:var(--gold);font-family:var(--font-label);font-size:12px;letter-spacing:0.06em;cursor:pointer;border-radius:2px;">全部</button>
+      <button style="padding:6px 18px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--font-label);font-size:12px;letter-spacing:0.06em;cursor:pointer;border-radius:2px;">長篇小說</button>
+      <button style="padding:6px 18px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--font-label);font-size:12px;letter-spacing:0.06em;cursor:pointer;border-radius:2px;">散文</button>
+      <button style="padding:6px 18px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--font-label);font-size:12px;letter-spacing:0.06em;cursor:pointer;border-radius:2px;">短篇小說</button>
+    </div>
+
+    <!-- Featured -->
+    <div style="background:var(--bg3);border:1px solid var(--border);border-top:3px solid var(--gold);display:grid;grid-template-columns:1fr 300px;margin-bottom:16px;">
+      <div style="padding:40px;">
+        <div style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font-label);font-size:11px;color:var(--moss);letter-spacing:0.1em;margin-bottom:20px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--moss);box-shadow:0 0 6px rgba(109,184,122,0.5);display:inline-block;"></span>進行中
+        </div>
+        <h2 style="font-family:var(--font-serif);font-size:36px;font-weight:700;color:var(--text);line-height:1.1;margin-bottom:16px;">尚未命名的長篇小說</h2>
+        <p style="font-size:14px;line-height:1.9;color:var(--text-muted);font-weight:300;max-width:440px;margin-bottom:28px;">
+          故事從一個人的行李開始。關於移動、記憶、與留下來的理由。目前第三稿，預計年底完成。
+        </p>
+        <div style="display:flex;gap:8px;">
+          <span style="padding:4px 12px;border:1px solid var(--border);font-family:var(--font-label);font-size:11px;color:var(--text-dim);letter-spacing:0.06em;border-radius:2px;">長篇小說</span>
+          <span style="padding:4px 12px;border:1px solid var(--border);font-family:var(--font-label);font-size:11px;color:var(--text-dim);letter-spacing:0.06em;border-radius:2px;">2024 —</span>
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--border);padding:40px 28px;display:flex;flex-direction:column;gap:24px;">
+        <div style="border-bottom:1px solid var(--border);padding-bottom:20px;">
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">創作進度</p>
+          <p style="font-size:14px;color:var(--text-muted);margin-bottom:10px;">第三稿，約 60%</p>
+          <div style="height:3px;background:rgba(232,224,204,0.08);border-radius:2px;overflow:hidden;"><div style="height:100%;background:var(--moss);border-radius:2px;width:60%;"></div></div>
+        </div>
+        <div style="border-bottom:1px solid var(--border);padding-bottom:20px;">
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;">類型</p>
+          <p style="font-size:14px;color:var(--text-muted);">當代文學小說</p>
+        </div>
+        <div>
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;">預計完成</p>
+          <p style="font-size:14px;color:var(--text-muted);">2026 年底</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-top:3px solid var(--moss);padding:28px 24px;">
+        <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;">散文</p>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.2;">散文集其一</h3>
+        <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">關於移動、停留與等待的文字。2022–2023 年寫成。</p>
+        <p style="margin-top:20px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">2023 · 已完成</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-top:3px solid var(--rust);padding:28px 24px;">
+        <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;">短篇小說</p>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.2;">短篇選集</h3>
+        <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">六篇短篇，每篇在不同城市完成，各有獨立的敘事視角。</p>
+        <p style="margin-top:20px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">2023 · 已完成</p>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-top:3px solid var(--gold);padding:28px 24px;">
+        <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;">隨筆</p>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.2;">寫作筆記</h3>
+        <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">不定期分享創作過程的思考、研究素材與靈感碎片。</p>
+        <p style="margin-top:20px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">持續更新</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="site-footer"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
+</div>
+
+
+<!-- ════════ 關於我 ════════ -->
+<div id="about" class="page">
+  <div style="padding:80px 64px;">
+
+    <div style="display:grid;grid-template-columns:1fr 260px;gap:64px;margin-bottom:64px;padding-bottom:56px;border-bottom:1px solid var(--border);">
+      <div>
+        <p class="chapter-mark">關於作者</p>
+        <h1 style="font-family:var(--font-serif);font-size:72px;font-weight:700;line-height:0.95;letter-spacing:-0.02em;color:var(--text);margin-bottom:36px;">之之<br><em style="font-style:italic;font-weight:300;color:var(--gold);">Chichi</em></h1>
+        <div style="font-size:15px;line-height:2.0;color:rgba(232,224,204,0.6);font-weight:300;max-width:540px;">
+          <p>我是公務員，也是小說作者，也是數位游牧工作者。這幾個身份不互相矛盾——它們都是我用來認識世界的不同方式。</p>
+          <p style="margin-top:20px;">寫作對我來說不是副業，是一種思考方式。每到一個地方，我就嘗試用文字理解那個地方給我的感受。長篇、散文、隨筆——形式不同，但動機都一樣：<strong style="color:rgba(232,224,204,0.85);font-weight:500;">想把瞬間留住。</strong></p>
+          <p style="margin-top:20px;">目前在寫第一部長篇小說，同時整理卡片筆記系統，嘗試讓思考更有結構。</p>
+        </div>
+      </div>
+      <div>
+        <div style="margin-bottom:36px;">
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);">基本資料</p>
+          <ul style="list-style:none;">
+            <li style="padding:9px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;">稱呼 <span>之之</span></li>
+            <li style="padding:9px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;">語言 <span>繁體中文</span></li>
+            <li style="padding:9px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;">工作模式 <span>數位游牧</span></li>
+            <li style="padding:9px 0;font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;">目前狀態 <span style="color:var(--moss);">✦ 創作中</span></li>
+          </ul>
+        </div>
+        <div>
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);">興趣 / 關注</p>
+          <ul style="list-style:none;">
+            <li style="padding:8px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);">卡片筆記法 (Zettelkasten)</li>
+            <li style="padding:8px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);">長距離步行與健身</li>
+            <li style="padding:8px 0;font-size:13px;color:var(--text-muted);">城市攝影與紀錄</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 三身份 -->
+    <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:28px;display:flex;align-items:center;gap:16px;">三個身份<span style="flex:1;height:1px;background:var(--border);display:block;"></span></p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:64px;">
+      <div style="background:var(--bg3);padding:36px 28px;border:1px solid var(--border);border-top:2px solid var(--gold);">
+        <div style="font-size:28px;margin-bottom:16px;">✍️</div>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:12px;">小說作者</h3>
+        <p style="font-size:13px;line-height:1.8;color:var(--text-muted);font-weight:300;">寫長篇、短篇與散文。相信文學是理解人的最慢、也最準確的方式。</p>
+      </div>
+      <div style="background:var(--bg3);padding:36px 28px;border:1px solid var(--border);border-top:2px solid var(--moss);">
+        <div style="font-size:28px;margin-bottom:16px;">🌏</div>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:12px;">數位游牧</h3>
+        <p style="font-size:13px;line-height:1.8;color:var(--text-muted);font-weight:300;">不定居在一個地方。用移動換取視角，每個城市都是素材庫。</p>
+      </div>
+      <div style="background:var(--bg3);padding:36px 28px;border:1px solid var(--border);border-top:2px solid var(--rust);">
+        <div style="font-size:28px;margin-bottom:16px;">🏛️</div>
+        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--text);margin-bottom:12px;">公務員</h3>
+        <p style="font-size:13px;line-height:1.8;color:var(--text-muted);font-weight:300;">在體制裡工作，在體制外寫作。兩件事之間的張力，也是寫作的來源。</p>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div style="padding:44px 48px;background:var(--bg3);border-left:3px solid var(--gold);margin-bottom:60px;">
+      <blockquote style="font-family:var(--font-serif);font-size:22px;font-weight:300;font-style:italic;color:rgba(232,224,204,0.75);line-height:1.7;max-width:600px;">
+        「我不是為了記錄而寫，是因為不寫就忘了——某種感覺，某個光線，某個人說話的方式。」
+      </blockquote>
+      <cite style="display:block;margin-top:16px;font-size:12px;font-style:normal;color:var(--text-dim);letter-spacing:0.08em;font-family:var(--font-label);">— 之之</cite>
+    </div>
+
+    <!-- Timeline -->
+    <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:32px;display:flex;align-items:center;gap:16px;">創作時間線<span style="flex:1;height:1px;background:var(--border);display:block;"></span></p>
+    <div style="position:relative;padding-left:28px;">
+      <div style="position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border);"></div>
+      <div style="position:relative;padding-bottom:32px;">
+        <div style="position:absolute;left:-32px;top:6px;width:9px;height:9px;border-radius:50%;border:1px solid var(--gold);background:var(--bg);"></div>
+        <p style="font-family:var(--font-label);font-size:11px;letter-spacing:0.1em;color:var(--gold);margin-bottom:6px;">2024 — 現在</p>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;font-weight:300;"><strong style="color:rgba(232,224,204,0.8);font-weight:500;">長篇小說</strong> 第一部長篇創作中，數位游牧工作模式確立。</p>
+      </div>
+      <div style="position:relative;padding-bottom:32px;">
+        <div style="position:absolute;left:-32px;top:6px;width:9px;height:9px;border-radius:50%;border:1px solid rgba(186,168,120,0.4);background:var(--bg);"></div>
+        <p style="font-family:var(--font-label);font-size:11px;letter-spacing:0.1em;color:var(--gold);margin-bottom:6px;">2023</p>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;font-weight:300;"><strong style="color:rgba(232,224,204,0.8);font-weight:500;">散文集 + 短篇選集</strong> 完成並整理發表。</p>
+      </div>
+      <div style="position:relative;">
+        <div style="position:absolute;left:-32px;top:6px;width:9px;height:9px;border-radius:50%;border:1px solid rgba(186,168,120,0.3);background:var(--bg);"></div>
+        <p style="font-family:var(--font-label);font-size:11px;letter-spacing:0.1em;color:var(--gold);margin-bottom:6px;">2022 以前</p>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;font-weight:300;">散落的散文與短篇創作，開始寫作習慣的養成期。</p>
+      </div>
+    </div>
+  </div>
+  <footer class="site-footer"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
+</div>
+
+
+<!-- ════════ 文章頁 ════════ -->
+<div id="writing" class="page">
+  <div style="padding:72px 64px;">
+    <div style="margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border);">
+      <p class="chapter-mark">所有文章</p>
+      <h1 style="font-family:var(--font-serif);font-size:52px;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:8px;">文章</h1>
+      <p style="font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:20px;color:var(--gold);">散文、筆記、創作碎片</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 220px;gap:48px;">
+      <ul style="list-style:none;">
+        <li style="padding:28px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start;cursor:pointer;">
+          <span style="font-family:var(--font-label);font-size:11px;color:var(--text-dim);margin-top:3px;">2026.03</span>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px;">散文</p>
+            <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.3;">關於在路上寫作這件事</h3>
+            <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">移動中的人如何保持創作節奏？不是靠意志力，是靠系統。</p>
+            <p style="margin-top:10px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">閱讀時間約 5 分鐘</p>
+          </div>
+        </li>
+        <li style="padding:28px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start;cursor:pointer;">
+          <span style="font-family:var(--font-label);font-size:11px;color:var(--text-dim);margin-top:3px;">2026.02</span>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">筆記</p>
+            <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.3;">卡片筆記法用了三個月後的反思</h3>
+            <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">Zettelkasten 不是魔法。它只是讓你更難自欺欺人。</p>
+            <p style="margin-top:10px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">閱讀時間約 7 分鐘</p>
+          </div>
+        </li>
+        <li style="padding:28px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start;cursor:pointer;">
+          <span style="font-family:var(--font-label);font-size:11px;color:var(--text-dim);margin-top:3px;">2026.01</span>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;">創作</p>
+            <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.3;">小說的第一個字怎麼來的</h3>
+            <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">我從來不在「最好的時機」開始寫，我在忍不住的時候開始。</p>
+            <p style="margin-top:10px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">閱讀時間約 4 分鐘</p>
+          </div>
+        </li>
+        <li style="padding:28px 0;display:grid;grid-template-columns:72px 1fr;gap:24px;align-items:start;cursor:pointer;">
+          <span style="font-family:var(--font-label);font-size:11px;color:var(--text-dim);margin-top:3px;">2025.12</span>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--moss);margin-bottom:8px;">散文</p>
+            <h3 style="font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--text);margin-bottom:10px;line-height:1.3;">某個城市的最後一個早晨</h3>
+            <p style="font-size:13px;line-height:1.75;color:var(--text-muted);font-weight:300;">離開的前一天，我總是睡得特別早，醒得特別早。</p>
+            <p style="margin-top:10px;font-size:11px;color:var(--text-dim);font-family:var(--font-label);">閱讀時間約 3 分鐘</p>
+          </div>
+        </li>
+      </ul>
+      <div>
+        <div style="margin-bottom:36px;">
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);">分類</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span style="padding:5px 14px;border:1px solid rgba(186,168,120,0.4);background:var(--gold-dim);font-family:var(--font-label);font-size:12px;color:var(--gold);border-radius:20px;cursor:pointer;">全部</span>
+            <span style="padding:5px 14px;border:1px solid var(--border);font-family:var(--font-label);font-size:12px;color:var(--text-muted);border-radius:20px;cursor:pointer;">散文</span>
+            <span style="padding:5px 14px;border:1px solid var(--border);font-family:var(--font-label);font-size:12px;color:var(--text-muted);border-radius:20px;cursor:pointer;">筆記</span>
+            <span style="padding:5px 14px;border:1px solid var(--border);font-family:var(--font-label);font-size:12px;color:var(--text-muted);border-radius:20px;cursor:pointer;">創作</span>
+          </div>
+        </div>
+        <div>
+          <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);">年份</p>
+          <ul style="list-style:none;">
+            <li style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);cursor:pointer;">2026 <span style="font-size:11px;color:var(--text-dim);">3 篇</span></li>
+            <li style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(232,224,204,0.05);font-size:13px;color:var(--text-muted);cursor:pointer;">2025 <span style="font-size:11px;color:var(--text-dim);">8 篇</span></li>
+            <li style="display:flex;justify-content:space-between;padding:9px 0;font-size:13px;color:var(--text-muted);cursor:pointer;">2024 <span style="font-size:11px;color:var(--text-dim);">5 篇</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="site-footer"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
+</div>
+
+
+<!-- ════════ 聯絡頁 ════════ -->
+<div id="contact" class="page">
+  <div style="padding:80px 64px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;min-height:calc(100vh - 52px);">
+    <div>
+      <p class="chapter-mark">聯絡</p>
+      <h1 style="font-family:var(--font-serif);font-size:56px;font-weight:700;color:var(--text);line-height:1.0;letter-spacing:-0.02em;margin-bottom:12px;">說聲<br><em style="font-style:italic;font-weight:300;color:var(--gold);">你好</em></h1>
+      <p style="font-size:15px;line-height:1.9;color:var(--text-muted);font-weight:300;margin-bottom:44px;max-width:360px;">
+        歡迎任何關於作品的回饋、合作提案，或是單純想聊聊你也喜歡某本書——都可以寫信給我。
+      </p>
+      <ul style="list-style:none;">
+        <li style="display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);cursor:pointer;">
+          <div style="width:40px;height:40px;border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">✉️</div>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Email</p>
+            <p style="font-size:14px;color:var(--text-muted);">twchichi@gmail.com</p>
+          </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);cursor:pointer;">
+          <div style="width:40px;height:40px;border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📷</div>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Instagram</p>
+            <p style="font-size:14px;color:var(--text-muted);">@chichi.writes</p>
+          </div>
+        </li>
+        <li style="display:flex;align-items:center;gap:20px;padding:20px 0;cursor:pointer;">
+          <div style="width:40px;height:40px;border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📝</div>
+          <div>
+            <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">Newsletter</p>
+            <p style="font-size:14px;color:var(--text-muted);">不定期電子報，訂閱可收到新文章通知</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-family:var(--font-label);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);">直接寫信給我</p>
+      <p style="font-size:14px;line-height:1.9;color:var(--text-muted);font-weight:300;margin-bottom:28px;">回覆時間通常在 1–3 天內。如果是合作提案，請說明你是誰、想做什麼——我喜歡直接。</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);">稱呼</label>
+          <input placeholder="你的名字或暱稱" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:14px;padding:12px 16px;outline:none;border-radius:2px;font-weight:300;" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);">Email</label>
+          <input placeholder="your@email.com" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:14px;padding:12px 16px;outline:none;border-radius:2px;font-weight:300;" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label style="font-family:var(--font-label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);">訊息</label>
+          <textarea placeholder="想說什麼都可以..." rows="5" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:14px;padding:12px 16px;outline:none;border-radius:2px;font-weight:300;resize:vertical;"></textarea>
+        </div>
+        <button style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--gold-dim);border:1px solid rgba(186,168,120,0.3);color:var(--gold);font-family:var(--font-label);font-size:13px;letter-spacing:0.08em;cursor:pointer;align-self:flex-start;border-radius:2px;">
+          送出 ✦
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function go(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = ['home','works','about','writing','contact'];
+  document.querySelectorAll('.nav-tab')[tabs.indexOf(id)].classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>

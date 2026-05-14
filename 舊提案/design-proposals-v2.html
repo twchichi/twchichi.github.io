@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>之之的個人頁面 — 設計方案 V2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,500;1,9..144,700&family=Instrument+Sans:wght@400;500;600&family=Noto+Serif+TC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Switcher ── */
+body { background: #0a0a0a; }
+
+.switcher {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 28px;
+  background: rgba(10,10,10,0.93);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.switcher-label {
+  color: rgba(255,255,255,0.3);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  margin-right: 4px; font-family: 'Instrument Sans', sans-serif;
+  white-space: nowrap;
+}
+.tab-btn {
+  padding: 6px 18px; border: 1px solid rgba(255,255,255,0.12);
+  background: transparent; color: rgba(255,255,255,0.45);
+  border-radius: 20px; cursor: pointer;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 12px;
+  transition: all 0.2s; white-space: nowrap;
+}
+.tab-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+.tab-btn.active { background: #fff; color: #0a0a0a; border-color: #fff; font-weight: 500; }
+.badge {
+  margin-left: auto; padding: 4px 14px; border-radius: 20px;
+  font-size: 11px; letter-spacing: 0.06em;
+  font-family: 'Instrument Sans', sans-serif; white-space: nowrap;
+}
+
+.design-panel { display: none; margin-top: 52px; }
+.design-panel.active { display: block; }
+
+/* ── Design Notes ── */
+.design-notes {
+  background: #111; padding: 36px 52px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.design-notes h3 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); margin-bottom: 24px;
+}
+.design-notes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+.note-item label {
+  display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); margin-bottom: 8px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+.note-item p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65;
+  font-family: 'Noto Sans TC', sans-serif; }
+.note-safe { color: #7ec8a0 !important; }
+.note-risk { color: #e8a87c !important; }
+.swatch-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.swatch { width: 28px; height: 28px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.1); }
+
+
+/* ═══════════════════════════════════
+   方案 A：深夜書房 Midnight Study
+   Deep warm brown · Gold · Cozy
+═══════════════════════════════════ */
+#dA {
+  background: #171009;
+  color: #f0e6cf;
+  min-height: 100vh;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+#dA .a-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 52px;
+}
+#dA .a-logo {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: 20px; font-weight: 400; letter-spacing: 0.08em;
+  color: #f0e6cf;
+}
+#dA .a-nav-links {
+  display: flex; gap: 28px; list-style: none;
+  font-size: 13px; color: rgba(240,230,207,0.45); letter-spacing: 0.04em;
+}
+#dA .a-nav-links li { cursor: pointer; transition: color 0.2s; }
+#dA .a-nav-links li:hover { color: #f0e6cf; }
+
+/* Hero — book cover grid */
+#dA .a-hero {
+  display: grid; grid-template-columns: 5fr 3fr;
+  min-height: 500px;
+  border-top: 1px solid rgba(240,230,207,0.08);
+  border-bottom: 1px solid rgba(240,230,207,0.08);
+}
+#dA .a-hero-main {
+  padding: 72px 52px;
+  border-right: 1px solid rgba(240,230,207,0.08);
+}
+#dA .a-eyebrow {
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #c9923e; margin-bottom: 28px;
+  font-family: 'Instrument Sans', sans-serif;
+  display: flex; align-items: center; gap: 12px;
+}
+#dA .a-eyebrow::before {
+  content: ''; width: 32px; height: 1px; background: #c9923e; display: inline-block;
+}
+#dA .a-hero-title {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: clamp(52px, 7vw, 96px); font-weight: 700;
+  line-height: 1.0; letter-spacing: -0.015em; color: #f0e6cf;
+  margin-bottom: 32px;
+}
+#dA .a-hero-title em {
+  font-style: italic; font-weight: 300; color: #c9923e;
+}
+#dA .a-hero-bio {
+  font-size: 15px; line-height: 1.85; color: rgba(240,230,207,0.6);
+  max-width: 500px; font-weight: 300;
+  border-left: 2px solid rgba(201,146,62,0.35);
+  padding-left: 20px;
+}
+#dA .a-hero-side {
+  padding: 52px 40px;
+  display: flex; flex-direction: column; gap: 32px;
+}
+#dA .a-side-block {}
+#dA .a-side-label {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(240,230,207,0.3); margin-bottom: 14px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dA .a-side-roles { display: flex; flex-direction: column; gap: 6px; }
+#dA .a-side-role {
+  font-size: 14px; color: rgba(240,230,207,0.75);
+  padding: 10px 0; border-bottom: 1px solid rgba(240,230,207,0.08);
+  display: flex; justify-content: space-between; align-items: center;
+}
+#dA .a-side-role span { font-size: 12px; color: rgba(240,230,207,0.25); }
+#dA .a-now-list { list-style: none; }
+#dA .a-now-list li {
+  font-size: 13px; color: rgba(240,230,207,0.6); line-height: 1.6;
+  padding: 8px 0; border-bottom: 1px solid rgba(240,230,207,0.07);
+  display: flex; align-items: baseline; gap: 10px;
+  font-weight: 300;
+}
+#dA .a-now-list li::before {
+  content: '—'; color: #c9923e; flex-shrink: 0; font-size: 12px;
+}
+
+#dA .a-works { padding: 56px 52px; border-bottom: 1px solid rgba(240,230,207,0.08); }
+#dA .a-section-label {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(240,230,207,0.3); margin-bottom: 36px;
+  font-family: 'Instrument Sans', sans-serif;
+  display: flex; align-items: center; gap: 16px;
+}
+#dA .a-section-label::after { content: ''; flex: 1; height: 1px; background: rgba(240,230,207,0.08); }
+#dA .a-works-list { display: flex; flex-direction: column; gap: 0; }
+#dA .a-work-row {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  gap: 28px; align-items: center;
+  padding: 22px 0; border-bottom: 1px solid rgba(240,230,207,0.07);
+  cursor: pointer; transition: background 0.15s;
+}
+#dA .a-work-row:hover { background: rgba(240,230,207,0.02); }
+#dA .a-work-num {
+  font-family: 'Fraunces', serif; font-size: 32px; font-weight: 300;
+  color: rgba(240,230,207,0.12); font-style: italic;
+  line-height: 1;
+}
+#dA .a-work-info h3 {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: 20px; font-weight: 500; color: #f0e6cf; margin-bottom: 4px;
+}
+#dA .a-work-info p { font-size: 12px; color: rgba(240,230,207,0.4); letter-spacing: 0.04em; }
+#dA .a-work-arrow { color: rgba(240,230,207,0.2); font-size: 18px; }
+
+#dA .a-footer {
+  padding: 28px 52px;
+  display: flex; justify-content: space-between;
+  color: rgba(240,230,207,0.2); font-size: 12px;
+  font-family: 'Instrument Sans', sans-serif;
+  border-top: 1px solid rgba(240,230,207,0.05);
+}
+
+
+/* ═══════════════════════════════════
+   方案 B：午夜藍 Midnight Navy
+   Deep navy · Terracotta · Romantic
+═══════════════════════════════════ */
+#dB {
+  background: #0c1420;
+  color: #e4ddd0;
+  min-height: 100vh;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+#dB .b-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 26px 52px;
+  border-bottom: 1px solid rgba(228,221,208,0.07);
+}
+#dB .b-logo {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: 18px; font-style: italic; font-weight: 300;
+  color: #e4ddd0; letter-spacing: 0.06em;
+}
+#dB .b-nav-right {
+  display: flex; align-items: center; gap: 24px;
+}
+#dB .b-nav-links {
+  display: flex; gap: 24px; list-style: none;
+  font-size: 12px; color: rgba(228,221,208,0.4); letter-spacing: 0.06em;
+}
+#dB .b-nav-links li { cursor: pointer; transition: color 0.2s; }
+#dB .b-nav-links li:hover { color: #e4ddd0; }
+#dB .b-nav-cta {
+  padding: 8px 20px; border: 1px solid rgba(210,130,90,0.4);
+  color: #d2825a; font-size: 12px; cursor: pointer; transition: all 0.2s;
+  letter-spacing: 0.06em; font-family: 'Instrument Sans', sans-serif;
+}
+#dB .b-nav-cta:hover { background: rgba(210,130,90,0.1); }
+
+#dB .b-hero {
+  padding: 80px 52px 64px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  border-bottom: 1px solid rgba(228,221,208,0.07);
+}
+#dB .b-hero-left {}
+#dB .b-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; border-radius: 2px;
+  background: rgba(210,130,90,0.12); color: #d2825a;
+  font-size: 11px; letter-spacing: 0.1em;
+  font-family: 'Instrument Sans', sans-serif;
+  margin-bottom: 28px;
+}
+#dB .b-hero-title {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: clamp(44px, 5.5vw, 80px); font-weight: 700;
+  line-height: 1.08; letter-spacing: -0.01em;
+  color: #e4ddd0; margin-bottom: 28px;
+}
+#dB .b-hero-title .italic { font-style: italic; font-weight: 300; }
+#dB .b-hero-bio {
+  font-size: 15px; line-height: 1.9; color: rgba(228,221,208,0.55);
+  font-weight: 300; margin-bottom: 32px;
+}
+#dB .b-btn-group { display: flex; gap: 12px; }
+#dB .b-btn-primary {
+  padding: 12px 28px; background: #d2825a; color: #0c1420;
+  font-family: 'Instrument Sans', sans-serif; font-size: 13px;
+  font-weight: 600; letter-spacing: 0.04em; cursor: pointer; border: none;
+}
+#dB .b-btn-ghost {
+  padding: 12px 28px; border: 1px solid rgba(228,221,208,0.2);
+  color: rgba(228,221,208,0.6); background: transparent;
+  font-family: 'Instrument Sans', sans-serif; font-size: 13px;
+  cursor: pointer; letter-spacing: 0.04em;
+}
+
+/* Right side — featured work card */
+#dB .b-hero-right { position: relative; }
+#dB .b-featured {
+  background: rgba(228,221,208,0.04);
+  border: 1px solid rgba(228,221,208,0.1);
+  border-radius: 2px; padding: 36px 32px;
+}
+#dB .b-featured-label {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #d2825a; margin-bottom: 20px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dB .b-featured-title {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: 28px; font-weight: 700; color: #e4ddd0;
+  margin-bottom: 12px; line-height: 1.2;
+}
+#dB .b-featured-desc {
+  font-size: 13px; line-height: 1.8; color: rgba(228,221,208,0.5);
+  font-weight: 300; margin-bottom: 24px;
+}
+#dB .b-featured-meta {
+  display: flex; gap: 16px;
+}
+#dB .b-meta-chip {
+  padding: 4px 12px; background: rgba(228,221,208,0.06);
+  font-size: 11px; color: rgba(228,221,208,0.4);
+  letter-spacing: 0.06em; border-radius: 2px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+
+#dB .b-strip {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-top: 1px solid rgba(228,221,208,0.07);
+  border-bottom: 1px solid rgba(228,221,208,0.07);
+}
+#dB .b-strip-item {
+  padding: 28px 52px 28px;
+  border-right: 1px solid rgba(228,221,208,0.07);
+  font-size: 13px; color: rgba(228,221,208,0.5);
+}
+#dB .b-strip-item:last-child { border-right: none; }
+#dB .b-strip-item strong { display: block; font-size: 22px; font-weight: 700;
+  color: #e4ddd0; margin-bottom: 4px; font-family: 'Fraunces', serif; }
+
+#dB .b-updates { padding: 56px 52px; }
+#dB .b-section-label {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(228,221,208,0.25); margin-bottom: 32px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dB .b-post-list { list-style: none; }
+#dB .b-post {
+  display: flex; gap: 24px; align-items: flex-start;
+  padding: 20px 0; border-bottom: 1px solid rgba(228,221,208,0.07);
+  cursor: pointer;
+}
+#dB .b-post-date {
+  font-size: 11px; color: rgba(228,221,208,0.3);
+  letter-spacing: 0.06em; white-space: nowrap; margin-top: 2px;
+  font-variant-numeric: tabular-nums; min-width: 72px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dB .b-post-title { font-size: 15px; color: rgba(228,221,208,0.8); margin-bottom: 4px; }
+#dB .b-post-cat { font-size: 11px; color: #d2825a; letter-spacing: 0.06em; }
+
+#dB .b-footer {
+  padding: 28px 52px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: rgba(228,221,208,0.2); font-size: 12px;
+  font-family: 'Instrument Sans', sans-serif;
+  border-top: 1px solid rgba(228,221,208,0.05);
+}
+
+
+/* ═══════════════════════════════════
+   方案 C：深林暗綠 Dark Forest
+   Forest green · Warm ivory · Earthy
+═══════════════════════════════════ */
+#dC {
+  background: #0e1611;
+  color: #e8e0cc;
+  min-height: 100vh;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+#dC .c-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 52px;
+  border-bottom: 1px solid rgba(232,224,204,0.08);
+}
+#dC .c-logo-wrap { display: flex; align-items: center; gap: 14px; }
+#dC .c-logo-mark {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(186,168,120,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 16px; color: #baa878;
+  font-style: italic;
+}
+#dC .c-logo {
+  font-family: 'Noto Serif TC', serif; font-size: 17px;
+  font-weight: 400; color: #e8e0cc; letter-spacing: 0.04em;
+}
+#dC .c-nav-links {
+  display: flex; gap: 28px; list-style: none;
+  font-size: 12px; color: rgba(232,224,204,0.4); letter-spacing: 0.06em;
+}
+#dC .c-nav-links li { cursor: pointer; transition: color 0.2s; }
+#dC .c-nav-links li:hover { color: #e8e0cc; }
+
+#dC .c-hero {
+  padding: 72px 52px 64px;
+  display: grid; grid-template-columns: 3fr 2fr;
+  gap: 64px; align-items: start;
+  border-bottom: 1px solid rgba(232,224,204,0.08);
+}
+#dC .c-chapter {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(186,168,120,0.7); margin-bottom: 20px;
+  font-family: 'Instrument Sans', sans-serif;
+  display: flex; align-items: center; gap: 14px;
+}
+#dC .c-chapter::before {
+  content: '§'; font-style: normal; font-size: 14px; color: #baa878;
+}
+#dC .c-hero-title {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: clamp(50px, 6.5vw, 88px); font-weight: 700;
+  line-height: 1.0; letter-spacing: -0.015em;
+  color: #e8e0cc; margin-bottom: 8px;
+}
+#dC .c-hero-subtitle {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: clamp(24px, 3vw, 40px); font-weight: 300;
+  font-style: italic; color: #baa878;
+  margin-bottom: 36px; letter-spacing: -0.01em;
+}
+#dC .c-hero-desc {
+  font-size: 15px; line-height: 1.9; color: rgba(232,224,204,0.55);
+  font-weight: 300; max-width: 480px;
+}
+/* Right: Now card */
+#dC .c-now-card {
+  background: rgba(186,168,120,0.06);
+  border: 1px solid rgba(186,168,120,0.15);
+  padding: 28px 24px;
+  margin-top: 8px;
+}
+#dC .c-now-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+#dC .c-now-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #6db87a;
+  box-shadow: 0 0 8px rgba(109,184,122,0.6);
+  animation: glow 2.5s ease-in-out infinite;
+}
+@keyframes glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(109,184,122,0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 4px rgba(109,184,122,0.3); }
+}
+#dC .c-now-title {
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(232,224,204,0.4); font-family: 'Instrument Sans', sans-serif;
+}
+#dC .c-now-items { list-style: none; }
+#dC .c-now-items li {
+  padding: 11px 0; border-bottom: 1px solid rgba(232,224,204,0.07);
+  font-size: 13px; line-height: 1.6; color: rgba(232,224,204,0.65);
+  font-weight: 300; display: flex; gap: 10px; align-items: flex-start;
+}
+#dC .c-now-items li:last-child { border-bottom: none; }
+#dC .c-now-items li::before {
+  content: '✦'; color: #6db87a; font-size: 9px; margin-top: 4px;
+  flex-shrink: 0;
+}
+
+/* Works — horizontal book shelf row */
+#dC .c-shelf { padding: 56px 52px; border-bottom: 1px solid rgba(232,224,204,0.08); }
+#dC .c-shelf-label {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(232,224,204,0.25); margin-bottom: 36px;
+  font-family: 'Instrument Sans', sans-serif;
+  display: flex; align-items: center; gap: 16px;
+}
+#dC .c-shelf-label::after { content: ''; flex: 1; height: 1px; background: rgba(232,224,204,0.08); }
+#dC .c-books { display: flex; gap: 20px; }
+#dC .c-book {
+  flex: 1; min-width: 0;
+  background: rgba(232,224,204,0.03);
+  border: 1px solid rgba(232,224,204,0.08);
+  border-top: 3px solid;
+  padding: 28px 24px 24px;
+  cursor: pointer; transition: all 0.2s;
+}
+#dC .c-book:nth-child(1) { border-top-color: #baa878; }
+#dC .c-book:nth-child(2) { border-top-color: #6db87a; }
+#dC .c-book:nth-child(3) { border-top-color: #c4875e; }
+#dC .c-book:hover { background: rgba(232,224,204,0.06); transform: translateY(-2px); }
+#dC .c-book-type {
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(232,224,204,0.3); margin-bottom: 14px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dC .c-book-title {
+  font-family: 'Fraunces', 'Noto Serif TC', serif;
+  font-size: 20px; font-weight: 500; color: #e8e0cc;
+  margin-bottom: 12px; line-height: 1.25;
+}
+#dC .c-book-desc {
+  font-size: 13px; line-height: 1.7; color: rgba(232,224,204,0.45);
+  font-weight: 300;
+}
+
+/* Recent writing */
+#dC .c-writing { padding: 52px 52px; }
+#dC .c-writing-label {
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(232,224,204,0.25); margin-bottom: 28px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+#dC .c-post-list { list-style: none; }
+#dC .c-post {
+  display: flex; gap: 28px; align-items: baseline;
+  padding: 17px 0; border-bottom: 1px solid rgba(232,224,204,0.07);
+}
+#dC .c-post-date {
+  font-size: 11px; color: rgba(232,224,204,0.25);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+  font-family: 'Instrument Sans', sans-serif; min-width: 68px;
+}
+#dC .c-post-title { font-size: 15px; color: rgba(232,224,204,0.75); }
+#dC .c-post-tag { font-size: 11px; color: #6db87a; margin-left: 12px; }
+
+#dC .c-footer {
+  padding: 26px 52px;
+  display: flex; justify-content: space-between;
+  color: rgba(232,224,204,0.2); font-size: 11px;
+  font-family: 'Instrument Sans', sans-serif;
+  border-top: 1px solid rgba(232,224,204,0.05);
+}
+
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <span class="switcher-label">V2 深色系</span>
+  <button class="tab-btn active" onclick="show('A')">方案 A 深夜書房</button>
+  <button class="tab-btn" onclick="show('B')">方案 B 午夜藍</button>
+  <button class="tab-btn" onclick="show('C')">方案 C 深林暗綠</button>
+  <span class="badge" id="badge" style="background:#c9923e22;color:#c9923e;border:1px solid #c9923e44;">Warm Brown · Gold</span>
+</div>
+
+
+<!-- ══════════════════════
+     方案 A：深夜書房
+══════════════════════ -->
+<div id="dA" class="design-panel active">
+
+  <nav class="a-nav">
+    <div class="a-logo">之之</div>
+    <ul class="a-nav-links">
+      <li>作品</li><li>關於我</li><li>最近</li><li>聯絡</li>
+    </ul>
+  </nav>
+
+  <section class="a-hero">
+    <div class="a-hero-main">
+      <p class="a-eyebrow">作者 · 游牧者</p>
+      <h1 class="a-hero-title">
+        用文字<br>標記<br><em>每個地方</em>
+      </h1>
+      <p class="a-hero-bio">
+        我寫小說，也寫散文。在不同城市之間移動，在每個停留點留下一些字。這是我的書房，雖然它沒有固定地址。
+      </p>
+    </div>
+    <div class="a-hero-side">
+      <div class="a-side-block">
+        <p class="a-side-label">身份</p>
+        <div class="a-side-roles">
+          <div class="a-side-role">小說作者 <span>主業</span></div>
+          <div class="a-side-role">數位游牧 <span>生活方式</span></div>
+          <div class="a-side-role">散文創作 <span>進行中</span></div>
+        </div>
+      </div>
+      <div class="a-side-block">
+        <p class="a-side-label">現在在做</p>
+        <ul class="a-now-list">
+          <li>長篇小說第三稿</li>
+          <li>Zettelkasten 卡片筆記系統</li>
+          <li>增肌減脂練習計畫</li>
+          <li>政府採購證照線上課</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="a-works">
+    <p class="a-section-label">作品</p>
+    <div class="a-works-list">
+      <div class="a-work-row">
+        <div class="a-work-num">01</div>
+        <div class="a-work-info">
+          <h3>尚未命名的長篇</h3>
+          <p>長篇小說 · 進行中 · 2024—</p>
+        </div>
+        <span class="a-work-arrow">→</span>
+      </div>
+      <div class="a-work-row">
+        <div class="a-work-num">02</div>
+        <div class="a-work-info">
+          <h3>散文集其一</h3>
+          <p>散文 · 已完成 · 2023</p>
+        </div>
+        <span class="a-work-arrow">→</span>
+      </div>
+      <div class="a-work-row">
+        <div class="a-work-num">03</div>
+        <div class="a-work-info">
+          <h3>短篇選集</h3>
+          <p>短篇小說 · 已完成 · 2023</p>
+        </div>
+        <span class="a-work-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="a-footer">
+    <span>之之 © 2026</span>
+    <span>用文字標記每個地方</span>
+  </footer>
+
+  <div class="design-notes">
+    <h3>設計說明 — 方案 A 深夜書房</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Editorial Dark + Organic Warm — 深色木質書房，像冬夜讀書的燈下</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Fraunces（大標 Serif）<br>+ Instrument Sans（標籤）<br>+ Noto Sans TC（內文）</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#171009"></span>
+          <span class="swatch" style="background:#f0e6cf"></span>
+          <span class="swatch" style="background:#c9923e"></span>
+        </div>
+        <p style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.35)">#171009 深褐夜 · #f0e6cf 奶油 · #c9923e 琥珀金</p>
+      </div>
+      <div class="note-item">
+        <label>安全 / 亮點</label>
+        <p class="note-safe">✔ 版式清晰，左右分欄讓「現在在做」永遠可見</p>
+        <p class="note-risk" style="margin-top:10px">★ 流水號式的作品列表（像書目索引）— 同類作者幾乎沒人這樣做，有收藏感</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════
+     方案 B：午夜藍
+══════════════════════ -->
+<div id="dB" class="design-panel">
+
+  <nav class="b-nav">
+    <div class="b-logo">之之</div>
+    <div class="b-nav-right">
+      <ul class="b-nav-links">
+        <li>作品</li><li>關於</li><li>文章</li>
+      </ul>
+      <div class="b-nav-cta">閱讀作品</div>
+    </div>
+  </nav>
+
+  <section class="b-hero">
+    <div class="b-hero-left">
+      <div class="b-tag">小說作者 · 數位游牧</div>
+      <h1 class="b-hero-title">
+        之之<br>
+        <span class="italic">在路上，</span><br>
+        一直在寫。
+      </h1>
+      <p class="b-hero-bio">
+        公務員，同時是小說作者。用文字記錄每個城市的氣味和光線，在移動中思考，在停留時落筆。
+      </p>
+      <div class="b-btn-group">
+        <button class="b-btn-primary">閱讀作品</button>
+        <button class="b-btn-ghost">關於我</button>
+      </div>
+    </div>
+    <div class="b-hero-right">
+      <div class="b-featured">
+        <p class="b-featured-label">目前最新作品</p>
+        <h3 class="b-featured-title">尚未命名的<br>長篇小說</h3>
+        <p class="b-featured-desc">
+          故事從一個人的行李開始。目前第三稿，預計年底完成。
+        </p>
+        <div class="b-featured-meta">
+          <span class="b-meta-chip">長篇小說</span>
+          <span class="b-meta-chip">進行中</span>
+          <span class="b-meta-chip">2024—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="b-strip">
+    <div class="b-strip-item"><strong>3</strong>已完成作品</div>
+    <div class="b-strip-item"><strong>1</strong>進行中長篇</div>
+    <div class="b-strip-item"><strong>游牧</strong>工作模式</div>
+    <div class="b-strip-item"><strong>2026</strong>最新更新</div>
+  </div>
+
+  <section class="b-updates">
+    <p class="b-section-label">最近寫的</p>
+    <ul class="b-post-list">
+      <li class="b-post">
+        <span class="b-post-date">2026.03</span>
+        <div>
+          <p class="b-post-title">關於在路上寫作這件事</p>
+          <span class="b-post-cat">散文</span>
+        </div>
+      </li>
+      <li class="b-post">
+        <span class="b-post-date">2026.02</span>
+        <div>
+          <p class="b-post-title">卡片筆記法用了三個月後的反思</p>
+          <span class="b-post-cat">筆記</span>
+        </div>
+      </li>
+      <li class="b-post">
+        <span class="b-post-date">2026.01</span>
+        <div>
+          <p class="b-post-title">小說的第一個字怎麼來的</p>
+          <span class="b-post-cat">創作</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="b-footer">
+    <span>之之 © 2026</span>
+    <span>twchichi@gmail.com</span>
+  </footer>
+
+  <div class="design-notes">
+    <h3>設計說明 — 方案 B 午夜藍</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Midnight Navy + Editorial — 夜空感，帶旅行與浪漫氣質，親近但精緻</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Fraunces italic（標題情感層次）<br>+ Instrument Sans（功能性文字）</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#0c1420"></span>
+          <span class="swatch" style="background:#e4ddd0"></span>
+          <span class="swatch" style="background:#d2825a"></span>
+        </div>
+        <p style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.35)">#0c1420 午夜藍 · #e4ddd0 舊紙 · #d2825a 陶土橘</p>
+      </div>
+      <div class="note-item">
+        <label>安全 / 亮點</label>
+        <p class="note-safe">✔ 主打作品 card 放右邊，讀者一眼看到你最重要的作品</p>
+        <p class="note-risk" style="margin-top:10px">★ 底部數字 strip（已完成作品數、游牧模式）— 讓資歷一秒傳達，不用讀 bio</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════
+     方案 C：深林暗綠
+══════════════════════ -->
+<div id="dC" class="design-panel">
+
+  <nav class="c-nav">
+    <div class="c-logo-wrap">
+      <div class="c-logo-mark">之</div>
+      <span class="c-logo">之之的書寫</span>
+    </div>
+    <ul class="c-nav-links">
+      <li>作品</li><li>關於</li><li>文章</li><li>聯絡</li>
+    </ul>
+  </nav>
+
+  <section class="c-hero">
+    <div>
+      <p class="c-chapter">作者介紹</p>
+      <h1 class="c-hero-title">之之</h1>
+      <h2 class="c-hero-subtitle">寫字的人，<br>路上的人</h2>
+      <p class="c-hero-desc">
+        我是公務員，也是小說作者，也是數位游牧工作者。這幾個身份不互相矛盾——它們都是我用來認識世界的不同角度。這裡有我的作品，還有我現在正在做的事。
+      </p>
+    </div>
+    <div class="c-now-card">
+      <div class="c-now-header">
+        <div class="c-now-dot"></div>
+        <span class="c-now-title">現在進行中</span>
+      </div>
+      <ul class="c-now-items">
+        <li>長篇小說第三稿創作</li>
+        <li>Zettelkasten 卡片筆記系統建立</li>
+        <li>每週五次增肌減脂訓練</li>
+        <li>政府採購證照線上課備考</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="c-shelf">
+    <p class="c-shelf-label">作品</p>
+    <div class="c-books">
+      <div class="c-book">
+        <p class="c-book-type">長篇小說</p>
+        <h3 class="c-book-title">尚未命名<br>的長篇</h3>
+        <p class="c-book-desc">目前進行中，故事從一個人的行李開始。</p>
+      </div>
+      <div class="c-book">
+        <p class="c-book-type">散文</p>
+        <h3 class="c-book-title">散文集<br>其一</h3>
+        <p class="c-book-desc">關於移動、停留與等待的文字。2023 完成。</p>
+      </div>
+      <div class="c-book">
+        <p class="c-book-type">短篇小說</p>
+        <h3 class="c-book-title">短篇<br>選集</h3>
+        <p class="c-book-desc">六篇，每篇在不同城市完成。2023。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="c-writing">
+    <p class="c-writing-label">最近寫的</p>
+    <ul class="c-post-list">
+      <li class="c-post">
+        <span class="c-post-date">2026.03</span>
+        <span class="c-post-title">關於在路上寫作這件事</span>
+        <span class="c-post-tag">散文</span>
+      </li>
+      <li class="c-post">
+        <span class="c-post-date">2026.02</span>
+        <span class="c-post-title">卡片筆記法用了三個月後的反思</span>
+        <span class="c-post-tag">筆記</span>
+      </li>
+      <li class="c-post">
+        <span class="c-post-date">2026.01</span>
+        <span class="c-post-title">小說的第一個字怎麼來的</span>
+        <span class="c-post-tag">創作</span>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="c-footer">
+    <span>© 2026 之之</span>
+    <span>在某個地方書寫</span>
+  </footer>
+
+  <div class="design-notes">
+    <h3>設計說明 — 方案 C 深林暗綠</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Dark Forest + Editorial — 森林夜晚感，深邃但有生機，最有「文學氣質」</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Fraunces + Noto Serif TC（標題雙語）<br>+ Instrument Sans（功能標籤）</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#0e1611"></span>
+          <span class="swatch" style="background:#e8e0cc"></span>
+          <span class="swatch" style="background:#baa878"></span>
+          <span class="swatch" style="background:#6db87a"></span>
+        </div>
+        <p style="margin-top:8px;font-size:11px;color:rgba(255,255,255,0.35)">#0e1611 深林 · #e8e0cc 象牙 · #baa878 舊金 · #6db87a 苔蘚</p>
+      </div>
+      <div class="note-item">
+        <label>安全 / 亮點</label>
+        <p class="note-safe">✔ 苔蘚綠 glow dot 標示「進行中」，讀者一眼感受到你是活躍的創作者</p>
+        <p class="note-risk" style="margin-top:10px">★ 書架式作品排列（頂部色塊區分類型）— 視覺上像真正的書架，沒人這樣做</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+const cfg = {
+  A: { label: 'Warm Brown · Gold',   bg:'#c9923e22', color:'#c9923e', border:'#c9923e55' },
+  B: { label: 'Midnight Navy · Terracotta', bg:'#d2825a22', color:'#d2825a', border:'#d2825a55' },
+  C: { label: 'Dark Forest · Moss',  bg:'#6db87a22', color:'#6db87a', border:'#6db87a55' }
+};
+function show(id) {
+  document.querySelectorAll('.design-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('d'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn')[['A','B','C'].indexOf(id)].classList.add('active');
+  const b = document.getElementById('badge'), c = cfg[id];
+  b.textContent = c.label;
+  b.style.background = c.bg; b.style.color = c.color; b.style.border = '1px solid '+c.border;
+}
+</script>
+</body>
+</html>

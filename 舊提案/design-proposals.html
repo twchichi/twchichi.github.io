@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>之之的個人頁面 — 3 個設計方案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=Satoshi:wght@400;500;700;900&family=Cabinet+Grotesk:wght@400;500;700;800&family=Source+Sans+3:wght@300;400;600&family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Switcher ── */
+  body { background: #0d0d0d; font-family: sans-serif; }
+
+  .switcher {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 24px;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .switcher-label {
+    color: rgba(255,255,255,0.4);
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-right: 8px; font-family: 'Instrument Sans', sans-serif;
+  }
+  .tab-btn {
+    padding: 6px 18px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.5);
+    border-radius: 20px; cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 13px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+  .tab-btn.active {
+    background: #fff; color: #0d0d0d;
+    border-color: #fff; font-weight: 500;
+  }
+  .badge {
+    margin-left: auto;
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; letter-spacing: 0.08em;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  .design-panel { display: none; margin-top: 52px; }
+  .design-panel.active { display: block; }
+
+
+  /* ════════════════════════════════════
+     方案一：文學雜誌 Editorial
+  ════════════════════════════════════ */
+  #d1 {
+    background: #141210;
+    color: #f0ebe0;
+    min-height: 100vh;
+    font-family: 'Noto Sans TC', 'Instrument Sans', sans-serif;
+  }
+  #d1 .d1-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 56px;
+    border-bottom: 1px solid rgba(240,235,224,0.1);
+  }
+  #d1 .d1-logo {
+    font-family: 'Fraunces', 'Noto Serif TC', serif;
+    font-size: 22px; font-weight: 300; letter-spacing: 0.05em;
+    color: #f0ebe0;
+  }
+  #d1 .d1-nav-links {
+    display: flex; gap: 32px; list-style: none;
+    font-size: 13px; letter-spacing: 0.08em; color: rgba(240,235,224,0.5);
+  }
+  #d1 .d1-nav-links li { cursor: pointer; transition: color 0.2s; }
+  #d1 .d1-nav-links li:hover { color: #f0ebe0; }
+
+  #d1 .d1-hero {
+    padding: 80px 56px 64px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 64px; align-items: end;
+    border-bottom: 1px solid rgba(240,235,224,0.1);
+  }
+  #d1 .d1-hero-title {
+    font-family: 'Fraunces', 'Noto Serif TC', serif;
+    font-size: clamp(56px, 8vw, 112px);
+    font-weight: 900; line-height: 0.95;
+    color: #f0ebe0; letter-spacing: -0.02em;
+  }
+  #d1 .d1-hero-title em {
+    font-style: italic; color: #c4875e;
+  }
+  #d1 .d1-hero-right { padding-bottom: 8px; }
+  #d1 .d1-hero-desc {
+    font-size: 15px; line-height: 1.75;
+    color: rgba(240,235,224,0.6);
+    margin-bottom: 28px;
+    font-family: 'Noto Sans TC', sans-serif; font-weight: 300;
+  }
+  #d1 .d1-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 28px;
+  }
+  #d1 .d1-tag {
+    padding: 4px 14px; border: 1px solid rgba(196,135,94,0.4);
+    color: #c4875e; font-size: 12px; letter-spacing: 0.06em;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  #d1 .d1-cta {
+    display: inline-block;
+    padding: 12px 28px;
+    background: #c4875e; color: #141210;
+    font-size: 13px; letter-spacing: 0.08em;
+    font-family: 'Instrument Sans', sans-serif; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+  }
+
+  #d1 .d1-section {
+    padding: 64px 56px;
+    border-bottom: 1px solid rgba(240,235,224,0.08);
+  }
+  #d1 .d1-section-label {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #c4875e; margin-bottom: 32px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  #d1 .d1-works-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  #d1 .d1-work-card {
+    background: rgba(240,235,224,0.04);
+    padding: 36px 28px;
+    border: 1px solid rgba(240,235,224,0.06);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  #d1 .d1-work-card:hover { background: rgba(240,235,224,0.08); }
+  #d1 .d1-work-year {
+    font-size: 11px; color: rgba(240,235,224,0.3);
+    letter-spacing: 0.1em; margin-bottom: 12px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  #d1 .d1-work-title {
+    font-family: 'Fraunces', 'Noto Serif TC', serif;
+    font-size: 22px; font-weight: 700; margin-bottom: 10px;
+  }
+  #d1 .d1-work-type {
+    font-size: 12px; color: rgba(240,235,224,0.4);
+    letter-spacing: 0.06em;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  #d1 .d1-now-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  }
+  #d1 .d1-now-item {
+    padding: 24px 0;
+    border-top: 1px solid rgba(240,235,224,0.12);
+  }
+  #d1 .d1-now-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c4875e; display: inline-block; margin-right: 10px;
+  }
+  #d1 .d1-now-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(240,235,224,0.7);
+    font-family: 'Noto Sans TC', sans-serif; font-weight: 300;
+  }
+  #d1 .d1-footer {
+    padding: 32px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: rgba(240,235,224,0.3); font-size: 12px;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+
+  /* ════════════════════════════════════
+     方案二：極簡游牧 Brutally Minimal
+  ════════════════════════════════════ */
+  #d2 {
+    background: #f8f7f4;
+    color: #111;
+    min-height: 100vh;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  #d2 .d2-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 56px;
+    border-bottom: 1px solid #e0ddd8;
+  }
+  #d2 .d2-logo {
+    font-size: 16px; font-weight: 500; letter-spacing: -0.01em;
+  }
+  #d2 .d2-logo span { color: #2563eb; }
+  #d2 .d2-nav-links {
+    display: flex; gap: 28px; list-style: none;
+    font-size: 13px; color: #888;
+  }
+  #d2 .d2-nav-links li { cursor: pointer; }
+  #d2 .d2-nav-links li:hover { color: #111; }
+
+  #d2 .d2-now {
+    padding: 48px 56px 40px;
+    border-bottom: 1px solid #e0ddd8;
+    max-width: 720px;
+  }
+  #d2 .d2-now-label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #2563eb; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  #d2 .d2-now-label::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #2563eb;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  #d2 .d2-now-list { list-style: none; }
+  #d2 .d2-now-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e8e5e0;
+    display: flex; gap: 20px; align-items: baseline;
+    font-size: 15px; line-height: 1.6; color: #333;
+  }
+  #d2 .d2-now-list li:last-child { border-bottom: none; }
+  #d2 .d2-now-meta {
+    font-size: 11px; color: #aaa; white-space: nowrap;
+    letter-spacing: 0.04em; flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #d2 .d2-main {
+    display: grid; grid-template-columns: 1fr 280px;
+    padding: 48px 56px; gap: 64px;
+    border-bottom: 1px solid #e0ddd8;
+  }
+  #d2 .d2-intro h1 {
+    font-size: 40px; font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 20px; color: #111;
+  }
+  #d2 .d2-intro p {
+    font-size: 15px; line-height: 1.85; color: #555;
+    max-width: 540px; font-weight: 300;
+  }
+  #d2 .d2-sidebar { padding-top: 4px; }
+  #d2 .d2-sidebar-section { margin-bottom: 36px; }
+  #d2 .d2-sidebar-title {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #aaa; margin-bottom: 12px;
+  }
+  #d2 .d2-sidebar-list { list-style: none; }
+  #d2 .d2-sidebar-list li {
+    font-size: 13px; color: #444; padding: 4px 0;
+    border-bottom: 1px solid #eeebe6;
+    display: flex; justify-content: space-between;
+  }
+  #d2 .d2-sidebar-list li span { color: #aaa; font-size: 12px; }
+
+  #d2 .d2-writing {
+    padding: 48px 56px;
+  }
+  #d2 .d2-writing-label {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #aaa; margin-bottom: 24px;
+  }
+  #d2 .d2-post {
+    padding: 20px 0;
+    border-bottom: 1px solid #e8e5e0;
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 24px; align-items: baseline;
+  }
+  #d2 .d2-post:last-child { border-bottom: none; }
+  #d2 .d2-post-date {
+    font-size: 12px; color: #aaa;
+    font-variant-numeric: tabular-nums;
+  }
+  #d2 .d2-post-title {
+    font-size: 15px; color: #111; margin-bottom: 4px;
+  }
+  #d2 .d2-post-tag {
+    font-size: 11px; color: #2563eb;
+    letter-spacing: 0.04em;
+  }
+
+
+  /* ════════════════════════════════════
+     方案三：日系手帳 Organic Warm
+  ════════════════════════════════════ */
+  #d3 {
+    background: #faf7f1;
+    color: #2e2118;
+    min-height: 100vh;
+    font-family: 'Noto Sans TC', 'Cabinet Grotesk', sans-serif;
+  }
+  /* subtle grain */
+  #d3::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+  #d3 > * { position: relative; z-index: 1; }
+
+  #d3 .d3-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 48px;
+  }
+  #d3 .d3-logo {
+    font-family: 'Noto Serif TC', 'Fraunces', serif;
+    font-size: 20px; font-weight: 700; color: #2e2118;
+    letter-spacing: 0.05em;
+  }
+  #d3 .d3-nav-links {
+    display: flex; gap: 28px; list-style: none;
+    font-size: 13px; color: #8b7355;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  #d3 .d3-nav-links li { cursor: pointer; }
+
+  #d3 .d3-hero {
+    padding: 0 48px 56px;
+    display: grid; grid-template-columns: 1fr 320px;
+    gap: 48px; align-items: center;
+    border-bottom: 2px solid #e8dfc8;
+  }
+  #d3 .d3-hero-left {}
+  #d3 .d3-greeting {
+    font-size: 13px; color: #9c8264;
+    letter-spacing: 0.08em; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  #d3 .d3-greeting::before {
+    content: '✦'; color: #7c9e7a; font-size: 10px;
+  }
+  #d3 .d3-hero-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 700; line-height: 1.05;
+    color: #2e2118; letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+  #d3 .d3-hero-name span { color: #7c9e7a; }
+  #d3 .d3-hero-roles {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+  }
+  #d3 .d3-role {
+    padding: 6px 16px;
+    background: #e8dfc8; color: #5c4a2e;
+    border-radius: 20px; font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  #d3 .d3-hero-bio {
+    font-size: 15px; line-height: 1.9; color: #6b5540;
+    max-width: 480px; font-weight: 300;
+  }
+  #d3 .d3-hero-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 2px 20px rgba(46,33,24,0.08);
+    border: 1px solid #e8dfc8;
+  }
+  #d3 .d3-card-title {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #9c8264; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #d3 .d3-card-title::after {
+    content: ''; flex: 1; height: 1px; background: #e8dfc8;
+  }
+  #d3 .d3-card-items { list-style: none; }
+  #d3 .d3-card-items li {
+    padding: 10px 0; border-bottom: 1px solid #f0e8d4;
+    font-size: 14px; line-height: 1.6; color: #4a3728;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  #d3 .d3-card-items li::before {
+    content: '◆'; color: #7c9e7a; font-size: 8px; margin-top: 5px; flex-shrink: 0;
+  }
+  #d3 .d3-card-items li:last-child { border-bottom: none; }
+
+  #d3 .d3-section { padding: 56px 48px; }
+  #d3 .d3-section-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+  }
+  #d3 .d3-section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 24px; font-weight: 700; color: #2e2118;
+  }
+  #d3 .d3-section-line {
+    flex: 1; height: 1px; background: #e8dfc8;
+  }
+
+  #d3 .d3-works-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  #d3 .d3-work-card {
+    background: #fff;
+    border-radius: 12px; padding: 28px 24px;
+    border: 1px solid #e8dfc8;
+    box-shadow: 0 1px 8px rgba(46,33,24,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  #d3 .d3-work-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(46,33,24,0.1);
+  }
+  #d3 .d3-work-emoji { font-size: 28px; margin-bottom: 12px; }
+  #d3 .d3-work-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #2e2118;
+  }
+  #d3 .d3-work-desc {
+    font-size: 13px; color: #8b7355; line-height: 1.7;
+  }
+  #d3 .d3-work-tag {
+    display: inline-block; margin-top: 12px;
+    padding: 3px 10px; background: #f0e8d4;
+    border-radius: 10px; font-size: 11px; color: #7c6040;
+    letter-spacing: 0.04em;
+  }
+
+  #d3 .d3-posts-list { list-style: none; }
+  #d3 .d3-posts-list li {
+    display: flex; gap: 20px; align-items: baseline;
+    padding: 16px 0; border-bottom: 1px solid #e8dfc8;
+  }
+  #d3 .d3-posts-list li:last-child { border-bottom: none; }
+  #d3 .d3-post-date {
+    font-size: 12px; color: #b09878;
+    white-space: nowrap; flex-shrink: 0;
+    font-variant-numeric: tabular-nums; min-width: 80px;
+  }
+  #d3 .d3-post-title {
+    font-size: 15px; color: #2e2118;
+  }
+
+  #d3 .d3-footer {
+    padding: 32px 48px;
+    border-top: 1px solid #e8dfc8;
+    display: flex; justify-content: space-between; align-items: center;
+    color: #b09878; font-size: 12px;
+  }
+  #d3 .d3-footer-heart { color: #7c9e7a; }
+
+
+  /* ── Design Notes Panel ── */
+  .design-notes {
+    background: #1a1a1a; padding: 32px 48px;
+    border-top: 2px solid #333;
+  }
+  .design-notes h3 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 20px;
+  }
+  .design-notes-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+  .note-item label {
+    display: block; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    margin-bottom: 6px; font-family: 'Instrument Sans', sans-serif;
+  }
+  .note-item p {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    line-height: 1.6; font-family: 'Noto Sans TC', sans-serif;
+  }
+  .note-safe { color: #7c9e7a !important; }
+  .note-risk { color: #c4875e !important; }
+  .swatch-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .swatch {
+    width: 28px; height: 28px; border-radius: 4px;
+    display: inline-block; border: 1px solid rgba(255,255,255,0.1);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <span class="switcher-label">之之個人頁</span>
+  <button class="tab-btn active" onclick="showDesign(1)">方案一 文學雜誌</button>
+  <button class="tab-btn" onclick="showDesign(2)">方案二 極簡游牧</button>
+  <button class="tab-btn" onclick="showDesign(3)">方案三 日系手帳</button>
+  <span class="badge" id="badge" style="background:#c4875e22;color:#c4875e;border:1px solid #c4875e44;">Editorial · Dark</span>
+</div>
+
+
+<!-- ══════════════════════════════
+     方案一：文學雜誌 Editorial Dark
+══════════════════════════════ -->
+<div id="d1" class="design-panel active">
+
+  <nav class="d1-nav">
+    <div class="d1-logo">之之</div>
+    <ul class="d1-nav-links">
+      <li>作品</li>
+      <li>關於我</li>
+      <li>最近在做</li>
+      <li>聯絡</li>
+    </ul>
+  </nav>
+
+  <section class="d1-hero">
+    <div>
+      <h1 class="d1-hero-title">
+        小說<br>
+        <em>作者</em><br>
+        之之
+      </h1>
+    </div>
+    <div class="d1-hero-right">
+      <p class="d1-hero-desc">
+        我寫小說、散文，也在路上工作。<br>
+        游牧、紀錄、然後繼續寫。
+      </p>
+      <div class="d1-tags">
+        <span class="d1-tag">小說</span>
+        <span class="d1-tag">散文</span>
+        <span class="d1-tag">數位游牧</span>
+      </div>
+      <a class="d1-cta" href="#">閱讀作品</a>
+    </div>
+  </section>
+
+  <section class="d1-section">
+    <p class="d1-section-label">作品</p>
+    <div class="d1-works-grid">
+      <div class="d1-work-card">
+        <p class="d1-work-year">2024</p>
+        <h3 class="d1-work-title">尚未命名的長篇</h3>
+        <p class="d1-work-type">長篇小說 · 進行中</p>
+      </div>
+      <div class="d1-work-card">
+        <p class="d1-work-year">2023</p>
+        <h3 class="d1-work-title">散文集其一</h3>
+        <p class="d1-work-type">散文 · 已完成</p>
+      </div>
+      <div class="d1-work-card">
+        <p class="d1-work-year">2023</p>
+        <h3 class="d1-work-title">短篇選集</h3>
+        <p class="d1-work-type">短篇小說 · 已完成</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="d1-section">
+    <p class="d1-section-label">最近在做</p>
+    <div class="d1-now-grid">
+      <div class="d1-now-item">
+        <span class="d1-now-dot"></span>
+        <span class="d1-now-text">卡片筆記法，整理寫作素材與思路</span>
+      </div>
+      <div class="d1-now-item">
+        <span class="d1-now-dot"></span>
+        <span class="d1-now-text">創作散文與長篇小說</span>
+      </div>
+      <div class="d1-now-item">
+        <span class="d1-now-dot"></span>
+        <span class="d1-now-text">增肌減脂，讓身體跟得上長途旅行</span>
+      </div>
+      <div class="d1-now-item">
+        <span class="d1-now-dot"></span>
+        <span class="d1-now-text">備考政府採購證照，每週兩次線上課</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="d1-footer">
+    <span>之之 © 2026</span>
+    <span>用文字標記每個地方</span>
+  </footer>
+
+  <div class="design-notes">
+    <h3>設計說明</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Editorial / Magazine — 強排版層次，雜誌封面感</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Fraunces（展示 Serif）<br>+ Instrument Sans（內文）</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#141210" title="#141210"></span>
+          <span class="swatch" style="background:#f0ebe0" title="#f0ebe0"></span>
+          <span class="swatch" style="background:#c4875e" title="#c4875e Copper"></span>
+        </div>
+        <p style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.4)">#141210 · #f0ebe0 · #c4875e</p>
+      </div>
+      <div class="note-item">
+        <label>安全選擇 / 亮點</label>
+        <p class="note-safe">✔ 清晰的作品/自介/聯絡結構</p>
+        <p class="note-risk" style="margin-top:8px">★ 深色為預設（大多數作者用白底）— 讓你第一眼就被記住</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     方案二：極簡游牧 Brutally Minimal
+══════════════════════════════ -->
+<div id="d2" class="design-panel">
+
+  <nav class="d2-nav">
+    <div class="d2-logo">之之<span>.</span></div>
+    <ul class="d2-nav-links">
+      <li>作品</li>
+      <li>關於</li>
+      <li>文章</li>
+    </ul>
+  </nav>
+
+  <section class="d2-now">
+    <p class="d2-now-label">現在進行中</p>
+    <ul class="d2-now-list">
+      <li>
+        <span class="d2-now-meta">寫作</span>
+        長篇小說第三稿，同步整理散文素材
+      </li>
+      <li>
+        <span class="d2-now-meta">學習</span>
+        Zettelkasten 卡片筆記法，建立個人知識庫
+      </li>
+      <li>
+        <span class="d2-now-meta">健身</span>
+        增肌減脂計畫，週五次訓練
+      </li>
+      <li>
+        <span class="d2-now-meta">考照</span>
+        政府採購證照，線上課進行中
+      </li>
+    </ul>
+  </section>
+
+  <section class="d2-main">
+    <div class="d2-intro">
+      <h1>你好，<br>我是之之。</h1>
+      <p>
+        公務員、小說作者，也是數位游牧工作者。<br><br>
+        我相信文字是最輕的行李。每到一個地方，我就寫一些東西。這個頁面是我的公開筆記本——作品、思考、現在在做的事。
+      </p>
+    </div>
+    <div class="d2-sidebar">
+      <div class="d2-sidebar-section">
+        <p class="d2-sidebar-title">作品</p>
+        <ul class="d2-sidebar-list">
+          <li>長篇小說（進行中）<span>2024—</span></li>
+          <li>散文集其一<span>2023</span></li>
+          <li>短篇選集<span>2023</span></li>
+        </ul>
+      </div>
+      <div class="d2-sidebar-section">
+        <p class="d2-sidebar-title">聯絡</p>
+        <ul class="d2-sidebar-list">
+          <li>Email<span>→</span></li>
+          <li>Instagram<span>→</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="d2-writing">
+    <p class="d2-writing-label">最近寫的</p>
+    <div class="d2-post">
+      <span class="d2-post-date">2026.03</span>
+      <div>
+        <p class="d2-post-title">關於在路上寫作這件事</p>
+        <span class="d2-post-tag">散文</span>
+      </div>
+    </div>
+    <div class="d2-post">
+      <span class="d2-post-date">2026.02</span>
+      <div>
+        <p class="d2-post-title">卡片筆記法用了三個月後的反思</p>
+        <span class="d2-post-tag">筆記</span>
+      </div>
+    </div>
+    <div class="d2-post">
+      <span class="d2-post-date">2026.01</span>
+      <div>
+        <p class="d2-post-title">小說的第一個字怎麼來的</p>
+        <span class="d2-post-tag">創作</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="design-notes">
+    <h3>設計說明</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Brutally Minimal — 文字與留白主導，像個人 wiki</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Noto Sans TC（全站）<br>無需英文展示字，乾淨一致</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#f8f7f4" title="#f8f7f4"></span>
+          <span class="swatch" style="background:#111111" title="#111"></span>
+          <span class="swatch" style="background:#2563eb" title="#2563eb Blue"></span>
+          <span class="swatch" style="background:#e0ddd8" title="#e0ddd8"></span>
+        </div>
+        <p style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.4)">#f8f7f4 · #111 · #2563eb</p>
+      </div>
+      <div class="note-item">
+        <label>安全選擇 / 亮點</label>
+        <p class="note-safe">✔ 超快載入，手機讀起來最舒服</p>
+        <p class="note-risk" style="margin-top:8px">★ 「現在進行中」放最頂——打破自我介紹優先的慣例，最真實</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     方案三：日系手帳 Organic Warm
+══════════════════════════════ -->
+<div id="d3" class="design-panel">
+
+  <nav class="d3-nav">
+    <div class="d3-logo">之之的手帳</div>
+    <ul class="d3-nav-links">
+      <li>作品</li>
+      <li>關於我</li>
+      <li>最近</li>
+      <li>聯絡</li>
+    </ul>
+  </nav>
+
+  <section class="d3-hero">
+    <div class="d3-hero-left">
+      <p class="d3-greeting">你好，歡迎來到這裡</p>
+      <h1 class="d3-hero-name">
+        之之<span>，</span><br>在路上<br>寫字的人
+      </h1>
+      <div class="d3-hero-roles">
+        <span class="d3-role">小說作者</span>
+        <span class="d3-role">散文</span>
+        <span class="d3-role">數位游牧</span>
+        <span class="d3-role">公務員</span>
+      </div>
+      <p class="d3-hero-bio">
+        文字是我記錄世界的方式。這裡有我的作品、正在發生的事，還有一些寫作途中的想法碎片。
+      </p>
+    </div>
+    <div class="d3-hero-card">
+      <p class="d3-card-title">現在在做</p>
+      <ul class="d3-card-items">
+        <li>創作長篇小說與散文</li>
+        <li>Zettelkasten 卡片筆記系統</li>
+        <li>增肌減脂練習計畫</li>
+        <li>政府採購證照線上課</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="d3-section" style="border-bottom: 2px solid #e8dfc8;">
+    <div class="d3-section-header">
+      <h2 class="d3-section-title">作品</h2>
+      <div class="d3-section-line"></div>
+    </div>
+    <div class="d3-works-grid">
+      <div class="d3-work-card">
+        <div class="d3-work-emoji">📖</div>
+        <h3 class="d3-work-title">尚未命名的長篇</h3>
+        <p class="d3-work-desc">正在寫的長篇小說，故事從一個人的行李開始。</p>
+        <span class="d3-work-tag">長篇小說</span>
+      </div>
+      <div class="d3-work-card">
+        <div class="d3-work-emoji">✍️</div>
+        <h3 class="d3-work-title">散文集其一</h3>
+        <p class="d3-work-desc">收錄 2022–2023 年的散文，關於移動、停留與等待。</p>
+        <span class="d3-work-tag">散文</span>
+      </div>
+      <div class="d3-work-card">
+        <div class="d3-work-emoji">🌿</div>
+        <h3 class="d3-work-title">短篇選集</h3>
+        <p class="d3-work-desc">六篇短篇，每篇都在不同的城市完成。</p>
+        <span class="d3-work-tag">短篇小說</span>
+      </div>
+      <div class="d3-work-card">
+        <div class="d3-work-emoji">🗒️</div>
+        <h3 class="d3-work-title">寫作筆記</h3>
+        <p class="d3-work-desc">不定期分享創作過程的思考與素材。</p>
+        <span class="d3-work-tag">筆記</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="d3-section">
+    <div class="d3-section-header">
+      <h2 class="d3-section-title">最近寫的</h2>
+      <div class="d3-section-line"></div>
+    </div>
+    <ul class="d3-posts-list">
+      <li>
+        <span class="d3-post-date">2026.03</span>
+        <span class="d3-post-title">關於在路上寫作這件事</span>
+      </li>
+      <li>
+        <span class="d3-post-date">2026.02</span>
+        <span class="d3-post-title">卡片筆記法用了三個月後的反思</span>
+      </li>
+      <li>
+        <span class="d3-post-date">2026.01</span>
+        <span class="d3-post-title">小說的第一個字怎麼來的</span>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="d3-footer">
+    <span>© 2026 之之</span>
+    <span>made with <span class="d3-footer-heart">♥</span> 在某個地方</span>
+  </footer>
+
+  <div class="design-notes">
+    <h3>設計說明</h3>
+    <div class="design-notes-grid">
+      <div class="note-item">
+        <label>美學方向</label>
+        <p>Organic / Warm — 紙質手帳感，親近且有溫度</p>
+      </div>
+      <div class="note-item">
+        <label>字型</label>
+        <p>Noto Serif TC（標題）<br>+ Noto Sans TC（內文）</p>
+      </div>
+      <div class="note-item">
+        <label>色盤</label>
+        <div class="swatch-row">
+          <span class="swatch" style="background:#faf7f1" title="#faf7f1"></span>
+          <span class="swatch" style="background:#2e2118" title="#2e2118"></span>
+          <span class="swatch" style="background:#7c9e7a" title="#7c9e7a Moss"></span>
+          <span class="swatch" style="background:#e8dfc8" title="#e8dfc8 Sand"></span>
+        </div>
+        <p style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.4)">#faf7f1 · #2e2118 · #7c9e7a · #e8dfc8</p>
+      </div>
+      <div class="note-item">
+        <label>安全選擇 / 亮點</label>
+        <p class="note-safe">✔ 讀者最容易親近、最溫暖的風格</p>
+        <p class="note-risk" style="margin-top:8px">★ Grain 紙質紋理 + 苔蘚綠 accent — 市場上幾乎沒有作者這樣做</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const badges = [
+    'Editorial · Dark',
+    'Minimal · Light',
+    'Organic · Warm'
+  ];
+  const badgeColors = [
+    {bg:'#c4875e22', color:'#c4875e', border:'#c4875e44'},
+    {bg:'#2563eb22', color:'#2563eb', border:'#2563eb44'},
+    {bg:'#7c9e7a33', color:'#5a7a58', border:'#7c9e7a55'}
+  ];
+
+  function showDesign(n) {
+    document.querySelectorAll('.design-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('d' + n).classList.add('active');
+    document.querySelectorAll('.tab-btn')[n-1].classList.add('active');
+    const badge = document.getElementById('badge');
+    badge.textContent = badges[n-1];
+    const c = badgeColors[n-1];
+    badge.style.background = c.bg;
+    badge.style.color = c.color;
+    badge.style.border = '1px solid ' + c.border;
+  }
+</script>
+
+</body>
+</html>
