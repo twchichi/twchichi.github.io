@@ -32,6 +32,17 @@
 
 body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
 
+/* ── p5.js Canvas (Background) ── */
+#p5-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ── Nav ── */
 .site-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -214,8 +225,11 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   </div>
 </nav>
 
+<!-- ── p5.js Canvas ── -->
+<div id="p5-canvas"></div>
+
 <!-- ── Home Hero ── -->
-<div class="home-wrap">
+<div class="home-wrap" style="position: relative; z-index: 1;">
   <div class="home-hero">
     <div>
       <p class="chapter-mark">作者 · 游牧者</p>
@@ -274,4 +288,96 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 </footer>
 
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.min.js"></script>
+<script>
+  p5.disableFriendlyErrors = true;
+
+  // === Config ===
+  const CONFIG = {
+    seed: 12345,
+    particleCount: 40,
+    speed: 2,
+    alpha: 15
+  };
+
+  // === Palette (from your site) ===
+  const PALETTE = {
+    bg: [14, 22, 17],
+    gold: [186, 168, 120],
+    moss: [109, 184, 122],
+    textDim: [232, 224, 204]
+  };
+
+  // === State ===
+  let particles = [];
+
+  // === FloatingDot class - slow, gentle floating ===
+  class FloatingDot {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.baseX = this.x;
+      this.baseY = this.y;
+      this.size = Math.random() * 3 + 1;
+      this.phaseX = Math.random() * Math.PI * 2;
+      this.phaseY = Math.random() * Math.PI * 2;
+      this.periodX = Math.random() * 3000 + 2000;
+      this.periodY = Math.random() * 4000 + 3000;
+      let c = Math.random();
+      if (c < 0.15) {
+        this.color = [...PALETTE.gold];
+      } else if (c < 0.3) {
+        this.color = [...PALETTE.moss];
+      } else {
+        this.color = [...PALETTE.textDim];
+      }
+    }
+
+    update() {
+      let spd = CONFIG.speed * 0.3;
+      let progress = (millis() % 100000) / 1000;
+      this.x = this.baseX + Math.sin(progress * (1000 / this.periodX) + this.phaseX) * 30 * spd;
+      this.y = this.baseY + Math.sin(progress * (1000 / this.periodY) + this.phaseY) * 20 * spd;
+      if (this.x < -20) this.x = width + 20;
+      if (this.x > width + 20) this.x = -20;
+      if (this.y < -20) this.y = height + 20;
+      if (this.y > height + 20) this.y = -20;
+    }
+
+    draw() {
+      let a = CONFIG.alpha / 100;
+      let c = this.color;
+      fill(c[0], c[1], c[2], a * 255);
+      noStroke();
+      ellipse(this.x, this.y, this.size, this.size);
+    }
+  }
+
+  function setup() {
+    let canvas = createCanvas(windowWidth, windowHeight);
+    canvas.parent('p5-canvas');
+    pixelDensity(1);
+    colorMode(RGB, 255, 255, 255, 255);
+    randomSeed(CONFIG.seed);
+    for (let i = 0; i < CONFIG.particleCount; i++) {
+      particles.push(new FloatingDot());
+    }
+  }
+
+  function draw() {
+    background(PALETTE.bg[0], PALETTE.bg[1], PALETTE.bg[2]);
+    for (let p of particles) {
+      p.update();
+      p.draw();
+    }
+  }
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+  }
+</script>
 </html>
