@@ -127,7 +127,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
     <div class="writing-hero">
       <p class="chapter-mark">所有隨筆</p>
       <h1 class="writing-page-title">隨筆</h1>
-      <p class="writing-page-sub">散文、筆記、創作碎片</p>
+      <p class="writing-page-sub">散文</p>
     </div>
     <div class="writing-layout">
       <ul class="post-list">
@@ -152,9 +152,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
           <div><p class="post-cat" style="color:var(--moss);">散文</p><h3 class="post-title">憤青的過去，小確幸的現在</h3><p class="post-excerpt">時代過了，憤青老了，武器還在架上，但只是換了握法。</p><p class="post-read-time">閱讀時間約 2 分鐘</p></div>
         </li>
       </ul>
-      <p class="post-empty" id="postEmpty" style="display:none;">目前沒有公開的文章。</p>
       <aside>
-        <div class="sidebar-section"><p class="sidebar-section-title">分類</p><div class="tag-cloud"><span class="tag-pill active">全部</span><span class="tag-pill">散文</span><span class="tag-pill">筆記</span><span class="tag-pill">創作</span></div></div>
+        <div class="sidebar-section"><p class="sidebar-section-title">分類</p><div class="tag-cloud"><span class="tag-pill active">全部</span><span class="tag-pill">散文</span></div></div>
       </aside>
     </div>
   </main>
@@ -201,7 +200,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
     </header>
     <div class="article-body">
       <p>我覺得我失去了看見世界美麗的眼睛，以前那種藉由文字重建圖像的情感衝擊，也在焦慮症與憂鬱症中完全消失了。</p>
-      <p>現在的我還剩下什麼呢？我把握住了我的大寶貝，婉新。喜歡每天一起開心燦爛地傻笑。除了這個，我很難說還有什麼東西是留下的。但今天的潮濕氣味確實勾出了某些潛能——某些我要留住、不能讓它溜走的思緒。在颱風天的早晨，重新握住手中的年華。</p>
+      <p>現在的我還剩下什麼呢？我把握住了我的大寶貝。喜歡每天一起開心燦爛地傻笑。除了這個，我很難說還有什麼東西是留下的。但今天的潮濕氣味確實勾出了某些潛能——某些我要留住、不能讓它溜走的思緒。在颱風天的早晨，重新握住手中的年華。</p>
       <p>今天是個美麗的颱風天。用珍貴的時光來跟我的憂鬱正式道別，再輕輕牽起焦慮的手，配上一顆整理好的心情，跨出珍貴的一步。</p>
     </div>
   </article>
@@ -334,7 +333,14 @@ function showListView() {
   document.getElementById('siteFooter').style.display = 'flex';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
-if (!document.querySelector('.post-item')) document.getElementById('postEmpty').style.display = 'block';
+// 空狀態由 JS 插入，不先寫死在 DOM 再隱藏——後者是 fail-open：
+// JS 不跑或純文字抓取器來讀，就會在有 5 篇的頁面上讀到「目前沒有公開的文章」
+if (!document.querySelector('.post-item')) {
+  const p = document.createElement('p');
+  p.className = 'post-empty';
+  p.textContent = '目前沒有公開的文章。';
+  document.querySelector('.post-list').after(p);
+}
 document.querySelectorAll('.post-item').forEach(item => { item.addEventListener('click', () => { showArticle(parseInt(item.getAttribute('data-article'))); }); });
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;

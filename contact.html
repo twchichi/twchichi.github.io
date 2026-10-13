@@ -183,7 +183,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   <div class="nav-tabs">
     <a href="/" class="nav-tab">首頁</a>
     <a href="/about.html" class="nav-tab">關於我</a>
-    <a href="/writing.html" class="nav-tab">文章</a>
+    <a href="/writing.html" class="nav-tab">隨筆</a>
     <a href="/contact.html" class="nav-tab active">聯絡</a>
   </div>
 </nav>
@@ -211,22 +211,23 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   <!-- Right: Form -->
   <div>
     <p class="contact-note-title">直接寫信給我</p>
-    <p class="contact-note-body">如果是合作提案，請說明你是誰、想做什麼——我喜歡直接。</p>
+    <p class="contact-note-body">如果是合作提案，請說明你是誰、想做什麼——我在送出的對面，期待</p>
     <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
       <div class="form-field">
         <label class="form-label">稱呼</label>
-        <input class="form-input" name="name" placeholder="你的名字或暱稱" required />
+        <input class="form-input" name="name" placeholder="你的名字或暱稱" required disabled />
       </div>
       <div class="form-field">
         <label class="form-label">Email</label>
-        <input class="form-input" name="email" type="email" placeholder="your@email.com" required />
+        <input class="form-input" name="email" type="email" placeholder="your@email.com" required disabled />
       </div>
       <div class="form-field">
         <label class="form-label">訊息</label>
-        <textarea class="form-textarea" name="message" rows="5" placeholder="想說什麼都可以..." required></textarea>
+        <textarea class="form-textarea" name="message" rows="5" placeholder="想說什麼都可以..." required disabled></textarea>
       </div>
-      <button type="submit" class="form-submit">送出 ✦</button>
-      <p class="form-note" id="formNote"></p>
+      <button type="submit" class="form-submit" disabled>送出 ✦</button>
+      <p class="form-note" id="formNote">表單還在設定中。現在請直接寄信到 twchichi@gmail.com。</p>
+      <noscript><p class="form-note">這個表單需要 JavaScript。請直接寄信到 twchichi@gmail.com。</p></noscript>
     </form>
   </div>
 
@@ -238,12 +239,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 // 空字串＝還沒接上：此時表單在載入時就停用並說明，**刻意不讓它假裝送得出去**。
 const SHEET_ENDPOINT = '';
 
+// 欄位在 markup 裡就是 disabled（fail-closed）。只有端點真的填了才由 JS 解除——
+// 反過來做（預設可用、JS 去停用）在 JS 不跑時會變成一個把訊息丟掉的表單
 window.addEventListener('DOMContentLoaded', () => {
-  if (SHEET_ENDPOINT) return;
-  const form = document.getElementById('contactForm');
-  form.querySelectorAll('input, textarea, button').forEach(el => { el.disabled = true; });
-  document.getElementById('formNote').textContent =
-    '表單還在設定中。現在請直接寄信到 twchichi@gmail.com。';
+  if (!SHEET_ENDPOINT) return;
+  document.getElementById('contactForm')
+    .querySelectorAll('input, textarea, button').forEach(el => { el.disabled = false; });
+  document.getElementById('formNote').textContent = '';
 });
 
 function handleSubmit(e) {
