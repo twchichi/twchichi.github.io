@@ -226,7 +226,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
         <textarea class="form-textarea" name="message" rows="5" placeholder="想說什麼都可以..." required disabled></textarea>
       </div>
       <button type="submit" class="form-submit" disabled>送出 ✦</button>
-      <p class="form-note" id="formNote">表單還在設定中。現在請直接寄信到 twchichi@gmail.com。</p>
+      <p class="form-note" id="formNote"></p>
       <noscript><p class="form-note">這個表單需要 JavaScript。請直接寄信到 twchichi@gmail.com。</p></noscript>
     </form>
   </div>
@@ -237,7 +237,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
 // 收件端點 = Google Apps Script 的網頁應用程式網址，訊息會 appendRow 進
 // 自己的 Google Sheet（不經任何第三方服務）。
 // 空字串＝還沒接上：此時表單在載入時就停用並說明，**刻意不讓它假裝送得出去**。
-const SHEET_ENDPOINT = '';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzlL0PNfWF7_rl0_PRJvB_0H1wUwvL3Eu0xJ8bcvsqHqq5llodXs6sRGBCEVdd_YRva_A/exec';
 
 // 欄位在 markup 裡就是 disabled（fail-closed）。只有端點真的填了才由 JS 解除——
 // 反過來做（預設可用、JS 去停用）在 JS 不跑時會變成一個把訊息丟掉的表單
