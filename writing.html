@@ -131,6 +131,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
     </div>
     <div class="writing-layout">
       <ul class="post-list">
+        <li class="post-item" data-article="2">
+          <span class="post-date">2026.10</span>
+          <div><p class="post-cat" style="color:var(--moss);">散文</p><h3 class="post-title">人生先從看見可能性開始</h3><p class="post-excerpt">最糟的是，你甚至不知道是哪一扇門是現在的自己關的，未來的哪天才在徒呼負負。</p><p class="post-read-time">閱讀時間約 2 分鐘</p></div>
+        </li>
         <li class="post-item" data-article="1">
           <span class="post-date">2026.07</span>
           <div><p class="post-cat" style="color:var(--moss);">散文</p><h3 class="post-title">奔放燦爛的櫻花樹提醒我快步向前</h3><p class="post-excerpt">可樂雞排只能是屬於一個人的狂歡。</p><p class="post-read-time">閱讀時間約 1 分鐘</p></div>
@@ -210,10 +214,33 @@ body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
   </article>
 </div>
 
+
+<!-- Article View 2: 人生先從看見可能性開始 -->
+<div id="articleView2" class="article-view">
+  <article>
+    <header class="article-hero">
+      <a class="back-to-list" onclick="showListView()">返回列表</a>
+      <p class="article-category essay">散文</p>
+      <h1 class="article-title">人生先從看見可能性開始</h1>
+      <p class="article-subtitle">最糟的是，你甚至不知道是哪一扇門是現在的自己關的，未來的哪天才在徒呼負負。</p>
+      <div class="article-meta"><span>2026年10月</span><span class="reading-time">◷ 2 分鐘閱讀</span></div>
+    </header>
+    <div class="article-body">
+      <p>越是資源受限的人，越會把注意力鎖在眼前即將到手的那一點資源，資源有可能是錢、關係、時間，甚至可能是一段話。保護的方法更可能有千萬種：有人先關死門、有人先拒絕、有人把話留到最後才說，甚至有人提前攻擊。對本人而言都合理，務必要守住眼前看得見的資源，跑了就沒了。但是對旁觀的他者來說，這一切就荒謬的有剩。</p>
+      <h2>他者的眼光幫不上忙</h2>
+      <p>問題是你作為他者，永遠看不到主角那個「提前」長什麼樣，猜不到就沒法預判，還必須要為了你不受傷，保守得想把能想到的防護做好，把主角可能造成的每個開口都先堵住，防的是「想得到的傷害」，但最致命的傷害經常來自於想不到的時間地點。主角和他者的悲劇不在「保守」本身，而在它的邊界，兩者把能預想到的風險全擋住了，也等於把各自都擋在「想不到的可能性」外面。主角護住了眼前這一點，但護住的方式，恰恰把後續的不確定性關掉了。</p>
+      <h2>可能性是倍數增長的前提</h2>
+      <p>破解前面「保守」的核心關鍵是交流交換，沒有新的交流所帶來的刺激，大概永遠都不知道未來還有多少可能性。從這個角度切入，可能性是一種槓桿屬性，能夠創造夢想，讓資源倍數增長，反過來可能性的大門關上了就是關上了，只剩往前看這個選項，哪天回頭看的時候後悔了，重新伸手也不存在那個相同的機會，失去了當下那個感觸，那個味道。最糟的是，你甚至不知道是哪一扇門是現在的自己關的，未來的哪天才在徒呼負負。</p>
+      <h2>交給不確定的未來</h2>
+      <p>練習從每天離不開的電視電影中，一起與角色判斷、學習、成長。練習伸手打開劇中幾乎免費的大門，才有機會在未來的每一個時刻，真正替自己作下真正的選擇，進而看到另外一個人生。</p>
+    </div>
+  </article>
+</div>
+
 <footer class="site-footer" id="siteFooter" style="display:none;"><span>之之 © 2026</span><span>在某個地方書寫 <span class="footer-moss">✦</span></span></footer>
 
 <script>
-const articles = [0,1];
+const articles = [0,1,2];
 function showArticle(index) {
   document.getElementById('listView').classList.add('hidden');
   document.getElementById('siteFooter').style.display = 'none';
